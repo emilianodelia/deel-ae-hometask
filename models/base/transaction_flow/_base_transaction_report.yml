@@ -25,7 +25,7 @@ models:
         description: "The three-character ISO currency code used for the transaction"
 
       - name: settled_usd_amount
-        description: "The transaction value in USD. Converted from minor units (integers) to standard decimal format"
+        description: "The transaction value in USD"
 
       - name: rates
         description: "JSON string containing the exchange rates used to settle the funds to USD."

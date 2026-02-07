@@ -8,7 +8,7 @@ with acceptance_rate_scope as (
         cast(cvv_provided as boolean) as is_cvv_provided,
         country as country_code, --The two-character ISO country code of the issued card
         currency as original_currency, --The three-character ISO currency code in which the transaction was originally processed
-        cast(safe_divide(amount, 100) as numeric) as settled_usd_amount, --The USD amount for the transaction (in minor units)
+        cast(amount as numeric) as settled_usd_amount, --The USD amount for the transaction (in minor units)
         rates as exchange_rates_json, 
         case 
             when upper(state)='ACCEPTED'
