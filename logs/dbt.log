@@ -2241,3 +2241,45 @@ parsing.
 [0m14:25:22.576544 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x136b0fba0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108c77650>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x136a85610>]}
 [0m14:25:22.576670 [debug] [MainThread]: Flushing usage events
 [0m14:25:23.065545 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m14:26:04.448793 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1060e8ad0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10704f9d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10704f890>]}
+
+
+============================== 14:26:04.451169 | 9289e619-48b1-4d45-88e3-b387ba43eb0f ==============================
+[0m14:26:04.451169 [info ] [MainThread]: Running with dbt=1.11.3
+[0m14:26:04.451432 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'profiles_dir': '/Users/emilianodelia/.dbt', 'send_anonymous_usage_stats': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'partial_parse': 'True', 'introspect': 'True', 'use_colors': 'True', 'warn_error': 'None', 'log_format': 'default', 'no_print': 'None', 'printer_width': '80', 'cache_selected_only': 'False', 'empty': 'False', 'write_json': 'True', 'invocation_command': 'dbt build --select models/base/transaction_flow/base_transaction_report.sql', 'fail_fast': 'False', 'log_path': '/Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/logs', 'target_path': 'None', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'static_parser': 'True', 'debug': 'False', 'log_cache_events': 'False', 'quiet': 'False'}
+[0m14:26:08.165705 [warn ] [MainThread]: [[33mWARNING[0m][MissingPlusPrefixDeprecation]: Deprecated functionality
+Missing '+' prefix on `schema` found at
+`deel_globepay.base.transaction_flow.schema` in file
+`/Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/dbt_project.yml`.
+Hierarchical config values without a '+' prefix are deprecated in
+dbt_project.yml.
+[0m14:26:08.165985 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'deprecation', 'label': '9289e619-48b1-4d45-88e3-b387ba43eb0f', 'property_': 'warn', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x132fd2ea0>]}
+[0m14:26:08.236129 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '9289e619-48b1-4d45-88e3-b387ba43eb0f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x132c5b350>]}
+[0m14:26:08.259052 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '9289e619-48b1-4d45-88e3-b387ba43eb0f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x132cf1850>]}
+[0m14:26:08.259440 [info ] [MainThread]: Registered adapter: bigquery=1.11.0
+[0m14:26:08.364625 [debug] [MainThread]: checksum: 97dbd983c77ef3cec7304d97135f72c53ee20ea7ab68d67bae8e0876ff0fcdb6, vars: {}, profile: , target: , version: 1.11.3
+[0m14:26:08.423061 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m14:26:08.423281 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m14:26:08.423401 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m14:26:08.437257 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '9289e619-48b1-4d45-88e3-b387ba43eb0f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1334fce60>]}
+[0m14:26:08.464598 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/manifest.json
+[0m14:26:08.465506 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/semantic_manifest.json
+[0m14:26:08.483288 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '9289e619-48b1-4d45-88e3-b387ba43eb0f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1336a4e50>]}
+[0m14:26:08.483519 [info ] [MainThread]: Found 3 models, 2 seeds, 538 macros
+[0m14:26:08.484456 [warn ] [MainThread]: Nothing to do. Try checking your model configs and model specification args
+[0m14:26:08.485239 [debug] [MainThread]: Command end result
+[0m14:26:08.494500 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/manifest.json
+[0m14:26:08.495171 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/semantic_manifest.json
+[0m14:26:08.496876 [debug] [MainThread]: Wrote artifact RunExecutionResult to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/run_results.json
+[0m14:26:08.497188 [warn ] [MainThread]: [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- MissingPlusPrefixDeprecation: 4 occurrences
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
+[0m14:26:08.498915 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": true, "command_wall_clock_time": 4.0804663, "process_in_blocks": "0", "process_kernel_time": 0.888245, "process_mem_max_rss": "363724800", "process_out_blocks": "0", "process_user_time": 2.619529}
+[0m14:26:08.499237 [debug] [MainThread]: Command `dbt build` succeeded at 14:26:08.499186 after 4.08 seconds
+[0m14:26:08.499400 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x13400fba0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106dd3650>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x13368d610>]}
+[0m14:26:08.499539 [debug] [MainThread]: Flushing usage events
+[0m14:26:08.985289 [debug] [MainThread]: An error was encountered while trying to flush usage events
