@@ -1,0 +1,21 @@
+==================== 2026-02-07T09:38:23.062182Z | 3e0b475b-a024-43fc-bd0f-02fb555cb243 ====================
+09:38:23.062215 [info ]: Starting dbt LSP server
+09:38:23.062231 [info ]: Connecting to LSP client on port 8000
+09:38:23.062422 [info ]: Successfully connected to LSP client
+09:38:23.062428 [info ]: Creating LSP service...
+09:38:23.129437 [info ]: Creating LSP server...
+09:38:23.129448 [info ]: Starting LSP server...
+09:38:23.138046 [info ]: Started loading project
+09:38:23.295516 [info ]: Started parsing
+09:38:23.309180 [info ]: Finished loading project [  0.17s]
+09:38:23.312350 [info ]: Finished parsing [  0.02s]
+09:38:23.312409 [info ]: Cached model count updated: 0 models (estimate)
+09:38:23.312415 [info ]: Cached model count updated: 0 models (accurate)
+09:38:23.312438 [info ]: Started scheduling
+09:38:23.312471 [info ]: Finished scheduling [  0.00s]
+09:38:23.391385 [info ]: Started building task graph
+09:38:23.391420 [info ]: Finished building task graph [  0.00s]
+09:38:23.393467 [info ]: Cached model count updated: 0 models (accurate)
+09:38:23.716657 [info ]: Started loading project
+09:38:23.718818 [info ]: Finished loading project [  0.00s]
+09:38:23.718840 [info ]: Cached model count updated: 0 models (accurate)
