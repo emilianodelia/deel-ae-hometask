@@ -24,7 +24,7 @@ charge_back_report_scope as (
     select 
         external_ref as transaction_id, 
         cast(chargeback as boolean) as has_chargeback
-    from {{ ref('charge_back_report_raw') }}
+    from {{ ref('chargeback_report_raw') }}
 ), 
 
 assign_chargeback_flag as (
