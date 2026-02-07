@@ -28,12 +28,10 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   deel_globepay:
     base:
-      # This matches deel_globepay.base.transaction_flow
       transaction_flow:
         +materialized: table
         +schema: base_globepay
         
-        # This matches deel_globepay.base.transaction_flow.intermediate
         intermediate:
           +materialized: table
           +schema: intermediate_base_globepay
