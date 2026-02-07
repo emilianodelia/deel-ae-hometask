@@ -1,0 +1,12 @@
+version: 2
+
+seeds:
+  - name: acceptance_report_raw
+    description: >
+      Raw transaction data from Globepay API. Reported data that specifically 
+      tracks the outcome of every payment attempt processed through Globepay
+  - name: charge_back_report_raw
+    description: >
+      Raw transaction chargebeck data from Globepay API. Reported data included
+      clients who have triggered a chargeback claim and the resolution of such 
+      dispute
