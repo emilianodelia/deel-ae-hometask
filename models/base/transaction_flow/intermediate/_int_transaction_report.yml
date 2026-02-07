@@ -16,27 +16,34 @@ models:
         description: "Unique event identifier associated with the recorded transaction"
         data_tests:
           - unique:
-              severity: error
+              config:
+                severity: error
           - not_null:
-              severity: error
+              config:
+                severity: error
       
       - name: transaction_id
         description: "Unique externally generated identifier of the transaction record"
         data_tests:
           - unique:
-              severity: error
+              config:
+                severity: error
           - not_null:
-              severity: error
+              config:
+                severity: error
 
       - name: status
         description: "The binary state of the transaction, it could be either accepted or declined"
         data_tests:
           - accepted_values:
-              values: ['ACCEPTED', 'DECLINED']
-              severity: warn
+              arguments:
+                values: ['ACCEPTED', 'DECLINED']
+              config:
+                severity: warn
       
       - name: processed_at
         description:  "UTC timestamp of the transaction, converted from the ISO 8601 Zulu format."
         data_tests:
           - not_null:
-              severity: warn
+              config:
+                severity: warn
