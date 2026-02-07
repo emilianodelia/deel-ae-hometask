@@ -30,13 +30,13 @@ models:
     base:
       # This matches deel_globepay.base.transaction_flow
       transaction_flow:
-        +materialized: table
-        +schema: base_globepay
+        materialized: table
+        schema: base_globepay
         
         # This matches deel_globepay.base.transaction_flow.intermediate
         intermediate:
-          +materialized: view
-          +schema: intermediate_base_globepay
+          materialized: view
+          schema: intermediate_base_globepay
 seeds:
   +column_types:
     date_time: timestamp

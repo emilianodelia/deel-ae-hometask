@@ -2003,3 +2003,241 @@ There are 2 unused configuration paths:
 [0m14:19:33.731633 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x107bbfe70>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x145452a50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x14550bad0>]}
 [0m14:19:33.731754 [debug] [MainThread]: Flushing usage events
 [0m14:19:34.318075 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m14:23:01.306886 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1083d4ad0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1093379d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109337890>]}
+
+
+============================== 14:23:01.309735 | 40e83814-1601-4eeb-a993-ff6b360be844 ==============================
+[0m14:23:01.309735 [info ] [MainThread]: Running with dbt=1.11.3
+[0m14:23:01.310022 [debug] [MainThread]: running dbt with arguments {'use_experimental_parser': 'False', 'write_json': 'True', 'send_anonymous_usage_stats': 'True', 'cache_selected_only': 'False', 'partial_parse': 'True', 'printer_width': '80', 'introspect': 'True', 'log_cache_events': 'False', 'fail_fast': 'False', 'debug': 'False', 'invocation_command': 'dbt list', 'version_check': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'warn_error': 'None', 'use_colors': 'True', 'empty': 'None', 'quiet': 'False', 'log_format': 'default', 'static_parser': 'True', 'log_path': '/Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/logs', 'profiles_dir': '/Users/emilianodelia/.dbt', 'target_path': 'None', 'no_print': 'None', 'indirect_selection': 'eager'}
+[0m14:23:04.422916 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '40e83814-1601-4eeb-a993-ff6b360be844', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108651a70>]}
+[0m14:23:04.446417 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '40e83814-1601-4eeb-a993-ff6b360be844', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1189a3240>]}
+[0m14:23:04.446781 [info ] [MainThread]: Registered adapter: bigquery=1.11.0
+[0m14:23:04.550024 [debug] [MainThread]: checksum: 97dbd983c77ef3cec7304d97135f72c53ee20ea7ab68d67bae8e0876ff0fcdb6, vars: {}, profile: , target: , version: 1.11.3
+[0m14:23:04.606542 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m14:23:04.606742 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m14:23:04.606847 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m14:23:04.620811 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '40e83814-1601-4eeb-a993-ff6b360be844', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x118b95e50>]}
+[0m14:23:04.649015 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/manifest.json
+[0m14:23:04.650060 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/semantic_manifest.json
+[0m14:23:04.662050 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '40e83814-1601-4eeb-a993-ff6b360be844', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1500fc7d0>]}
+[0m14:23:04.662733 [info ] [MainThread]: deel_globepay.base.transaction_flow.base_transaction_report
+[0m14:23:04.662877 [info ] [MainThread]: deel_globepay.base.transaction_flow.intermediate.build_base_transaction_report
+[0m14:23:04.662978 [info ] [MainThread]: deel_globepay.base.transaction_flow.intermediate.int_base_transaction_report_1_renaming
+[0m14:23:04.663069 [info ] [MainThread]: deel_globepay.acceptance_report_raw
+[0m14:23:04.663158 [info ] [MainThread]: deel_globepay.charge_back_report_raw
+[0m14:23:04.664333 [debug] [MainThread]: Resource report: {"command_name": "list", "command_success": true, "command_wall_clock_time": 3.3902118, "process_in_blocks": "0", "process_kernel_time": 0.818784, "process_mem_max_rss": "371015680", "process_out_blocks": "0", "process_user_time": 2.536689}
+[0m14:23:04.664779 [debug] [MainThread]: Command `dbt list` succeeded at 14:23:04.664715 after 3.39 seconds
+[0m14:23:04.664961 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109313bd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1501366d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x15023f930>]}
+[0m14:23:04.665105 [debug] [MainThread]: Flushing usage events
+[0m14:23:05.309461 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m14:23:17.654293 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10607cad0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106fe39d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106fe3890>]}
+
+
+============================== 14:23:17.656780 | 4ee971dc-3ba5-41f9-affa-bd890e4f689f ==============================
+[0m14:23:17.656780 [info ] [MainThread]: Running with dbt=1.11.3
+[0m14:23:17.657069 [debug] [MainThread]: running dbt with arguments {'use_colors': 'True', 'printer_width': '80', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'indirect_selection': 'eager', 'target_path': 'None', 'warn_error': 'None', 'static_parser': 'True', 'log_cache_events': 'False', 'debug': 'False', 'invocation_command': 'dbt build --select models/base/transaction_flow', 'version_check': 'True', 'write_json': 'True', 'empty': 'False', 'send_anonymous_usage_stats': 'True', 'fail_fast': 'False', 'profiles_dir': '/Users/emilianodelia/.dbt', 'no_print': 'None', 'cache_selected_only': 'False', 'log_format': 'default', 'log_path': '/Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/logs', 'partial_parse': 'True', 'use_experimental_parser': 'False', 'introspect': 'True', 'quiet': 'False'}
+[0m14:23:20.481424 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '4ee971dc-3ba5-41f9-affa-bd890e4f689f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1062f9a70>]}
+[0m14:23:20.503250 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '4ee971dc-3ba5-41f9-affa-bd890e4f689f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11a5ff240>]}
+[0m14:23:20.503526 [info ] [MainThread]: Registered adapter: bigquery=1.11.0
+[0m14:23:20.599108 [debug] [MainThread]: checksum: 97dbd983c77ef3cec7304d97135f72c53ee20ea7ab68d67bae8e0876ff0fcdb6, vars: {}, profile: , target: , version: 1.11.3
+[0m14:23:20.651177 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m14:23:20.651407 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m14:23:20.651519 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m14:23:20.665495 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '4ee971dc-3ba5-41f9-affa-bd890e4f689f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11a5e5350>]}
+[0m14:23:20.693002 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/manifest.json
+[0m14:23:20.693950 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/semantic_manifest.json
+[0m14:23:20.711094 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '4ee971dc-3ba5-41f9-affa-bd890e4f689f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11a89aa80>]}
+[0m14:23:20.711318 [info ] [MainThread]: Found 3 models, 2 seeds, 538 macros
+[0m14:23:20.712226 [info ] [MainThread]: 
+[0m14:23:20.712360 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m14:23:20.712460 [info ] [MainThread]: 
+[0m14:23:20.712652 [debug] [MainThread]: Acquiring new bigquery connection 'master'
+[0m14:23:20.713018 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_deel-task-12345'
+[0m14:23:20.713170 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m14:23:21.663879 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_deel-task-12345, now create_deel-task-12345_globepay_intermediate_base_globepay)
+[0m14:23:21.665214 [debug] [ThreadPool]: Creating schema "database: "deel-task-12345"
+schema: "globepay_intermediate_base_globepay"
+"
+[0m14:23:21.677076 [debug] [ThreadPool]: On create_deel-task-12345_globepay_intermediate_base_globepay: /* {"app": "dbt", "dbt_version": "1.11.3", "profile_name": "deel_globepay", "target_name": "dev", "connection_name": "create_deel-task-12345_globepay_intermediate_base_globepay"} */
+create schema if not exists `deel-task-12345`.`globepay_intermediate_base_globepay`
+  
+[0m14:23:21.677414 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m14:23:22.130354 [debug] [ThreadPool]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=deel-task-12345&j=bq:EU:37f9c067-1435-41bc-a900-6229abcf3f11&page=queryresults
+[0m14:23:24.387270 [debug] [ThreadPool]: SQL status: OK in 2.256 seconds
+[0m14:23:24.431366 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_deel-task-12345_globepay_base_globepay'
+[0m14:23:24.431684 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_deel-task-12345_globepay_intermediate_base_globepay'
+[0m14:23:24.431860 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m14:23:24.432150 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_deel-task-12345_globepay'
+[0m14:23:24.432329 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m14:23:24.432711 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m14:23:25.103134 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '4ee971dc-3ba5-41f9-affa-bd890e4f689f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11ae25d30>]}
+[0m14:23:25.104167 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m14:23:25.109181 [debug] [Thread-1 (]: Began running node model.deel_globepay.int_base_transaction_report_1_renaming
+[0m14:23:25.109903 [info ] [Thread-1 (]: 1 of 1 START sql view model globepay_intermediate_base_globepay.int_base_transaction_report_1_renaming  [RUN]
+[0m14:23:25.110438 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_deel-task-12345_globepay_base_globepay, now model.deel_globepay.int_base_transaction_report_1_renaming)
+[0m14:23:25.110837 [debug] [Thread-1 (]: Began compiling node model.deel_globepay.int_base_transaction_report_1_renaming
+[0m14:23:25.121829 [debug] [Thread-1 (]: Writing injected SQL for node "model.deel_globepay.int_base_transaction_report_1_renaming"
+[0m14:23:25.123958 [debug] [Thread-1 (]: Began executing node model.deel_globepay.int_base_transaction_report_1_renaming
+[0m14:23:25.146029 [debug] [Thread-1 (]: Writing runtime sql for node "model.deel_globepay.int_base_transaction_report_1_renaming"
+[0m14:23:25.147083 [debug] [Thread-1 (]: On model.deel_globepay.int_base_transaction_report_1_renaming: /* {"app": "dbt", "dbt_version": "1.11.3", "profile_name": "deel_globepay", "target_name": "dev", "node_id": "model.deel_globepay.int_base_transaction_report_1_renaming"} */
+
+
+  create or replace view `deel-task-12345`.`globepay_intermediate_base_globepay`.`int_base_transaction_report_1_renaming`
+  OPTIONS()
+  as with scope as (
+    select 
+        external_ref as external_id, -- needed
+        ref as id, -- internal ID for future joins with enterprise level data
+        cast(date_time as timestamp) as processed_at, --The timestamp of the transaction.
+        upper(state) as status, --The binary state of the transaction
+        cast(cvv_provided as boolean) as is_cvv_provided,
+        country as country_code, --The two-character ISO country code of the issued card
+        currency as original_currency, --The three-character ISO currency code in which the transaction was originally processed
+        cast(safe_divide(amount, 100) as numeric) as settled_usd_amount, --The USD amount for the transaction (in minor units)
+        rates as exchange_rates_json
+    from `deel-task-12345`.`globepay`.`acceptance_report_raw`
+)
+
+select * from scope;
+
+
+[0m14:23:25.147396 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m14:23:26.013352 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=deel-task-12345&j=bq:EU:52845946-31e5-40d2-9568-275662d46a28&page=queryresults
+[0m14:23:26.534421 [debug] [Thread-1 (]: SQL status: OK in 0.520 seconds
+[0m14:23:26.553406 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '4ee971dc-3ba5-41f9-affa-bd890e4f689f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11b241640>]}
+[0m14:23:26.553939 [info ] [Thread-1 (]: 1 of 1 OK created sql view model globepay_intermediate_base_globepay.int_base_transaction_report_1_renaming  [[32mCREATE VIEW (0 processed)[0m in 1.44s]
+[0m14:23:26.554281 [debug] [Thread-1 (]: Finished running node model.deel_globepay.int_base_transaction_report_1_renaming
+[0m14:23:26.555067 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m14:23:26.555440 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m14:23:26.555602 [debug] [MainThread]: Connection 'create_deel-task-12345_globepay_intermediate_base_globepay' was properly closed.
+[0m14:23:26.555746 [debug] [MainThread]: Connection 'model.deel_globepay.int_base_transaction_report_1_renaming' was properly closed.
+[0m14:23:26.555871 [debug] [MainThread]: Connection 'list_deel-task-12345_globepay_intermediate_base_globepay' was properly closed.
+[0m14:23:26.555998 [debug] [MainThread]: Connection 'list_deel-task-12345_globepay' was properly closed.
+[0m14:23:26.556153 [info ] [MainThread]: 
+[0m14:23:26.556322 [info ] [MainThread]: Finished running 1 view model in 0 hours 0 minutes and 5.84 seconds (5.84s).
+[0m14:23:26.556703 [debug] [MainThread]: Command end result
+[0m14:23:26.571010 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/manifest.json
+[0m14:23:26.572378 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/semantic_manifest.json
+[0m14:23:26.575511 [debug] [MainThread]: Wrote artifact RunExecutionResult to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/run_results.json
+[0m14:23:26.575664 [info ] [MainThread]: 
+[0m14:23:26.575875 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m14:23:26.576034 [info ] [MainThread]: 
+[0m14:23:26.576183 [info ] [MainThread]: Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+[0m14:23:26.577751 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": true, "command_wall_clock_time": 8.954097, "process_in_blocks": "0", "process_kernel_time": 0.78167, "process_mem_max_rss": "370147328", "process_out_blocks": "0", "process_user_time": 2.775135}
+[0m14:23:26.577952 [debug] [MainThread]: Command `dbt build` succeeded at 14:23:26.577913 after 8.95 seconds
+[0m14:23:26.578112 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106d67650>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11adf5ff0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11adf6410>]}
+[0m14:23:26.578257 [debug] [MainThread]: Flushing usage events
+[0m14:23:27.074554 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m14:23:28.363739 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x107b54ad0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108abb9d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108abb890>]}
+
+
+============================== 14:23:28.365987 | 06d6ccad-b4a7-4025-968d-616d89f3b512 ==============================
+[0m14:23:28.365987 [info ] [MainThread]: Running with dbt=1.11.3
+[0m14:23:28.366242 [debug] [MainThread]: running dbt with arguments {'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'log_cache_events': 'False', 'fail_fast': 'False', 'use_colors': 'True', 'profiles_dir': '/Users/emilianodelia/.dbt', 'static_parser': 'True', 'log_format': 'default', 'version_check': 'True', 'log_path': '/Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/logs', 'printer_width': '80', 'debug': 'False', 'empty': 'False', 'send_anonymous_usage_stats': 'True', 'write_json': 'True', 'target_path': 'None', 'warn_error': 'None', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'invocation_command': 'dbt build --select models/base/transaction_flow/base_transaction_report.sql', 'no_print': 'None', 'quiet': 'False', 'partial_parse': 'True'}
+[0m14:23:30.947533 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '06d6ccad-b4a7-4025-968d-616d89f3b512', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x107dd1a70>]}
+[0m14:23:30.969260 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '06d6ccad-b4a7-4025-968d-616d89f3b512', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x13c36b240>]}
+[0m14:23:30.969503 [info ] [MainThread]: Registered adapter: bigquery=1.11.0
+[0m14:23:31.062739 [debug] [MainThread]: checksum: 97dbd983c77ef3cec7304d97135f72c53ee20ea7ab68d67bae8e0876ff0fcdb6, vars: {}, profile: , target: , version: 1.11.3
+[0m14:23:31.113380 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m14:23:31.113541 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m14:23:31.113639 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m14:23:31.127246 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '06d6ccad-b4a7-4025-968d-616d89f3b512', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x13c3bd350>]}
+[0m14:23:31.154082 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/manifest.json
+[0m14:23:31.155212 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/semantic_manifest.json
+[0m14:23:31.171539 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '06d6ccad-b4a7-4025-968d-616d89f3b512', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x13c5e6a80>]}
+[0m14:23:31.171738 [info ] [MainThread]: Found 3 models, 2 seeds, 538 macros
+[0m14:23:31.172676 [warn ] [MainThread]: Nothing to do. Try checking your model configs and model specification args
+[0m14:23:31.173421 [debug] [MainThread]: Command end result
+[0m14:23:31.183873 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/manifest.json
+[0m14:23:31.184780 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/semantic_manifest.json
+[0m14:23:31.186261 [debug] [MainThread]: Wrote artifact RunExecutionResult to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/run_results.json
+[0m14:23:31.187127 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": true, "command_wall_clock_time": 2.8520586, "process_in_blocks": "0", "process_kernel_time": 0.680121, "process_mem_max_rss": "379813888", "process_out_blocks": "0", "process_user_time": 2.418509}
+[0m14:23:31.187343 [debug] [MainThread]: Command `dbt build` succeeded at 14:23:31.187304 after 2.85 seconds
+[0m14:23:31.187492 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108a93e70>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x13df50590>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x13e00bad0>]}
+[0m14:23:31.187617 [debug] [MainThread]: Flushing usage events
+[0m14:23:31.647587 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m14:24:55.385958 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108418ad0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10937f9d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10937f890>]}
+
+
+============================== 14:24:55.388483 | 7de57919-7113-49e5-a625-d0bb1096cf14 ==============================
+[0m14:24:55.388483 [info ] [MainThread]: Running with dbt=1.11.3
+[0m14:24:55.388768 [debug] [MainThread]: running dbt with arguments {'quiet': 'False', 'warn_error': 'None', 'log_format': 'default', 'printer_width': '80', 'indirect_selection': 'eager', 'cache_selected_only': 'False', 'target_path': 'None', 'send_anonymous_usage_stats': 'True', 'use_colors': 'True', 'invocation_command': 'dbt build -s models/base/transaction_flow/_base_transaction_report.yml', 'partial_parse': 'True', 'empty': 'False', 'use_experimental_parser': 'False', 'introspect': 'True', 'write_json': 'True', 'no_print': 'None', 'log_path': '/Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/logs', 'version_check': 'True', 'debug': 'False', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'profiles_dir': '/Users/emilianodelia/.dbt', 'log_cache_events': 'False', 'fail_fast': 'False'}
+[0m14:24:58.264263 [warn ] [MainThread]: [[33mWARNING[0m][MissingPlusPrefixDeprecation]: Deprecated functionality
+Missing '+' prefix on `schema` found at
+`deel_globepay.base.transaction_flow.intermediate.schema` in file
+`/Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/dbt_project.yml`.
+Hierarchical config values without a '+' prefix are deprecated in
+dbt_project.yml.
+[0m14:24:58.264502 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'deprecation', 'label': '7de57919-7113-49e5-a625-d0bb1096cf14', 'property_': 'warn', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x134de6ea0>]}
+[0m14:24:58.319521 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '7de57919-7113-49e5-a625-d0bb1096cf14', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x134b9f350>]}
+[0m14:24:58.341389 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '7de57919-7113-49e5-a625-d0bb1096cf14', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x134bf1850>]}
+[0m14:24:58.341651 [info ] [MainThread]: Registered adapter: bigquery=1.11.0
+[0m14:24:58.431988 [debug] [MainThread]: checksum: 97dbd983c77ef3cec7304d97135f72c53ee20ea7ab68d67bae8e0876ff0fcdb6, vars: {}, profile: , target: , version: 1.11.3
+[0m14:24:58.465542 [info ] [MainThread]: Unable to do partial parsing because a project config has changed
+[0m14:24:58.465803 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': '7de57919-7113-49e5-a625-d0bb1096cf14', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x134d148c0>]}
+[0m14:24:58.930908 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '7de57919-7113-49e5-a625-d0bb1096cf14', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x135ebfe70>]}
+[0m14:24:58.961738 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/manifest.json
+[0m14:24:58.963473 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/semantic_manifest.json
+[0m14:24:58.980827 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '7de57919-7113-49e5-a625-d0bb1096cf14', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1374cc1f0>]}
+[0m14:24:58.981025 [info ] [MainThread]: Found 3 models, 2 seeds, 538 macros
+[0m14:24:58.981611 [warn ] [MainThread]: The selection criterion 'models/base/transaction_flow/_base_transaction_report.yml' does not match any enabled nodes
+[0m14:24:58.982106 [warn ] [MainThread]: Nothing to do. Try checking your model configs and model specification args
+[0m14:24:58.982311 [debug] [MainThread]: Command end result
+[0m14:24:58.992784 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/manifest.json
+[0m14:24:58.993576 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/semantic_manifest.json
+[0m14:24:58.994982 [debug] [MainThread]: Wrote artifact RunExecutionResult to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/run_results.json
+[0m14:24:58.995203 [warn ] [MainThread]: [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- MissingPlusPrefixDeprecation: 4 occurrences
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
+[0m14:24:58.996685 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": true, "command_wall_clock_time": 3.6424835, "process_in_blocks": "0", "process_kernel_time": 0.757118, "process_mem_max_rss": "368214016", "process_out_blocks": "0", "process_user_time": 2.868061}
+[0m14:24:58.996957 [debug] [MainThread]: Command `dbt build` succeeded at 14:24:58.996912 after 3.64 seconds
+[0m14:24:58.997114 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109103650>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x137177cd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x13742c730>]}
+[0m14:24:58.997243 [debug] [MainThread]: Flushing usage events
+[0m14:24:59.608144 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m14:25:19.295044 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x107f8cad0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108ef39d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108ef3890>]}
+
+
+============================== 14:25:19.297761 | 910ed593-0fe3-47e9-b9ec-4fe2493cfbf7 ==============================
+[0m14:25:19.297761 [info ] [MainThread]: Running with dbt=1.11.3
+[0m14:25:19.298102 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'write_json': 'True', 'log_path': '/Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/logs', 'quiet': 'False', 'target_path': 'None', 'no_print': 'None', 'send_anonymous_usage_stats': 'True', 'fail_fast': 'False', 'warn_error': 'None', 'profiles_dir': '/Users/emilianodelia/.dbt', 'invocation_command': 'dbt build --select models/base/transaction_flow/_base_transaction_report.yml', 'debug': 'False', 'printer_width': '80', 'cache_selected_only': 'False', 'partial_parse': 'True', 'log_format': 'default', 'use_colors': 'True', 'empty': 'False', 'version_check': 'True', 'log_cache_events': 'False', 'use_experimental_parser': 'False', 'indirect_selection': 'eager', 'introspect': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])'}
+[0m14:25:22.293069 [warn ] [MainThread]: [[33mWARNING[0m][MissingPlusPrefixDeprecation]: Deprecated functionality
+Missing '+' prefix on `materialized` found at
+`deel_globepay.base.transaction_flow.materialized` in file
+`/Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/dbt_project.yml`.
+Hierarchical config values without a '+' prefix are deprecated in
+dbt_project.yml.
+[0m14:25:22.293334 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'deprecation', 'label': '910ed593-0fe3-47e9-b9ec-4fe2493cfbf7', 'property_': 'warn', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1334ceea0>]}
+[0m14:25:22.337709 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '910ed593-0fe3-47e9-b9ec-4fe2493cfbf7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x13324b350>]}
+[0m14:25:22.359852 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '910ed593-0fe3-47e9-b9ec-4fe2493cfbf7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1332f1850>]}
+[0m14:25:22.360177 [info ] [MainThread]: Registered adapter: bigquery=1.11.0
+[0m14:25:22.449830 [debug] [MainThread]: checksum: 97dbd983c77ef3cec7304d97135f72c53ee20ea7ab68d67bae8e0876ff0fcdb6, vars: {}, profile: , target: , version: 1.11.3
+[0m14:25:22.501446 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m14:25:22.501633 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m14:25:22.501734 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m14:25:22.515403 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '910ed593-0fe3-47e9-b9ec-4fe2493cfbf7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x136900e60>]}
+[0m14:25:22.542579 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/manifest.json
+[0m14:25:22.543415 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/semantic_manifest.json
+[0m14:25:22.560361 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '910ed593-0fe3-47e9-b9ec-4fe2493cfbf7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x136aa4e50>]}
+[0m14:25:22.560569 [info ] [MainThread]: Found 3 models, 2 seeds, 538 macros
+[0m14:25:22.561173 [warn ] [MainThread]: The selection criterion 'models/base/transaction_flow/_base_transaction_report.yml' does not match any enabled nodes
+[0m14:25:22.561652 [warn ] [MainThread]: Nothing to do. Try checking your model configs and model specification args
+[0m14:25:22.562402 [debug] [MainThread]: Command end result
+[0m14:25:22.572113 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/manifest.json
+[0m14:25:22.573139 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/semantic_manifest.json
+[0m14:25:22.574497 [debug] [MainThread]: Wrote artifact RunExecutionResult to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/run_results.json
+[0m14:25:22.574753 [warn ] [MainThread]: [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- MissingPlusPrefixDeprecation: 4 occurrences
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
+[0m14:25:22.576169 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": true, "command_wall_clock_time": 3.311911, "process_in_blocks": "0", "process_kernel_time": 0.798642, "process_mem_max_rss": "370311168", "process_out_blocks": "0", "process_user_time": 2.517094}
+[0m14:25:22.576397 [debug] [MainThread]: Command `dbt build` succeeded at 14:25:22.576358 after 3.31 seconds
+[0m14:25:22.576544 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x136b0fba0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108c77650>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x136a85610>]}
+[0m14:25:22.576670 [debug] [MainThread]: Flushing usage events
+[0m14:25:23.065545 [debug] [MainThread]: An error was encountered while trying to flush usage events
