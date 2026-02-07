@@ -1,0 +1,31 @@
+version: 2
+
+models: 
+  - name: base_transaction_report
+    columns:
+      - name: external_id
+        description: "External event ID. Unique external reference (external_ref) for the transaction event"
+
+      - name: id
+        description: "Internal card/account ID associated with the recorded transaction"
+
+      - name: processed_at
+        description: "UTC timestamp of the transaction, converted from the ISO 8601 Zulu format"
+
+      - name: status
+        description: "The final outcome of the transaction (e.g., accepted, declined)"
+
+      - name: is_cvv_provided
+        description: "Boolean flag indicating if the CVV was provided by the user during checkout"
+
+      - name: country_code
+        description: "The two-character ISO country code of the card used for the transaction"
+
+      - name: original_currency
+        description: "The three-character ISO currency code used for the transaction"
+
+      - name: settled_usd_amount
+        description: "The transaction value in USD. Converted from minor units (integers) to standard decimal format"
+
+      - name: rates
+        description: "JSON string containing the exchange rates used to settle the funds to USD."
