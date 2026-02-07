@@ -3054,3 +3054,572 @@ select * from `deel-task-12345`.`globepay_intermediate_base_globepay`.`build_bas
 [0m15:36:05.449940 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108bb7a80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10462b2a0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x135389d30>]}
 [0m15:36:05.450118 [debug] [MainThread]: Flushing usage events
 [0m15:36:06.068161 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m15:44:12.204787 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1066d0ad0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1076379d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x107637890>]}
+
+
+============================== 15:44:12.207280 | e62cba5f-6fd3-48d5-939c-9a060e865257 ==============================
+[0m15:44:12.207280 [info ] [MainThread]: Running with dbt=1.11.3
+[0m15:44:12.207545 [debug] [MainThread]: running dbt with arguments {'warn_error': 'None', 'quiet': 'False', 'profiles_dir': '/Users/emilianodelia/.dbt', 'send_anonymous_usage_stats': 'True', 'use_colors': 'True', 'static_parser': 'True', 'empty': 'False', 'debug': 'False', 'partial_parse': 'True', 'invocation_command': 'dbt build --select +base_transaction_report', 'fail_fast': 'False', 'version_check': 'True', 'write_json': 'True', 'indirect_selection': 'eager', 'printer_width': '80', 'log_path': '/Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/logs', 'use_experimental_parser': 'False', 'no_print': 'None', 'cache_selected_only': 'False', 'introspect': 'True', 'log_cache_events': 'False', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'log_format': 'default'}
+[0m15:44:15.176804 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'e62cba5f-6fd3-48d5-939c-9a060e865257', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10694da70>]}
+[0m15:44:15.198645 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'e62cba5f-6fd3-48d5-939c-9a060e865257', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11ac6b240>]}
+[0m15:44:15.198931 [info ] [MainThread]: Registered adapter: bigquery=1.11.0
+[0m15:44:15.300893 [debug] [MainThread]: checksum: 97dbd983c77ef3cec7304d97135f72c53ee20ea7ab68d67bae8e0876ff0fcdb6, vars: {}, profile: , target: , version: 1.11.3
+[0m15:44:15.358329 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 1 files added, 0 files changed.
+[0m15:44:15.358613 [debug] [MainThread]: Partial parsing: added file: deel_globepay://macros/generate_schema_name.sql
+[0m15:44:15.359832 [info ] [MainThread]: Unable to do partial parsing because change detected to override macro. Starting full parse.
+[0m15:44:15.820006 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'e62cba5f-6fd3-48d5-939c-9a060e865257', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x139ba1f50>]}
+[0m15:44:15.847188 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/manifest.json
+[0m15:44:15.848067 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/semantic_manifest.json
+[0m15:44:15.864640 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': 'e62cba5f-6fd3-48d5-939c-9a060e865257', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x139af8230>]}
+[0m15:44:15.864851 [info ] [MainThread]: Found 3 models, 2 seeds, 539 macros
+[0m15:44:15.865642 [info ] [MainThread]: 
+[0m15:44:15.865788 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m15:44:15.865889 [info ] [MainThread]: 
+[0m15:44:15.866072 [debug] [MainThread]: Acquiring new bigquery connection 'master'
+[0m15:44:15.867689 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_deel-task-12345'
+[0m15:44:15.867898 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_deel-task-12345'
+[0m15:44:15.868025 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m15:44:15.868207 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_deel-task-12345'
+[0m15:44:15.868359 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m15:44:15.868597 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m15:44:17.005989 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_deel-task-12345, now create_deel-task-12345_intermediate_base_globepay)
+[0m15:44:17.006576 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_deel-task-12345, now create_deel-task-12345_base_globepay)
+[0m15:44:17.007044 [debug] [ThreadPool]: Creating schema "database: "deel-task-12345"
+schema: "intermediate_base_globepay"
+"
+[0m15:44:17.007417 [debug] [ThreadPool]: Creating schema "database: "deel-task-12345"
+schema: "base_globepay"
+"
+[0m15:44:17.014415 [debug] [ThreadPool]: On create_deel-task-12345_intermediate_base_globepay: /* {"app": "dbt", "dbt_version": "1.11.3", "profile_name": "deel_globepay", "target_name": "dev", "connection_name": "create_deel-task-12345_intermediate_base_globepay"} */
+create schema if not exists `deel-task-12345`.`intermediate_base_globepay`
+  
+[0m15:44:17.015224 [debug] [ThreadPool]: On create_deel-task-12345_base_globepay: /* {"app": "dbt", "dbt_version": "1.11.3", "profile_name": "deel_globepay", "target_name": "dev", "connection_name": "create_deel-task-12345_base_globepay"} */
+create schema if not exists `deel-task-12345`.`base_globepay`
+  
+[0m15:44:17.015439 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m15:44:17.015602 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m15:44:17.395029 [debug] [ThreadPool]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=deel-task-12345&j=bq:EU:3eb723ef-df6f-4803-a8f2-18d4da644756&page=queryresults
+[0m15:44:17.430341 [debug] [ThreadPool]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=deel-task-12345&j=bq:EU:112042d2-ad5c-4278-9ca6-c65496d9135b&page=queryresults
+[0m15:44:18.814379 [debug] [ThreadPool]: SQL status: OK in 1.418 seconds
+[0m15:44:19.457830 [debug] [ThreadPool]: SQL status: OK in 2.026 seconds
+[0m15:44:19.467144 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_deel-task-12345, now list_deel-task-12345_intermediate_base_globepay)
+[0m15:44:19.467703 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m15:44:19.468172 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly create_deel-task-12345_base_globepay, now list_deel-task-12345_base_globepay)
+[0m15:44:19.469361 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly create_deel-task-12345_intermediate_base_globepay, now list_deel-task-12345_globepay)
+[0m15:44:19.469807 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m15:44:19.470308 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m15:44:19.896947 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'e62cba5f-6fd3-48d5-939c-9a060e865257', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x13a1e7bd0>]}
+[0m15:44:19.897979 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m15:44:19.903156 [debug] [Thread-1 (]: Began running node seed.deel_globepay.acceptance_report_raw
+[0m15:44:19.903886 [info ] [Thread-1 (]: 1 of 4 START seed file globepay.acceptance_report_raw .......................... [RUN]
+[0m15:44:19.904386 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_deel-task-12345_intermediate_base_globepay, now seed.deel_globepay.acceptance_report_raw)
+[0m15:44:19.904737 [debug] [Thread-1 (]: Began compiling node seed.deel_globepay.acceptance_report_raw
+[0m15:44:19.905131 [debug] [Thread-1 (]: Began executing node seed.deel_globepay.acceptance_report_raw
+[0m15:44:20.091941 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m15:44:23.799547 [debug] [Thread-1 (]: On seed.deel_globepay.acceptance_report_raw: /* {"app": "dbt", "dbt_version": "1.11.3", "profile_name": "deel_globepay", "target_name": "dev", "node_id": "seed.deel_globepay.acceptance_report_raw"} */
+
+    alter table `deel-task-12345`.`globepay`.`acceptance_report_raw` set OPTIONS()
+  
+[0m15:44:24.103138 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=deel-task-12345&j=bq:EU:20f1cd41-a50e-4d5a-8419-40bc9edeb6dc&page=queryresults
+[0m15:44:24.365732 [debug] [Thread-1 (]: SQL status: OK in 0.261 seconds
+[0m15:44:24.375978 [debug] [Thread-1 (]: Writing runtime SQL for node "seed.deel_globepay.acceptance_report_raw"
+[0m15:44:24.390826 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'e62cba5f-6fd3-48d5-939c-9a060e865257', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x13d94eea0>]}
+[0m15:44:24.391270 [info ] [Thread-1 (]: 1 of 4 OK loaded seed file globepay.acceptance_report_raw ...................... [[32mINSERT 5430[0m in 4.49s]
+[0m15:44:24.391642 [debug] [Thread-1 (]: Finished running node seed.deel_globepay.acceptance_report_raw
+[0m15:44:24.392282 [debug] [Thread-2 (]: Began running node model.deel_globepay.int_base_transaction_report_1_scope_definition
+[0m15:44:24.392620 [info ] [Thread-2 (]: 2 of 4 START sql table model intermediate_base_globepay.int_base_transaction_report_1_scope_definition  [RUN]
+[0m15:44:24.392887 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly list_deel-task-12345_base_globepay, now model.deel_globepay.int_base_transaction_report_1_scope_definition)
+[0m15:44:24.393096 [debug] [Thread-2 (]: Began compiling node model.deel_globepay.int_base_transaction_report_1_scope_definition
+[0m15:44:24.399450 [debug] [Thread-2 (]: Writing injected SQL for node "model.deel_globepay.int_base_transaction_report_1_scope_definition"
+[0m15:44:24.400160 [debug] [Thread-2 (]: Began executing node model.deel_globepay.int_base_transaction_report_1_scope_definition
+[0m15:44:24.415930 [debug] [Thread-2 (]: Writing runtime sql for node "model.deel_globepay.int_base_transaction_report_1_scope_definition"
+[0m15:44:24.416979 [debug] [Thread-2 (]: On model.deel_globepay.int_base_transaction_report_1_scope_definition: /* {"app": "dbt", "dbt_version": "1.11.3", "profile_name": "deel_globepay", "target_name": "dev", "node_id": "model.deel_globepay.int_base_transaction_report_1_scope_definition"} */
+
+  
+    
+
+    create or replace table `deel-task-12345`.`intermediate_base_globepay`.`int_base_transaction_report_1_scope_definition`
+      
+    
+    
+
+    
+    OPTIONS()
+    as (
+      with scope as (
+    select 
+        external_ref as external_id, -- needed
+        ref as id, -- internal ID for future joins with enterprise level data
+        cast(date_time as timestamp) as processed_at, --The timestamp of the transaction.
+        upper(state) as status, --The binary state of the transaction
+        cast(cvv_provided as boolean) as is_cvv_provided,
+        country as country_code, --The two-character ISO country code of the issued card
+        currency as original_currency, --The three-character ISO currency code in which the transaction was originally processed
+        cast(safe_divide(amount, 100) as numeric) as settled_usd_amount, --The USD amount for the transaction (in minor units)
+        rates as exchange_rates_json
+    from `deel-task-12345`.`globepay`.`acceptance_report_raw`
+)
+
+select * from scope
+    );
+  
+[0m15:44:24.417226 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m15:44:25.486500 [debug] [Thread-2 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=deel-task-12345&j=bq:EU:bd50d282-81d3-4784-b4dd-b16ac31eb127&page=queryresults
+[0m15:44:27.213390 [debug] [Thread-2 (]: SQL status: OK in 1.726 seconds
+[0m15:44:27.540841 [debug] [Thread-2 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'e62cba5f-6fd3-48d5-939c-9a060e865257', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x139b99250>]}
+[0m15:44:27.541943 [info ] [Thread-2 (]: 2 of 4 OK created sql table model intermediate_base_globepay.int_base_transaction_report_1_scope_definition  [[32mCREATE TABLE (5.4k rows, 1.3 MiB processed)[0m in 3.15s]
+[0m15:44:27.542835 [debug] [Thread-2 (]: Finished running node model.deel_globepay.int_base_transaction_report_1_scope_definition
+[0m15:44:27.543897 [debug] [Thread-3 (]: Began running node model.deel_globepay.build_base_transaction_report
+[0m15:44:27.544463 [info ] [Thread-3 (]: 3 of 4 START sql table model intermediate_base_globepay.build_base_transaction_report  [RUN]
+[0m15:44:27.544992 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly list_deel-task-12345_globepay, now model.deel_globepay.build_base_transaction_report)
+[0m15:44:27.545336 [debug] [Thread-3 (]: Began compiling node model.deel_globepay.build_base_transaction_report
+[0m15:44:27.549579 [debug] [Thread-3 (]: Writing injected SQL for node "model.deel_globepay.build_base_transaction_report"
+[0m15:44:27.550661 [debug] [Thread-3 (]: Began executing node model.deel_globepay.build_base_transaction_report
+[0m15:44:27.553999 [debug] [Thread-3 (]: Writing runtime sql for node "model.deel_globepay.build_base_transaction_report"
+[0m15:44:27.554741 [debug] [Thread-3 (]: On model.deel_globepay.build_base_transaction_report: /* {"app": "dbt", "dbt_version": "1.11.3", "profile_name": "deel_globepay", "target_name": "dev", "node_id": "model.deel_globepay.build_base_transaction_report"} */
+
+  
+    
+
+    create or replace table `deel-task-12345`.`intermediate_base_globepay`.`build_base_transaction_report`
+      
+    
+    
+
+    
+    OPTIONS()
+    as (
+      
+
+select * from `deel-task-12345`.`intermediate_base_globepay`.`int_base_transaction_report_1_scope_definition`
+    );
+  
+[0m15:44:27.555123 [debug] [Thread-3 (]: Opening a new connection, currently in state closed
+[0m15:44:28.765526 [debug] [Thread-3 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=deel-task-12345&j=bq:EU:ff0b7184-1099-4fde-a1fa-44058b1e560b&page=queryresults
+[0m15:44:30.407235 [debug] [Thread-3 (]: SQL status: OK in 1.641 seconds
+[0m15:44:30.707640 [debug] [Thread-3 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'e62cba5f-6fd3-48d5-939c-9a060e865257', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x139a95700>]}
+[0m15:44:30.708119 [info ] [Thread-3 (]: 3 of 4 OK created sql table model intermediate_base_globepay.build_base_transaction_report  [[32mCREATE TABLE (5.4k rows, 1.3 MiB processed)[0m in 3.16s]
+[0m15:44:30.708472 [debug] [Thread-3 (]: Finished running node model.deel_globepay.build_base_transaction_report
+[0m15:44:30.708863 [debug] [Thread-4 (]: Began running node model.deel_globepay.base_transaction_report
+[0m15:44:30.709199 [info ] [Thread-4 (]: 4 of 4 START sql table model base_globepay.base_transaction_report ............. [RUN]
+[0m15:44:30.709578 [debug] [Thread-4 (]: Acquiring new bigquery connection 'model.deel_globepay.base_transaction_report'
+[0m15:44:30.709800 [debug] [Thread-4 (]: Began compiling node model.deel_globepay.base_transaction_report
+[0m15:44:30.711669 [debug] [Thread-4 (]: Writing injected SQL for node "model.deel_globepay.base_transaction_report"
+[0m15:44:30.712078 [debug] [Thread-4 (]: Began executing node model.deel_globepay.base_transaction_report
+[0m15:44:30.713737 [debug] [Thread-4 (]: Writing runtime sql for node "model.deel_globepay.base_transaction_report"
+[0m15:44:30.714085 [debug] [Thread-4 (]: On model.deel_globepay.base_transaction_report: /* {"app": "dbt", "dbt_version": "1.11.3", "profile_name": "deel_globepay", "target_name": "dev", "node_id": "model.deel_globepay.base_transaction_report"} */
+
+  
+    
+
+    create or replace table `deel-task-12345`.`base_globepay`.`base_transaction_report`
+      
+    
+    
+
+    
+    OPTIONS()
+    as (
+      
+
+select * from `deel-task-12345`.`intermediate_base_globepay`.`build_base_transaction_report`
+    );
+  
+[0m15:44:30.714288 [debug] [Thread-4 (]: Opening a new connection, currently in state init
+[0m15:44:32.142406 [debug] [Thread-4 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=deel-task-12345&j=bq:EU:140d5aac-7976-4b77-af2d-12b67400b2a3&page=queryresults
+[0m15:44:33.455919 [debug] [Thread-4 (]: SQL status: OK in 1.312 seconds
+[0m15:44:33.890656 [debug] [Thread-4 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'e62cba5f-6fd3-48d5-939c-9a060e865257', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x13a11a8f0>]}
+[0m15:44:33.892015 [info ] [Thread-4 (]: 4 of 4 OK created sql table model base_globepay.base_transaction_report ........ [[32mCREATE TABLE (5.4k rows, 1.3 MiB processed)[0m in 3.18s]
+[0m15:44:33.892558 [debug] [Thread-4 (]: Finished running node model.deel_globepay.base_transaction_report
+[0m15:44:33.893724 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m15:44:33.894092 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m15:44:33.894240 [debug] [MainThread]: Connection 'seed.deel_globepay.acceptance_report_raw' was properly closed.
+[0m15:44:33.894343 [debug] [MainThread]: Connection 'model.deel_globepay.int_base_transaction_report_1_scope_definition' was properly closed.
+[0m15:44:33.894450 [debug] [MainThread]: Connection 'model.deel_globepay.build_base_transaction_report' was properly closed.
+[0m15:44:33.894655 [debug] [MainThread]: Connection 'model.deel_globepay.base_transaction_report' was properly closed.
+[0m15:44:33.894877 [info ] [MainThread]: 
+[0m15:44:33.895030 [info ] [MainThread]: Finished running 1 seed, 3 table models in 0 hours 0 minutes and 18.03 seconds (18.03s).
+[0m15:44:33.895545 [debug] [MainThread]: Command end result
+[0m15:44:33.914989 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/manifest.json
+[0m15:44:33.918331 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/semantic_manifest.json
+[0m15:44:33.920951 [debug] [MainThread]: Wrote artifact RunExecutionResult to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/run_results.json
+[0m15:44:33.921081 [info ] [MainThread]: 
+[0m15:44:33.921219 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m15:44:33.921323 [info ] [MainThread]: 
+[0m15:44:33.921452 [info ] [MainThread]: Done. PASS=4 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=4
+[0m15:44:33.923640 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": true, "command_wall_clock_time": 21.74951, "process_in_blocks": "0", "process_kernel_time": 0.858017, "process_mem_max_rss": "407175168", "process_out_blocks": "0", "process_user_time": 3.867017}
+[0m15:44:33.924148 [debug] [MainThread]: Command `dbt build` succeeded at 15:44:33.924051 after 21.75 seconds
+[0m15:44:33.924408 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1068e3650>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1068e23d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1030c72a0>]}
+[0m15:44:33.924562 [debug] [MainThread]: Flushing usage events
+[0m15:44:34.536501 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m15:47:33.222413 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106690ad0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1104e79d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1104e7890>]}
+
+
+============================== 15:47:33.224970 | 0a9b72b6-6203-48f0-ade8-ca640106e377 ==============================
+[0m15:47:33.224970 [info ] [MainThread]: Running with dbt=1.11.3
+[0m15:47:33.225241 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'use_colors': 'True', 'target_path': 'None', 'debug': 'False', 'profiles_dir': '/Users/emilianodelia/.dbt', 'static_parser': 'True', 'fail_fast': 'False', 'cache_selected_only': 'False', 'empty': 'False', 'no_print': 'None', 'invocation_command': 'dbt build --select +base_transaction_report', 'quiet': 'False', 'indirect_selection': 'eager', 'warn_error': 'None', 'introspect': 'True', 'printer_width': '80', 'use_experimental_parser': 'False', 'log_path': '/Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/logs', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'log_format': 'default', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])'}
+[0m15:47:36.236040 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '0a9b72b6-6203-48f0-ade8-ca640106e377', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106bfda70>]}
+[0m15:47:36.258169 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '0a9b72b6-6203-48f0-ade8-ca640106e377', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x14c2ff240>]}
+[0m15:47:36.258602 [info ] [MainThread]: Registered adapter: bigquery=1.11.0
+[0m15:47:36.364974 [debug] [MainThread]: checksum: 97dbd983c77ef3cec7304d97135f72c53ee20ea7ab68d67bae8e0876ff0fcdb6, vars: {}, profile: , target: , version: 1.11.3
+[0m15:47:36.421711 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 1 files changed.
+[0m15:47:36.421955 [debug] [MainThread]: Partial parsing: updated file: deel_globepay://models/base/transaction_flow/intermediate/int_base_transaction_report_1_scope_definition.sql
+[0m15:47:36.516716 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '0a9b72b6-6203-48f0-ade8-ca640106e377', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x14d4a1050>]}
+[0m15:47:36.546879 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/manifest.json
+[0m15:47:36.548283 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/semantic_manifest.json
+[0m15:47:36.565383 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '0a9b72b6-6203-48f0-ade8-ca640106e377', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x14c4d2a80>]}
+[0m15:47:36.565603 [info ] [MainThread]: Found 3 models, 2 seeds, 539 macros
+[0m15:47:36.566434 [info ] [MainThread]: 
+[0m15:47:36.566572 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m15:47:36.566672 [info ] [MainThread]: 
+[0m15:47:36.566864 [debug] [MainThread]: Acquiring new bigquery connection 'master'
+[0m15:47:36.568707 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_deel-task-12345'
+[0m15:47:36.568890 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m15:47:36.569046 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_deel-task-12345'
+[0m15:47:36.569332 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_deel-task-12345'
+[0m15:47:36.569473 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m15:47:36.569627 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m15:47:37.581718 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_deel-task-12345, now list_deel-task-12345_globepay)
+[0m15:47:37.582184 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_deel-task-12345, now list_deel-task-12345_base_globepay)
+[0m15:47:37.582504 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_deel-task-12345, now list_deel-task-12345_intermediate_base_globepay)
+[0m15:47:37.582742 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m15:47:37.582981 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m15:47:37.583176 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m15:47:37.827671 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '0a9b72b6-6203-48f0-ade8-ca640106e377', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x14d5fa890>]}
+[0m15:47:37.828074 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m15:47:37.829743 [debug] [Thread-1 (]: Began running node seed.deel_globepay.acceptance_report_raw
+[0m15:47:37.829926 [debug] [Thread-2 (]: Began running node seed.deel_globepay.charge_back_report_raw
+[0m15:47:37.830167 [info ] [Thread-1 (]: 1 of 5 START seed file globepay.acceptance_report_raw .......................... [RUN]
+[0m15:47:37.830436 [info ] [Thread-2 (]: 2 of 5 START seed file globepay.charge_back_report_raw ......................... [RUN]
+[0m15:47:37.830670 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_deel-task-12345_globepay, now seed.deel_globepay.acceptance_report_raw)
+[0m15:47:37.830831 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly list_deel-task-12345_base_globepay, now seed.deel_globepay.charge_back_report_raw)
+[0m15:47:37.830987 [debug] [Thread-1 (]: Began compiling node seed.deel_globepay.acceptance_report_raw
+[0m15:47:37.831119 [debug] [Thread-2 (]: Began compiling node seed.deel_globepay.charge_back_report_raw
+[0m15:47:37.831260 [debug] [Thread-1 (]: Began executing node seed.deel_globepay.acceptance_report_raw
+[0m15:47:37.831389 [debug] [Thread-2 (]: Began executing node seed.deel_globepay.charge_back_report_raw
+[0m15:47:37.887822 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m15:47:37.921283 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m15:47:41.589975 [debug] [Thread-2 (]: On seed.deel_globepay.charge_back_report_raw: /* {"app": "dbt", "dbt_version": "1.11.3", "profile_name": "deel_globepay", "target_name": "dev", "node_id": "seed.deel_globepay.charge_back_report_raw"} */
+
+    alter table `deel-task-12345`.`globepay`.`charge_back_report_raw` set OPTIONS()
+  
+[0m15:47:41.792691 [debug] [Thread-2 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=deel-task-12345&j=bq:EU:0b205fdc-a13f-4adb-aceb-ab7d66ddedce&page=queryresults
+[0m15:47:41.871370 [debug] [Thread-1 (]: On seed.deel_globepay.acceptance_report_raw: /* {"app": "dbt", "dbt_version": "1.11.3", "profile_name": "deel_globepay", "target_name": "dev", "node_id": "seed.deel_globepay.acceptance_report_raw"} */
+
+    alter table `deel-task-12345`.`globepay`.`acceptance_report_raw` set OPTIONS()
+  
+[0m15:47:42.108848 [debug] [Thread-2 (]: SQL status: OK in 0.315 seconds
+[0m15:47:42.119008 [debug] [Thread-2 (]: Writing runtime SQL for node "seed.deel_globepay.charge_back_report_raw"
+[0m15:47:42.145263 [debug] [Thread-2 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '0a9b72b6-6203-48f0-ade8-ca640106e377', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x14f02cc80>]}
+[0m15:47:42.145816 [info ] [Thread-2 (]: 2 of 5 OK loaded seed file globepay.charge_back_report_raw ..................... [[32mINSERT 5430[0m in 4.31s]
+[0m15:47:42.146208 [debug] [Thread-2 (]: Finished running node seed.deel_globepay.charge_back_report_raw
+[0m15:47:42.174784 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=deel-task-12345&j=bq:EU:1e528018-4dc1-47a4-b867-dcb7ebc898ac&page=queryresults
+[0m15:47:42.459666 [debug] [Thread-1 (]: SQL status: OK in 0.284 seconds
+[0m15:47:42.462491 [debug] [Thread-1 (]: Writing runtime SQL for node "seed.deel_globepay.acceptance_report_raw"
+[0m15:47:42.473841 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '0a9b72b6-6203-48f0-ade8-ca640106e377', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x14d7c2450>]}
+[0m15:47:42.474895 [info ] [Thread-1 (]: 1 of 5 OK loaded seed file globepay.acceptance_report_raw ...................... [[32mINSERT 5430[0m in 4.64s]
+[0m15:47:42.475966 [debug] [Thread-1 (]: Finished running node seed.deel_globepay.acceptance_report_raw
+[0m15:47:42.477308 [debug] [Thread-3 (]: Began running node model.deel_globepay.int_base_transaction_report_1_scope_definition
+[0m15:47:42.477981 [info ] [Thread-3 (]: 3 of 5 START sql table model intermediate_base_globepay.int_base_transaction_report_1_scope_definition  [RUN]
+[0m15:47:42.478465 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly list_deel-task-12345_intermediate_base_globepay, now model.deel_globepay.int_base_transaction_report_1_scope_definition)
+[0m15:47:42.478831 [debug] [Thread-3 (]: Began compiling node model.deel_globepay.int_base_transaction_report_1_scope_definition
+[0m15:47:42.488922 [debug] [Thread-3 (]: Writing injected SQL for node "model.deel_globepay.int_base_transaction_report_1_scope_definition"
+[0m15:47:42.490138 [debug] [Thread-3 (]: Began executing node model.deel_globepay.int_base_transaction_report_1_scope_definition
+[0m15:47:42.497567 [debug] [Thread-3 (]: Opening a new connection, currently in state closed
+[0m15:47:42.702107 [debug] [Thread-3 (]: Writing runtime sql for node "model.deel_globepay.int_base_transaction_report_1_scope_definition"
+[0m15:47:42.704379 [debug] [Thread-3 (]: On model.deel_globepay.int_base_transaction_report_1_scope_definition: /* {"app": "dbt", "dbt_version": "1.11.3", "profile_name": "deel_globepay", "target_name": "dev", "node_id": "model.deel_globepay.int_base_transaction_report_1_scope_definition"} */
+
+  
+    
+
+    create or replace table `deel-task-12345`.`intermediate_base_globepay`.`int_base_transaction_report_1_scope_definition`
+      
+    
+    
+
+    
+    OPTIONS()
+    as (
+      
+
+with acceptance_rate_scope as (
+    select 
+        external_ref as transaction_id,
+        cast(date_time as timestamp) as processed_at, --The timestamp of the transaction.
+        upper(state) as status, --The binary state of the transaction
+        cast(cvv_provided as boolean) as is_cvv_provided,
+        country as country_code, --The two-character ISO country code of the issued card
+        currency as original_currency, --The three-character ISO currency code in which the transaction was originally processed
+        cast(safe_divide(amount, 100) as numeric) as settled_usd_amount, --The USD amount for the transaction (in minor units)
+        rates as exchange_rates_json, 
+        case 
+            when upper(state)='ACCEPTED'
+                then true
+            when upper(state)='DECLINED'
+                then false 
+        end as is_valid, 
+        ref as event_id
+    from `deel-task-12345`.`globepay`.`acceptance_report_raw`
+), 
+
+charge_back_report_scope as (
+    select 
+        external_ref as transaction_id, 
+        cast(chargeback as boolean) as has_chargeback
+    from `deel-task-12345`.`globepay`.`charge_back_report_raw`
+), 
+
+assign_chargeback_flag as (
+    select 
+        txns.transaction_id, 
+        txns.processed_at, 
+        txns.status, 
+        txns.is_cvv_provided, 
+        txns.country_code, 
+        txns.country_code, 
+        txns.original_currency, 
+        txns.settled_usd_amount, 
+        txns.exchange_rates_json, 
+        txns.is_valid, 
+        txns.event_id, 
+        chargeback.has_chargeback
+    from acceptance_rate_scope as txns
+    left join charge_back_report_scope as chargeback
+        using (transaction_id)
+)
+
+select * from assign_chargeback_flag
+    );
+  
+[0m15:47:43.180737 [debug] [Thread-3 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=deel-task-12345&j=bq:EU:2ad58c8b-d7b5-4470-837a-32c367392c98&page=queryresults
+[0m15:47:43.285548 [error] [Thread-3 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=deel-task-12345&j=bq:EU:2ad58c8b-d7b5-4470-837a-32c367392c98&page=queryresults
+[0m15:47:43.302188 [debug] [Thread-3 (]: Database Error in model int_base_transaction_report_1_scope_definition (models/base/transaction_flow/intermediate/int_base_transaction_report_1_scope_definition.sql)
+  CREATE TABLE has columns with duplicate name country_code at [16:1]
+  compiled code at target/run/deel_globepay/models/base/transaction_flow/intermediate/int_base_transaction_report_1_scope_definition.sql
+[0m15:47:43.303003 [debug] [Thread-3 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '0a9b72b6-6203-48f0-ade8-ca640106e377', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x14d74aaf0>]}
+[0m15:47:43.303703 [error] [Thread-3 (]: 3 of 5 ERROR creating sql table model intermediate_base_globepay.int_base_transaction_report_1_scope_definition  [[31mERROR[0m in 0.82s]
+[0m15:47:43.304259 [debug] [Thread-3 (]: Finished running node model.deel_globepay.int_base_transaction_report_1_scope_definition
+[0m15:47:43.304744 [debug] [Thread-7 (]: Marking all children of 'model.deel_globepay.int_base_transaction_report_1_scope_definition' to be skipped because of status 'error'.  Reason: Database Error in model int_base_transaction_report_1_scope_definition (models/base/transaction_flow/intermediate/int_base_transaction_report_1_scope_definition.sql)
+  CREATE TABLE has columns with duplicate name country_code at [16:1]
+  compiled code at target/run/deel_globepay/models/base/transaction_flow/intermediate/int_base_transaction_report_1_scope_definition.sql.
+[0m15:47:43.305762 [debug] [Thread-4 (]: Began running node model.deel_globepay.build_base_transaction_report
+[0m15:47:43.306139 [info ] [Thread-4 (]: 4 of 5 SKIP relation intermediate_base_globepay.build_base_transaction_report .. [[33mSKIP[0m]
+[0m15:47:43.306506 [debug] [Thread-4 (]: Finished running node model.deel_globepay.build_base_transaction_report
+[0m15:47:43.306777 [debug] [Thread-7 (]: Marking all children of 'model.deel_globepay.build_base_transaction_report' to be skipped because of status 'skipped'. 
+[0m15:47:43.307263 [debug] [Thread-2 (]: Began running node model.deel_globepay.base_transaction_report
+[0m15:47:43.307658 [info ] [Thread-2 (]: 5 of 5 SKIP relation base_globepay.base_transaction_report ..................... [[33mSKIP[0m]
+[0m15:47:43.308034 [debug] [Thread-2 (]: Finished running node model.deel_globepay.base_transaction_report
+[0m15:47:43.308245 [debug] [Thread-7 (]: Marking all children of 'model.deel_globepay.base_transaction_report' to be skipped because of status 'skipped'. 
+[0m15:47:43.309096 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m15:47:43.309550 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m15:47:43.309747 [debug] [MainThread]: Connection 'seed.deel_globepay.acceptance_report_raw' was properly closed.
+[0m15:47:43.309921 [debug] [MainThread]: Connection 'seed.deel_globepay.charge_back_report_raw' was properly closed.
+[0m15:47:43.310087 [debug] [MainThread]: Connection 'model.deel_globepay.int_base_transaction_report_1_scope_definition' was properly closed.
+[0m15:47:43.310356 [info ] [MainThread]: 
+[0m15:47:43.310602 [info ] [MainThread]: Finished running 2 seeds, 3 table models in 0 hours 0 minutes and 6.74 seconds (6.74s).
+[0m15:47:43.311258 [debug] [MainThread]: Command end result
+[0m15:47:43.329505 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/manifest.json
+[0m15:47:43.331634 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/semantic_manifest.json
+[0m15:47:43.336183 [debug] [MainThread]: Wrote artifact RunExecutionResult to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/run_results.json
+[0m15:47:43.336380 [info ] [MainThread]: 
+[0m15:47:43.336554 [info ] [MainThread]: [31mCompleted with 1 error, 0 partial successes, and 0 warnings:[0m
+[0m15:47:43.336690 [info ] [MainThread]: 
+[0m15:47:43.336881 [error] [MainThread]: [31mFailure in model int_base_transaction_report_1_scope_definition (models/base/transaction_flow/intermediate/int_base_transaction_report_1_scope_definition.sql)[0m
+[0m15:47:43.337062 [error] [MainThread]:   Database Error in model int_base_transaction_report_1_scope_definition (models/base/transaction_flow/intermediate/int_base_transaction_report_1_scope_definition.sql)
+  CREATE TABLE has columns with duplicate name country_code at [16:1]
+  compiled code at target/run/deel_globepay/models/base/transaction_flow/intermediate/int_base_transaction_report_1_scope_definition.sql
+[0m15:47:43.337186 [info ] [MainThread]: 
+[0m15:47:43.337343 [info ] [MainThread]:   compiled code at target/compiled/deel_globepay/models/base/transaction_flow/intermediate/int_base_transaction_report_1_scope_definition.sql
+[0m15:47:43.337468 [info ] [MainThread]: 
+[0m15:47:43.337623 [info ] [MainThread]: Done. PASS=2 WARN=0 ERROR=1 SKIP=2 NO-OP=0 TOTAL=5
+[0m15:47:43.339373 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": false, "command_wall_clock_time": 10.1483555, "process_in_blocks": "0", "process_kernel_time": 0.865031, "process_mem_max_rss": "401539072", "process_out_blocks": "0", "process_user_time": 3.221645}
+[0m15:47:43.339632 [debug] [MainThread]: Command `dbt build` failed at 15:47:43.339586 after 10.15 seconds
+[0m15:47:43.339860 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x14d8225d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x14eb75be0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x14c701750>]}
+[0m15:47:43.340036 [debug] [MainThread]: Flushing usage events
+[0m15:47:43.953662 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m15:48:33.386230 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104600ad0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1055679d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x105567890>]}
+
+
+============================== 15:48:33.388924 | 4551d8aa-3f1f-4827-8c42-e8c1246d1a58 ==============================
+[0m15:48:33.388924 [info ] [MainThread]: Running with dbt=1.11.3
+[0m15:48:33.389190 [debug] [MainThread]: running dbt with arguments {'log_format': 'default', 'fail_fast': 'False', 'printer_width': '80', 'use_experimental_parser': 'False', 'target_path': 'None', 'warn_error': 'None', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'send_anonymous_usage_stats': 'True', 'debug': 'False', 'indirect_selection': 'eager', 'use_colors': 'True', 'introspect': 'True', 'partial_parse': 'True', 'write_json': 'True', 'log_path': '/Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/logs', 'invocation_command': 'dbt build --select +base_transaction_report', 'quiet': 'False', 'profiles_dir': '/Users/emilianodelia/.dbt', 'cache_selected_only': 'False', 'log_cache_events': 'False', 'version_check': 'True', 'no_print': 'None', 'empty': 'False'}
+[0m15:48:36.342656 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '4551d8aa-3f1f-4827-8c42-e8c1246d1a58', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10487da70>]}
+[0m15:48:36.364032 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '4551d8aa-3f1f-4827-8c42-e8c1246d1a58', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1418df240>]}
+[0m15:48:36.364288 [info ] [MainThread]: Registered adapter: bigquery=1.11.0
+[0m15:48:36.458412 [debug] [MainThread]: checksum: 97dbd983c77ef3cec7304d97135f72c53ee20ea7ab68d67bae8e0876ff0fcdb6, vars: {}, profile: , target: , version: 1.11.3
+[0m15:48:36.516167 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m15:48:36.516346 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m15:48:36.516445 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m15:48:36.530997 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '4551d8aa-3f1f-4827-8c42-e8c1246d1a58', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1428a0b50>]}
+[0m15:48:36.559069 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/manifest.json
+[0m15:48:36.560146 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/semantic_manifest.json
+[0m15:48:36.577539 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '4551d8aa-3f1f-4827-8c42-e8c1246d1a58', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x141b52a80>]}
+[0m15:48:36.577741 [info ] [MainThread]: Found 3 models, 2 seeds, 539 macros
+[0m15:48:36.578542 [info ] [MainThread]: 
+[0m15:48:36.578672 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m15:48:36.578771 [info ] [MainThread]: 
+[0m15:48:36.578955 [debug] [MainThread]: Acquiring new bigquery connection 'master'
+[0m15:48:36.580512 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_deel-task-12345'
+[0m15:48:36.580681 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m15:48:36.580834 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_deel-task-12345'
+[0m15:48:36.581060 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_deel-task-12345'
+[0m15:48:36.581206 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m15:48:36.581315 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m15:48:37.528491 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_deel-task-12345, now list_deel-task-12345_intermediate_base_globepay)
+[0m15:48:37.529529 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_deel-task-12345, now list_deel-task-12345_globepay)
+[0m15:48:37.530089 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m15:48:37.530519 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_deel-task-12345, now list_deel-task-12345_base_globepay)
+[0m15:48:37.530917 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m15:48:37.532240 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m15:48:37.779140 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '4551d8aa-3f1f-4827-8c42-e8c1246d1a58', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x14296a0b0>]}
+[0m15:48:37.779476 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m15:48:37.781123 [debug] [Thread-1 (]: Began running node seed.deel_globepay.acceptance_report_raw
+[0m15:48:37.781296 [debug] [Thread-2 (]: Began running node seed.deel_globepay.charge_back_report_raw
+[0m15:48:37.781529 [info ] [Thread-1 (]: 1 of 5 START seed file globepay.acceptance_report_raw .......................... [RUN]
+[0m15:48:37.781785 [info ] [Thread-2 (]: 2 of 5 START seed file globepay.charge_back_report_raw ......................... [RUN]
+[0m15:48:37.781984 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_deel-task-12345_intermediate_base_globepay, now seed.deel_globepay.acceptance_report_raw)
+[0m15:48:37.782148 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly list_deel-task-12345_globepay, now seed.deel_globepay.charge_back_report_raw)
+[0m15:48:37.782305 [debug] [Thread-1 (]: Began compiling node seed.deel_globepay.acceptance_report_raw
+[0m15:48:37.782442 [debug] [Thread-2 (]: Began compiling node seed.deel_globepay.charge_back_report_raw
+[0m15:48:37.782588 [debug] [Thread-1 (]: Began executing node seed.deel_globepay.acceptance_report_raw
+[0m15:48:37.782718 [debug] [Thread-2 (]: Began executing node seed.deel_globepay.charge_back_report_raw
+[0m15:48:37.844782 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m15:48:37.869741 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m15:48:40.278412 [debug] [Thread-1 (]: On seed.deel_globepay.acceptance_report_raw: /* {"app": "dbt", "dbt_version": "1.11.3", "profile_name": "deel_globepay", "target_name": "dev", "node_id": "seed.deel_globepay.acceptance_report_raw"} */
+
+    alter table `deel-task-12345`.`globepay`.`acceptance_report_raw` set OPTIONS()
+  
+[0m15:48:40.629247 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=deel-task-12345&j=bq:EU:5a3e0754-f853-4755-b92f-a09a6ec32b09&page=queryresults
+[0m15:48:40.881693 [debug] [Thread-1 (]: SQL status: OK in 0.251 seconds
+[0m15:48:40.893094 [debug] [Thread-1 (]: Writing runtime SQL for node "seed.deel_globepay.acceptance_report_raw"
+[0m15:48:40.914718 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '4551d8aa-3f1f-4827-8c42-e8c1246d1a58', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x143e20870>]}
+[0m15:48:40.915313 [info ] [Thread-1 (]: 1 of 5 OK loaded seed file globepay.acceptance_report_raw ...................... [[32mINSERT 5430[0m in 3.13s]
+[0m15:48:40.915734 [debug] [Thread-1 (]: Finished running node seed.deel_globepay.acceptance_report_raw
+[0m15:48:41.050566 [debug] [Thread-2 (]: On seed.deel_globepay.charge_back_report_raw: /* {"app": "dbt", "dbt_version": "1.11.3", "profile_name": "deel_globepay", "target_name": "dev", "node_id": "seed.deel_globepay.charge_back_report_raw"} */
+
+    alter table `deel-task-12345`.`globepay`.`charge_back_report_raw` set OPTIONS()
+  
+[0m15:48:41.445152 [debug] [Thread-2 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=deel-task-12345&j=bq:EU:e429a90d-b09b-42c7-b8ec-ef17dca0330a&page=queryresults
+[0m15:48:41.672129 [debug] [Thread-2 (]: SQL status: OK in 0.226 seconds
+[0m15:48:41.674885 [debug] [Thread-2 (]: Writing runtime SQL for node "seed.deel_globepay.charge_back_report_raw"
+[0m15:48:41.681898 [debug] [Thread-2 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '4551d8aa-3f1f-4827-8c42-e8c1246d1a58', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x142b3d310>]}
+[0m15:48:41.682590 [info ] [Thread-2 (]: 2 of 5 OK loaded seed file globepay.charge_back_report_raw ..................... [[32mINSERT 5430[0m in 3.90s]
+[0m15:48:41.683243 [debug] [Thread-2 (]: Finished running node seed.deel_globepay.charge_back_report_raw
+[0m15:48:41.684382 [debug] [Thread-3 (]: Began running node model.deel_globepay.int_base_transaction_report_1_scope_definition
+[0m15:48:41.685034 [info ] [Thread-3 (]: 3 of 5 START sql table model intermediate_base_globepay.int_base_transaction_report_1_scope_definition  [RUN]
+[0m15:48:41.685537 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly list_deel-task-12345_base_globepay, now model.deel_globepay.int_base_transaction_report_1_scope_definition)
+[0m15:48:41.686001 [debug] [Thread-3 (]: Began compiling node model.deel_globepay.int_base_transaction_report_1_scope_definition
+[0m15:48:41.703352 [debug] [Thread-3 (]: Writing injected SQL for node "model.deel_globepay.int_base_transaction_report_1_scope_definition"
+[0m15:48:41.704614 [debug] [Thread-3 (]: Began executing node model.deel_globepay.int_base_transaction_report_1_scope_definition
+[0m15:48:41.711637 [debug] [Thread-3 (]: Opening a new connection, currently in state closed
+[0m15:48:41.918243 [debug] [Thread-3 (]: Writing runtime sql for node "model.deel_globepay.int_base_transaction_report_1_scope_definition"
+[0m15:48:41.919939 [debug] [Thread-3 (]: On model.deel_globepay.int_base_transaction_report_1_scope_definition: /* {"app": "dbt", "dbt_version": "1.11.3", "profile_name": "deel_globepay", "target_name": "dev", "node_id": "model.deel_globepay.int_base_transaction_report_1_scope_definition"} */
+
+  
+    
+
+    create or replace table `deel-task-12345`.`intermediate_base_globepay`.`int_base_transaction_report_1_scope_definition`
+      
+    
+    
+
+    
+    OPTIONS()
+    as (
+      
+
+with acceptance_rate_scope as (
+    select 
+        external_ref as transaction_id,
+        cast(date_time as timestamp) as processed_at, --The timestamp of the transaction.
+        upper(state) as status, --The binary state of the transaction
+        cast(cvv_provided as boolean) as is_cvv_provided,
+        country as country_code, --The two-character ISO country code of the issued card
+        currency as original_currency, --The three-character ISO currency code in which the transaction was originally processed
+        cast(safe_divide(amount, 100) as numeric) as settled_usd_amount, --The USD amount for the transaction (in minor units)
+        rates as exchange_rates_json, 
+        case 
+            when upper(state)='ACCEPTED'
+                then true
+            when upper(state)='DECLINED'
+                then false 
+        end as is_valid, 
+        ref as event_id
+    from `deel-task-12345`.`globepay`.`acceptance_report_raw`
+), 
+
+charge_back_report_scope as (
+    select 
+        external_ref as transaction_id, 
+        cast(chargeback as boolean) as has_chargeback
+    from `deel-task-12345`.`globepay`.`charge_back_report_raw`
+), 
+
+assign_chargeback_flag as (
+    select 
+        txns.transaction_id, 
+        txns.processed_at, 
+        txns.status, 
+        txns.is_cvv_provided, 
+        txns.country_code, 
+        txns.country_code, 
+        txns.original_currency, 
+        txns.settled_usd_amount, 
+        txns.exchange_rates_json, 
+        txns.is_valid, 
+        txns.event_id, 
+        chargeback.has_chargeback
+    from acceptance_rate_scope as txns
+    left join charge_back_report_scope as chargeback
+        using (transaction_id)
+)
+
+select * from assign_chargeback_flag
+    );
+  
+[0m15:48:42.350949 [debug] [Thread-3 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=deel-task-12345&j=bq:EU:06feaff7-1e5e-4c5f-9752-c712ed6b41f3&page=queryresults
+[0m15:48:42.424057 [error] [Thread-3 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=deel-task-12345&j=bq:EU:06feaff7-1e5e-4c5f-9752-c712ed6b41f3&page=queryresults
+[0m15:48:42.439290 [debug] [Thread-3 (]: Database Error in model int_base_transaction_report_1_scope_definition (models/base/transaction_flow/intermediate/int_base_transaction_report_1_scope_definition.sql)
+  CREATE TABLE has columns with duplicate name country_code at [16:1]
+  compiled code at target/run/deel_globepay/models/base/transaction_flow/intermediate/int_base_transaction_report_1_scope_definition.sql
+[0m15:48:42.439940 [debug] [Thread-3 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '4551d8aa-3f1f-4827-8c42-e8c1246d1a58', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1429eaaf0>]}
+[0m15:48:42.441098 [error] [Thread-3 (]: 3 of 5 ERROR creating sql table model intermediate_base_globepay.int_base_transaction_report_1_scope_definition  [[31mERROR[0m in 0.75s]
+[0m15:48:42.441684 [debug] [Thread-3 (]: Finished running node model.deel_globepay.int_base_transaction_report_1_scope_definition
+[0m15:48:42.442228 [debug] [Thread-7 (]: Marking all children of 'model.deel_globepay.int_base_transaction_report_1_scope_definition' to be skipped because of status 'error'.  Reason: Database Error in model int_base_transaction_report_1_scope_definition (models/base/transaction_flow/intermediate/int_base_transaction_report_1_scope_definition.sql)
+  CREATE TABLE has columns with duplicate name country_code at [16:1]
+  compiled code at target/run/deel_globepay/models/base/transaction_flow/intermediate/int_base_transaction_report_1_scope_definition.sql.
+[0m15:48:42.443406 [debug] [Thread-4 (]: Began running node model.deel_globepay.build_base_transaction_report
+[0m15:48:42.443901 [info ] [Thread-4 (]: 4 of 5 SKIP relation intermediate_base_globepay.build_base_transaction_report .. [[33mSKIP[0m]
+[0m15:48:42.444293 [debug] [Thread-4 (]: Finished running node model.deel_globepay.build_base_transaction_report
+[0m15:48:42.444606 [debug] [Thread-7 (]: Marking all children of 'model.deel_globepay.build_base_transaction_report' to be skipped because of status 'skipped'. 
+[0m15:48:42.445169 [debug] [Thread-1 (]: Began running node model.deel_globepay.base_transaction_report
+[0m15:48:42.445504 [info ] [Thread-1 (]: 5 of 5 SKIP relation base_globepay.base_transaction_report ..................... [[33mSKIP[0m]
+[0m15:48:42.445824 [debug] [Thread-1 (]: Finished running node model.deel_globepay.base_transaction_report
+[0m15:48:42.446041 [debug] [Thread-7 (]: Marking all children of 'model.deel_globepay.base_transaction_report' to be skipped because of status 'skipped'. 
+[0m15:48:42.446874 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m15:48:42.447388 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m15:48:42.447624 [debug] [MainThread]: Connection 'seed.deel_globepay.acceptance_report_raw' was properly closed.
+[0m15:48:42.447805 [debug] [MainThread]: Connection 'seed.deel_globepay.charge_back_report_raw' was properly closed.
+[0m15:48:42.447975 [debug] [MainThread]: Connection 'model.deel_globepay.int_base_transaction_report_1_scope_definition' was properly closed.
+[0m15:48:42.448245 [info ] [MainThread]: 
+[0m15:48:42.448478 [info ] [MainThread]: Finished running 2 seeds, 3 table models in 0 hours 0 minutes and 5.87 seconds (5.87s).
+[0m15:48:42.449178 [debug] [MainThread]: Command end result
+[0m15:48:42.467004 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/manifest.json
+[0m15:48:42.468676 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/semantic_manifest.json
+[0m15:48:42.472356 [debug] [MainThread]: Wrote artifact RunExecutionResult to /Users/emilianodelia/Desktop/Git Repos/deel-ae-hometask/target/run_results.json
+[0m15:48:42.472521 [info ] [MainThread]: 
+[0m15:48:42.472689 [info ] [MainThread]: [31mCompleted with 1 error, 0 partial successes, and 0 warnings:[0m
+[0m15:48:42.472826 [info ] [MainThread]: 
+[0m15:48:42.473018 [error] [MainThread]: [31mFailure in model int_base_transaction_report_1_scope_definition (models/base/transaction_flow/intermediate/int_base_transaction_report_1_scope_definition.sql)[0m
+[0m15:48:42.473196 [error] [MainThread]:   Database Error in model int_base_transaction_report_1_scope_definition (models/base/transaction_flow/intermediate/int_base_transaction_report_1_scope_definition.sql)
+  CREATE TABLE has columns with duplicate name country_code at [16:1]
+  compiled code at target/run/deel_globepay/models/base/transaction_flow/intermediate/int_base_transaction_report_1_scope_definition.sql
+[0m15:48:42.473324 [info ] [MainThread]: 
+[0m15:48:42.473479 [info ] [MainThread]:   compiled code at target/compiled/deel_globepay/models/base/transaction_flow/intermediate/int_base_transaction_report_1_scope_definition.sql
+[0m15:48:42.473603 [info ] [MainThread]: 
+[0m15:48:42.473751 [info ] [MainThread]: Done. PASS=2 WARN=0 ERROR=1 SKIP=2 NO-OP=0 TOTAL=5
+[0m15:48:42.475451 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": false, "command_wall_clock_time": 9.121375, "process_in_blocks": "0", "process_kernel_time": 0.842575, "process_mem_max_rss": "398344192", "process_out_blocks": "0", "process_user_time": 3.129388}
+[0m15:48:42.475666 [debug] [MainThread]: Command `dbt build` failed at 15:48:42.475625 after 9.12 seconds
+[0m15:48:42.475851 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x143c61bd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x143cd9520>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x141fb09d0>]}
+[0m15:48:42.476010 [debug] [MainThread]: Flushing usage events
+[0m15:48:43.024516 [debug] [MainThread]: An error was encountered while trying to flush usage events
