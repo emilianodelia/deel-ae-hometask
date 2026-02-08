@@ -205,19 +205,21 @@ dbt build -s +fct_transactions
 ```sql
 with calculations as (
   select 
-    date(date_trunc(processed_at, month)) as year_month_txn_date,
+    extract(year from processed_at) as year,
+    extract(month from processed_at) as month_num,
+    format_timestamp('%B', processed_at) AS month,
     sum(case when status='DECLINED' then 1 else 0 end)  as total_declined_transactions, 
     sum(case when status='ACCEPTED' then 1 else 0 end) as total_accepted_transactions,
     count(transaction_id) as total_transactions
   from deel-task-12345.payment_management.fct_transactions 
-  group by year_month_txn_date 
+  group by all 
 )
 
 select 
-  *, 
+  *except(month_num), 
   round(safe_divide(total_accepted_transactions, total_transactions)*100, 2) as acceptance_rate_pct
 from calculations
-order by year_month_txn_date desc
+order by year, month_num asc
 ```
 
 <img src="docs/query_results/acceptance_rate_over_time.png" width="700">
