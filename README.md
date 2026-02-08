@@ -65,7 +65,7 @@ chargeback      0
 
 <img src="analyses/eda_graphics/chargeback_distribution_grid.png" width="700">
 
-Things that caught my eye
+### Conclusions
 * High reliability thanks to having no null/missing values in any of the columns of any of the two datasets
 * All json fx rates records look good, no weird formatting or broken records detected
 * Transactional data only covers 6 months of 2019
@@ -145,7 +145,7 @@ The graph below shows the flow from raw seeds to the final fact table.
 
 ### Documentation
 * yml descriptions were included in every model and column and I made sure to transfer that information into the materialized models in BQ
-* CTEs in SQL are key to make the transformation steps easy for anyone to follow. In my day-to-day I also welcome the inclusion of comments within the code. Our entreprise level repository has a ton of collaborators and therefore it is always nice to pick up were someone left off with some context and SQL logic explanations
+* CTEs in SQL are key to make the transformation steps easy for anyone to follow. In my day-to-day I also welcome the inclusion of comments within the code. Our entreprise level repository has a ton of collaborators and therefore it is always nice to pick up where someone left off with some context and SQL logic explanations
 * The project is fully compatible with `dbt docs generate` which provides a searchable data catalog for anyone that needs or want to check the lineages or data flows. Not everyone wants to clone a repo and make some research from the inside. This kind of UI is quite helpful
 * Hot Tip! To avoid copy/pasting the column names again and again across every layer a `markdown` file can be created to centralize all common column definitions and assign them when needed. Initially I avoided using this in the repo because I assumed you wanted to the see the definitions in the yml themselves and not in separate doc
 
@@ -190,6 +190,15 @@ Data Analyst to utilize. This model should be able to answer these three questio
 minimum
 
 Final Model -----> `fct_transactions`
+
+dbt build ran as expected, all good 
+
+```sql
+dbt build -s +fct_transactions
+```
+
+<img src="docs/dbt_build_evidence.png" width="700">
+
 
 1. What is the acceptance rate over time?
 
