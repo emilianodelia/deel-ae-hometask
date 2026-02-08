@@ -4,14 +4,13 @@
 This repository contains the Analytics Engineering solution for processing and analysing credit/debit card funding transactions handled by Globepay
 
 ## Business Context
-Deel leverages Globepay as a global payment processor to allow clients to fund their accounts. This project focuses on:
-* Standardizing multi-currency transaction data.
-* Mapping Globepay API responses to Deel’s internal account funding structures.
-* Providing visibility into transaction success rates and processing performance across different countries.
+Deel clients can add funds to their Deel account using their credit and debit cards. Deel has partnered with Globepay to process all of these account funding credit and debit card transactions. Globepay is an industry-leading global payment processor and is able to process payments in many currencies from cards domiciled in many countries.
+
+Deel has connectivity into Globepay using their API. Deel clients provide their credit and debit details within the Deel web application, Deel systems pass those credentials along with any relevant transaction details to Globepay for processing
 
 # Part 1 - Data Ingestion and Architecture Design
 
-## 1. Preliminary Data Exploration
+## <kbd>1. Preliminary Data Exploration </kbd>
 
 ### Transaction Acceptance Report
 notebook path: `analyses/acceptance_rate_eda.ipynb`
@@ -48,12 +47,15 @@ rates           0
 
 ### Chargeback Report
 
+notebook path: `analyses/chargeback_report_eda.ipynb`
+
 ```md
 Total records: 5430
 Total columns: 4
 
 Duplicate external refs: 0
 
+Nulls per Column
 external_ref    0
 status          0
 source          0
@@ -63,17 +65,16 @@ chargeback      0
 <img src="analyses/eda_graphics/chargeback_distribution_grid.png" width="700">
 
 ### Key Observations
-* High reliability thanks to no null or missing values were found in any columns across both datasets* All json fx rates records look good, no weird formatting or broken records detected
-* Transactional data only covers 6 months of 2019
-* A consistent universe of 5430 records is maintained across both the acceptance report and the chargeback report
+* High reliability: No null or missing values were found in any columns across both datasets.
+* All JSON FX rate records look good. No weird formatting or broken records were detected.
+* Transactional data only covers 6 months of 2019.
+* A consistent universe of 5430 records is maintained across both the acceptance report and the chargeback report.
 
-## 2. Summary of your model architecture
-
-Architecture Overview
+## <kbd>2. Summary of your model architecture</kbd>
 
 The architecture is divided into four standalone layers to ensure scalability, data quality, and clear lineage. 
 
-_Note on Implementation:_ All models in this project were fully materialized within BigQuery
+_Note on Implementation:_ All models in this project were fully materialized within a prersonal BigQuery project
 
 ```bash
 models
