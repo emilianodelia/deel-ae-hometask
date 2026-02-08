@@ -3,10 +3,44 @@ version: 2
 seeds:
   - name: chargeback_report_raw
     description: >
-      Raw chargeback dat per transaction from Globepay API. Reported data that specifically 
-      flags whether a specific transaction has a disputed chargeback or not
+      Raw chargeback data per transaction from Globepay API. This serves as the asynchronous 
+      update to identify which transactions were disputed post-authorization.
+    columns:
+      - name: external_ref
+        description: "Primary key. Unique identifier for the transaction, used to join with the acceptance report."
+      - name: status
+        description: "Technical status of the API report record (TRUE if the record was successfully generated)."
+      - name: source
+        description: "The originating platform, hardcoded to GLOBALPAY"
+      - name: chargeback
+        description: "Binary flag indicating if a dispute was filed for this transaction. Source values: TRUE/FALSE."
 
   - name: acceptance_report_raw
     description: >
-      Raw transaction data from Globepay API. Reported data that specifically 
-      tracks the outcome of every payment attempt processed through Globepay
+      Raw transaction data from Globepay API. This is the 'source of truth' for all 
+      payment attempts, including successful and declined transactions
+    columns:
+      - name: external_ref
+        description: "Unique identifier for the transaction. Maps to the 'external_ref' in the chargeback report"
+      - name: status
+        description: "Technical status of the API response."
+      - name: source
+        description: "The originating platform, hardcoded to GLOBALPAY"
+      - name: amount
+        description: "USD transaction amount"
+      - name: ref
+        description: "Internal Globepay event reference"
+      - name: date_time
+        description: "Timestamp of when the transaction was processed."
+      - name: state
+        description: "The business outcome of the payment attempt (ACCEPTED, DECLINED)"
+      - name: cvv_provided
+        description: "Boolean flag indicating if the cvv was supplied by the user at the moment of the transaction"
+      - name: amount
+        description: "The transaction value in minor units"
+      - name: country
+        description:  "ISO country code of where the transaction took place"
+      - name: currency
+        description: "ISO code for the original currency in which the transaction was processed"
+      - name: rates
+        description: "JSON string containing exchange rates relative to USD at the time of transaction"

@@ -12,8 +12,8 @@ Mapping Globepay API responses to Deel’s internal account funding structures.
 
 Providing visibility into transaction success rates and processing performance across different countries.
 
-## Tools to be used 
-* dbt
+# Part 1 - Data Ingestion and Architecture Design
+For the first part of the challenge, please ingest and model the source data
 
 ## 1. Preliminary data exploration
 
@@ -21,7 +21,9 @@ Providing visibility into transaction success rates and processing performance a
 
 Architecture Overview
 
-The architecture is divided into four standalone layers to ensure scalability, data quality, and clear lineage
+The architecture is divided into four standalone layers to ensure scalability, data quality, and clear lineage. 
+
+_Note on Implementation:_ All models in this project were fully materialized within BigQuery
 
 ```bash
 models
@@ -78,5 +80,59 @@ The graph below shows the flow from raw seeds to the final fact table.
 ## 4. Tips around macros, data validation, and documentation
 
 ### Data Quality and Validations
-* Every layer is validated using dbt tests such as `not_null` and `unique` in order to detect any duplicate or null critical transaction identifiers that will be used across the layers
-* `accepted_values` test was used in order to detect whether the values from columns such as `status` are displaying the expected values that were seen in the EDA process
+* `uniqueness` and `not_null` testing was applied to `transaction_id` and `external_ref` across staging and marts to ensure no duplicates were generated during joins or other operations. This set of tests are usefull for avoiding duplication or distortion of any critical financial metric
+* `relationship` testing was used to ensure that 100% of the IDs in the `chargeback_report` actually exist in the `acceptance_report`.
+* `accepted_values` testing was used to validate that statuses (like state) fall within the expected set of values that are seen in our source data 
+
+### Documentation
+* yml descriptions were included in every model and column and I made sure to transfer that information into the materialized models in BQ
+* CTEs in SQL are key to make the transformation steps easy for anyone to follow. In my day-to-day I also welcome the inclusion of comments within the code. Our entreprise level repository has a ton of collaborators and therefore it is always nice to pick up were someone left off with some context and SQL logic explanations
+* The project is fully compatible with `dbt docs generate` which provides a searchable data catalog for anyone that needs or want to check the lineages or data flows. Not everyone wants to clone a repo and make some research from the inside. This kind of UI is quite helpful
+
+# Part 2 - Final Model Testing
+For the second part of the challenge, please develop a production version of the model for the
+Data Analyst to utilize. This model should be able to answer these three questions at a
+minimum
+
+1. What is the acceptance rate over time?
+
+```sql
+with calculations as (
+  select 
+    date(date_trunc(processed_at, month)) as year_month_txn_date,
+    sum(case when status='DECLINED' then 0 else 1 end)  as total_declined_transactions, 
+    sum(case when status!='DECLINED' then 0 else 1 end) as total_accepted_transactions,
+    count(transaction_id) as total_transactions
+  from deel-task-12345.payment_management.fct_transactions 
+  group by year_month_txn_date 
+)
+
+select 
+  *, 
+  round(safe_divide(total_accepted_transactions, total_transactions)*100, 2) as acceptance_rate_pct
+from calculations
+order by year_month_txn_date desc
+```
+
+<img src="docs/query_results/acceptance_rate_over_time.png" width="700">
+
+2. List the countries where the amount of declined transactions went over $25M
+```sql
+with declined_transactions_scope as (
+  select 
+    country_code, 
+    sum(usd_settled_amount) as total_settled_amount_usd_for_declined_txns
+  from deel-task-12345.payment_management.fct_transactions 
+  where status='DECLINED'
+group by country_code 
+)
+
+select * from declined_transactions_scope 
+where total_settled_amount_usd_for_declined_txns>25000000
+```
+
+<img src="docs/query_results/countries_declined_txns_over_25_million.png" width="700">
+
+3. Which transactions are missing chargeback data?
+
+
