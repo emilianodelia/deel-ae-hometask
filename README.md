@@ -176,6 +176,7 @@ where total_settled_amount_usd_for_declined_txns>25000000
 ```sql
 select count(*) as txns_with_no_chargeback_record
 from deel-task-12345.payment_management.fct_transactions 
-where has_chargeback is null
+where has_chargeback_evidence=false
 ```
+
 <img src="docs/query_results/txns_with_no_chargeback_report.png" width="700">
