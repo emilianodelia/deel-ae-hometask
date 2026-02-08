@@ -5,9 +5,9 @@ Deel clients can add funds to their Deel account using their credit and debit ca
 
 Deel has connectivity into Globepay using their API. Deel clients provide their credit and debit details within the Deel web application, Deel systems pass those credentials along with any relevant transaction details to Globepay for processing
 
-# Part 1 - Data Ingestion and Architecture Design
+# `Part I - Data Ingestion and Architecture Design`
 
-## <kbd>1. Preliminary Data Exploration </kbd>
+## `1. Preliminary Data Exploration`
 
 ### Transaction Acceptance Report
 notebook path: `analyses/acceptance_rate_eda.ipynb`
@@ -67,7 +67,7 @@ chargeback      0
 * Transactional data only covers 6 months of 2019.
 * A consistent universe of 5430 records is maintained across both the acceptance report and the chargeback report.
 
-## <kbd>2. Summary of your model architecture</kbd>
+## `2. Summary of your model architecture`
 
 The architecture is divided into four standalone layers to ensure scalability, data quality, and clear lineage. 
 
@@ -102,17 +102,17 @@ models
 
 ### Layer Descriptions
 
-### 1. Ingestion Layer
+### `1. Ingestion Layer`
 * **Role**: Ingestion of raw transaction acceptance and chargeback data.
 * **Action**: Static CSV files are loaded into BigQuery as raw tables
 * **Notes**: EDA showed no messy data or broken data formats; however, testing was still applied to ensure data quality at the start of the pipeline.
 
-### 2. Staging Layer
+### `2. Staging Layer`
 * **Role**: Cleaning and standardizing.
 * **Action**: Creation of views that rename columns, cast timestamps, and standardize the schema.
 * **Why**: This layer ensures that if source column names change, the fix only needs to be applied in one place.
 
-### 3. Intermediate Layer
+### `3. Intermediate Layer`
 * **Role**: Business logic integration and core transformations.
 * **Action**: This is where the "heavy lifting" occurs, using complex transformations to further refine the data.
 * **JSON Processing**:
@@ -121,12 +121,12 @@ models
 * **Joining & Flag Creation**: Joins transactions with chargebacks and creates the `has_chargeback` and `has_chargeback_evidence` boolean fields.
 * **Why**: Keeps complex logic out of the Marts layer to ensure the final tables remain thin and easy to query.
 
-### 4. Marts Layer
+### `4. Marts Layer`
 * **Role**: Consumption and reporting at the enterprise or domain level.
 * **Action**: Builds the final `fct_transactions` model, capable of answering all defined business questions.
 * **Why**: This table is optimized for BI tools and end-users. It is tested for uniqueness and nulls to ensure financial reporting accuracy.
 
-### Data Limitations & Assumptions
+### `Data Limitations & Assumptions`
 * **Assumption on Chargeback Status**: Although the current acceptance and chargeback reports share a perfect 1:1 mapping, I have introduced a boolean validation field to identify any transactions missing a corresponding chargeback record. The field `has_chargeback_evidence` will let the analysts filter any transaction with missing chargeback data and avoid dealing with nulls within the BI tool to be used by the analyst
 
 ## 3. Lineage graphs
@@ -135,14 +135,13 @@ The graph below shows the flow from raw seeds to the final fact table.
 
 <img src="docs/dbt_architecture_lineage.png" width="700" alt="dbt Lineage Graph">
 
-## 4. Tips around macros, data validation, and documentation
+## `4. Tips around macros, data validation, and documentation`
 
 ### Data Quality and Validations
 * **Uniqueness and Not-Null**: Applied to `transaction_id` and `external_ref` across both the Staging and Marts layers. These tests ensure no duplicates are generated during joins, preventing the distortion of critical financial metrics.
 * **Relationships**: Used to guarantee that 100% of the IDs in the `chargeback_report` exist within the `acceptance_report`, ensuring referential integrity.
 * **Accepted Values**: Used to validate that categorical fields (such as `state`) fall within the expected set of values defined in the source data
 
-### Documentation
 ### Documentation
 * YML descriptions were included for every model and column, and I ensured that this information was transferred to the materialized models in BigQuery.
 * CTEs in SQL are key to making the transformation steps easy for anyone to follow. In my day-to-day work, I also welcome the inclusion of comments within the code. Our enterprise-level repository has many collaborators; therefore, it is always helpful to be able to pick up where someone left off with clear context and SQL logic explanations.
@@ -184,7 +183,7 @@ models:
         description: "{{ doc('transaction_state') }}"
 ```
 
-# Part 2 - Final Model Testing
+# `Part II - Final Model Testing`
 For the second part of the challenge, please develop a production version of the model for the
 Data Analyst to utilize. This model should be able to answer these three questions at a
 minimum
@@ -199,6 +198,7 @@ dbt build -s +fct_transactions
 
 <img src="docs/dbt_build_evidence.png" width="700">
 
+----------------------------------------
 
 1. What is the acceptance rate over time?
 
@@ -206,8 +206,8 @@ dbt build -s +fct_transactions
 with calculations as (
   select 
     date(date_trunc(processed_at, month)) as year_month_txn_date,
-    sum(case when status='DECLINED' then 0 else 1 end)  as total_declined_transactions, 
-    sum(case when status!='DECLINED' then 0 else 1 end) as total_accepted_transactions,
+    sum(case when status='DECLINED' then 1 else 0 end)  as total_declined_transactions, 
+    sum(case when status='ACCEPTED' then 1 else 0 end) as total_accepted_transactions,
     count(transaction_id) as total_transactions
   from deel-task-12345.payment_management.fct_transactions 
   group by year_month_txn_date 
@@ -221,6 +221,8 @@ order by year_month_txn_date desc
 ```
 
 <img src="docs/query_results/acceptance_rate_over_time.png" width="700">
+
+----------------------------------------
 
 2. List the countries where the amount of declined transactions went over $25M
 ```sql
@@ -238,6 +240,8 @@ where total_settled_amount_usd_for_declined_txns>25000000
 ```
 
 <img src="docs/query_results/countries_declined_txns_over_25_million.png" width="700">
+
+----------------------------------------
 
 3. Which transactions are missing chargeback data?
 
