@@ -147,7 +147,7 @@ The graph below shows the flow from raw seeds to the final fact table.
 
 ### Documentation
 * YML descriptions were included for every model and column, and I ensured that this information was transferred to the materialized models in BigQuery.
-* CTEs in SQL are key to making the transformation steps easy for anyone to follow. In my day-to-day work, I also welcome the inclusion of comments within the code. Our enterprise-level repository has many collaborators; therefore, it is always helpful to be able to pick up where someone left off with clear context and SQL logic explanations.
+* CTEs are key to making the transformation steps easy for anyone to follow. In my day-to-day, I welcome the inclusion of comments within the code. Our enterprise-level repository has many collaborators, therefore, it is always helpful to be able to pick up where someone left off with clear context and logic explanations.
 * The project is fully compatible with `dbt docs generate`, which provides a searchable data catalog for anyone who needs or wants to check lineages or data flows. Not everyone wants to clone a repo and research from the inside, so this UI is quite helpful.
 * **Hot Tip!** To avoid copy/pasting column names repeatedly across every layer, a markdown file can be created to centralize all common column definitions and assign them where needed. Initially, I avoided using this in the repo because I assumed you wanted to see the definitions in the YML files themselves rather than in a separate document
 
