@@ -48,4 +48,5 @@ models:
         description: >
           Boolean flag indicating if a chargeback was reported for this transaction. 
           Value TRUE indicates that the transaction was disputed by the cardholder or 
-          issuing bank, resulting in a chargeback record in the source data
+          issuing bank, resulting in a chargeback record in the source data. FALSE 
+          indicates that the transaction was not disputed
