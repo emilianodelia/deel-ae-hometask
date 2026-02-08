@@ -30,10 +30,13 @@ models:
       - name: country_code
         description: "The two-character ISO country code of the card used for the transaction"
 
-      - name: original_currency
+      - name: local_currency
         description: "The three-character ISO currency code used for the transaction"
-
-      - name: usd_settled_amount
+      
+      - name: local_amount
+        description: "The original transaction amount in the customer's currency, calculated by multiplying the settled USD amount by the extracted exchange rate"
+      
+      - name: settled_amount_usd
         description: "The transaction value in USD"
 
       - name: usd_exchange_rate

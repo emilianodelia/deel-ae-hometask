@@ -17,6 +17,61 @@ For the first part of the challenge, please ingest and model the source data
 
 ## 1. Preliminary data exploration
 
+### Transaction Acceptance Report
+notebook path: `analyses/acceptance_rate_eda.ipynb`
+
+```md
+Total records: 5430
+Total columns: 11
+
+Min transaction date: `2019-01-01T00:00:00.000Z`
+Max transaction date: `2019-06-30T19:12:00.000Z`
+
+Duplicate external refs: 0
+Duplicate refs: 0
+Rows with broken json rates: 0
+
+Nulls per Column
+external_ref    0
+status          0
+source          0
+ref             0
+date_time       0
+state           0
+cvv_provided    0
+amount          0
+country         0
+currency        0
+rates           0
+```
+
+<img src="analyses/eda_graphics/distribution_grid.png" width="700">
+
+<img src="analyses/eda_graphics/amount_field_distributions.png" width="700">
+
+
+### Chargeback Report
+
+```md
+Total records: 5430
+Total columns: 4
+
+Duplicate external refs: 0
+
+external_ref    0
+status          0
+source          0
+chargeback      0
+```
+
+<img src="analyses/eda_graphics/chargeback_report_eda.png" width="700">
+
+Things that caught my eye
+* High reliability thanks to having no null/missing values in any of the columns of any of the two datasets
+* All json fx rates fields look, no weird formatting or broken records detected
+* Transactional data only covers 6 months of 2019
+* A consistent universe of 5430 records is maintained across both the acceptance report and the chargeback report
+
 ## 2. Summary of your model architecture
 
 Architecture Overview
@@ -60,8 +115,10 @@ models
 ### 3. Intermediate Layer
 * **Role**: Business logic integration and relevant transformation
 * **Action**: This is where the heavy lifting happens and we clean up way more with more complex transformations
-* **JSON Processing**: Extracting nested exchange rates from the string-based rates column in order to display the USD exchange rate that was used in the conversion
-* **Joining & Flag Creation**: Performing a join between transactions and chargebacks and creating the `has_chargeback` boolean field
+* **JSON Processing**
+  * Extracting nested exchange rates from the `rates` column in order to display the USD exchange rate that was used in the conversion
+  * Value: This allows analysts to reverse calculate the original local currency amount paid by the customer, providing insight into local price points and consumer behavior that is otherwise lost in a USD standardized dataset
+* **Joining & Flag Creation**: Performing a join between transactions and chargebacks and creating the `has_chargeback` and `has_charge_back_evidence` boolean field
 * **Why**: We keep this logic out of the final Mart to make the final table thin and easy to query
 ### 4. Marts Layer
 * **Role**: Consumption and reporting at enterprise or domain level
@@ -69,7 +126,7 @@ models
 * **Why**: This table is optimized for BI tools and end-users. It is tested for uniqueness and nulls to ensure financial reporting accuracy
 
 ### Data Limitations & Assumptions
-* **Assumption on Chargeback Status**: I have modeled the `has_chargeback` flag as a Boolean. While a TRUE value indicates a confirmed dispute in the source data, a Null value indicates the absence of a record in the provided `chargeback_report`. In a live production environment, I would distinguish between a 'Confirmed Negative' and 'No Data Received,' but for the scope of this task, I have treated unmatched records as non-disputed to facilitate aggregate reporting. (Nulls can be tricky to hanlde in BI tools such as Looker)
+* **Assumption on Chargeback Status**: Although the current acceptance and chargeback reports share a perfect 1:1 mapping, I have introduced a boolean validation field to identify any transactions missing a corresponding chargeback record. The field `has_chargeback_evidence` will let the analysts filter any transaction with missing chargeback data and avoid dealing with nulls within the BI tool to be used by the analyst
 
 ## 3. Lineage graphs
 

@@ -6,9 +6,9 @@ with renaming as (
         upper(state) as status,
         cast(cvv_provided as boolean) as is_cvv_provided,
         country as country_code,
-        currency as original_currency,
-        cast(amount as numeric) as usd_settled_amount,
-        rates as exchange_rates_json
+        currency as local_currency,
+        cast(amount as numeric) as settled_amount_usd,
+        rates as fx_rates_json
     from {{ ref('acceptance_report_raw') }}
 )
 
