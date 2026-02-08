@@ -13,7 +13,6 @@ Mapping Globepay API responses to Deel’s internal account funding structures.
 Providing visibility into transaction success rates and processing performance across different countries.
 
 # Part 1 - Data Ingestion and Architecture Design
-For the first part of the challenge, please ingest and model the source data
 
 ## 1. Preliminary data exploration
 
@@ -64,11 +63,11 @@ source          0
 chargeback      0
 ```
 
-<img src="analyses/eda_graphics/chargeback_report_eda.png" width="700">
+<img src="analyses/eda_graphics/chargeback_distribution_grid.png" width="700">
 
 Things that caught my eye
 * High reliability thanks to having no null/missing values in any of the columns of any of the two datasets
-* All json fx rates fields look, no weird formatting or broken records detected
+* All json fx rates records look good, no weird formatting or broken records detected
 * Transactional data only covers 6 months of 2019
 * A consistent universe of 5430 records is maintained across both the acceptance report and the chargeback report
 
@@ -87,20 +86,23 @@ models
 │   └── charge_back_report_raw.csv
 │
 └── models/
-    ├── 1_staging/              
+    ├── 1_staging/      # Raw data cleaned, cast, and renamed. Materialized as views
     │   ├── _stg_globepay__models.yml
     │   ├── stg_globepay__chargebacks.sql
     │   └── stg_globepay__transactions.sql
     │
-    ├── 2_intermediate/            
+    ├── 2_intermediate/   # Business logic and heavy/complex transformation layer. Materialized as views       
     │   ├── _int_globepay__models.yml
     │   └── int_transactions_joined.sql
     │
-    └── 3_marts/                 
+    └── 3_marts/     # Home of the fct and dim models materialized as tables to procide high performance models for end users            
         └── payment_management
             ├── _marts_payment_management__models.yml
             └── fct_transactions.sql
 ```
+
+* Materializing the models in both the staging and intermediate layers as views keeps our production schema clean by not physically storing redundant datasets and simplifies the database catalog. Everybody wins
+
 
 ### Description per Layer 
 
@@ -216,7 +218,7 @@ order by year_month_txn_date desc
 with declined_transactions_scope as (
   select 
     country_code, 
-    sum(usd_settled_amount) as total_settled_amount_usd_for_declined_txns
+    sum(settled_amount_usd) as total_settled_amount_usd_for_declined_txns
   from deel-task-12345.payment_management.fct_transactions 
   where status='DECLINED'
 group by country_code 

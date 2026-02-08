@@ -40,7 +40,6 @@
   );
 {%- endmacro %}
 
-
 -- funcsign: () -> string
 {% macro default__get_column_names() %}
   {#- loop through user_provided_columns to get column names -#}
@@ -51,7 +50,6 @@
       {{ col_name }}{{ ", " if not loop.last }}
     {%- endfor -%}
 {% endmacro %}
-
 
 -- funcsign: (string) -> string
 {% macro get_select_subquery(sql) %}

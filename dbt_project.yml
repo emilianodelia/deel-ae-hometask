@@ -33,18 +33,24 @@ models:
         true
 
     staging:
-      +materialized: view
+    # Raw data cleaned, cast, and renamed. Materialized as views
+      +materialized: view 
       globepay:
         +schema: staging
 
     intermediate:
+    # Business logic and heavy/complex transformation layer
       +materialized: view
 
     marts:
+    # Home of the fct and dim models materialized as tables
+    # to procide high performance models for end users
       +materialized: table
       payment_management:
         +schema: payment_management
 
 seeds:
-  +column_types:
-    date_time: timestamp
+  deel_globepay:
+    acceptance_report_raw: 
+      +column_types:
+        date_time: timestamp 

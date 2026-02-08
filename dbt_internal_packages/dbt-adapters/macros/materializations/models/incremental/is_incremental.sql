@@ -1,4 +1,3 @@
-
 -- funcsign: () -> bool
 {% macro is_incremental() %}
     {#-- do not run introspective queries in parsing #}

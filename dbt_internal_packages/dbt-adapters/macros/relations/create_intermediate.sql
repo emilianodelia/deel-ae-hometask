@@ -4,7 +4,6 @@
     {{- adapter.dispatch('get_create_intermediate_sql', 'dbt')(relation, sql) -}}
 {%- endmacro -%}
 
-
 -- funcsign: (relation, string) -> string
 {%- macro default__get_create_intermediate_sql(relation, sql) -%}
 

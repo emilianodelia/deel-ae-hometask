@@ -4,7 +4,6 @@
     {{- adapter.dispatch('get_drop_sql', 'dbt')(relation) -}}
 {%- endmacro -%}
 
-
 -- funcsign: (relation) -> string
 {%- macro default__get_drop_sql(relation) -%}
 
@@ -24,7 +23,6 @@
 
 {%- endmacro -%}
 
-
 -- funcsign: (relation) -> string
 {% macro drop_relation(relation) -%}
     {{ return(adapter.dispatch('drop_relation', 'dbt')(relation)) }}
@@ -36,7 +34,6 @@
         {{ get_drop_sql(relation) }}
     {%- endcall %}
 {% endmacro %}
-
 
 -- funcsign: (optional[relation]) -> string
 {% macro drop_relation_if_exists(relation) %}

@@ -9,8 +9,6 @@
     limit 0
 {% endmacro %}
 
-
-{# DIVERGENCE #}
 {% macro bigquery__get_columns_in_relation(relation) -%}
   -- TODO: in this sql, look into if we get/derive "mode" field for BigqueryColumn
   {% call statement('get_columns_in_relation', fetch_result=True) %}
