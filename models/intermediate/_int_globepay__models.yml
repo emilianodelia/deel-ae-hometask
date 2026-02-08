@@ -1,16 +1,10 @@
 version: 2
 
 models:
-  - name: int_base_transaction_report_1_scope_definition
+  - name: int_transactions_joined
     description: >
-      Primary staging and cleansing layer for Globepay transactions. 
-      This model standardizes column headers, casts data types (including 
-      ISO-compliant timestamps), and normalizes currency amounts from 
-      minor units to standard decimal format
-
-  - name: build_base_transaction_report
-    description: >
-      Build/Validation version for the base reporting model that stores Globepay transactions
+     Intermediate version for the reporting model that stores Globepay transactions along
+     with their corresponding accetance rate and chargeback status
     columns:
       - name: event_id
         description: "Unique event identifier associated with the recorded transaction"

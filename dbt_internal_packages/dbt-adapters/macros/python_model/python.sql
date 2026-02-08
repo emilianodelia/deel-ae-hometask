@@ -9,8 +9,6 @@
 {%- endmacro -%}
 
 -- funcsign: (model) -> string
-
-
 {% macro build_ref_function(model) %}
 
     {%- set ref_dict = {} -%}
@@ -18,10 +16,7 @@
         {% set _ref_args = [_ref.get('package'), _ref['name']] if _ref.get('package') else [_ref['name'],] %}
         {%- set resolved = ref(*_ref_args, v=_ref.get('version')) -%}
 
-#
-#
-#
-{#
+        {#
             We want to get the string of the returned relation by calling .render() in order to skip sample/empty
             mode rendering logic. However, people override the default ref macro, and often return a string instead
             of a relation (like the ref macro does by default). Thus, to make sure we dont blow things up, we have
@@ -117,6 +112,6 @@ class dbtObj:
 {{py_script_comment()}}
 {% endmacro %}
 
-#-- entry point for add instuctions for running compiled_code --#}
+{#-- entry point for add instuctions for running compiled_code --#}
 {%macro py_script_comment()%}
 {%endmacro%}

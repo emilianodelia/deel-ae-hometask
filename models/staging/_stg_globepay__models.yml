@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: stg_globepay__chargebacks
+    description: >
+      Raw chargeback dat per transaction from Globepay API. Reported data that specifically 
+      flags whether a specific transaction has a disputed chargeback or not
+    columns:
+      - name: transaction_id
+        description: "Unique externally generated identifier of the transaction record associated with the chargeback case"
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              to: ref('stg_globepay__transactions')
+              field: transaction_id
+
+  - name: stg_globepay__transactions
+    description: >
+      Raw transaction data from Globepay API. Reported data that specifically 
+      tracks the outcome of every payment attempt processed through Globepay
+    columns:
+      - name: transaction_id
+        description: "Unique externally generated identifier of the transaction record"
+        tests:
+          - unique
+          - not_null
+      - name: event_id
+        description: "Unique event identifier associated with the recorded transaction"
+        tests:
+          - unique
+          - not_null

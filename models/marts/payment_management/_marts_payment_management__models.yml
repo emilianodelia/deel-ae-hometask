@@ -1,7 +1,10 @@
 version: 2
 
-models: 
-  - name: base_transaction_report
+models:
+  - name: fct_transactions
+    description: >
+      Fact model that stores globepay transactions with their corresponding 
+      acceptance and chargeback status
     columns:
       - name: transaction_id
         description: "External event ID. Unique external reference (external_ref) for the transaction event"

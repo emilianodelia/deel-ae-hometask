@@ -27,14 +27,20 @@ clean-targets:         # directories to be removed by `dbt clean`
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 models:
   deel_globepay:
-    base:
-      transaction_flow:
-        +materialized: table
-        +schema: base_globepay
-        
-        intermediate:
-          +materialized: table
-          +schema: intermediate_base_globepay
+    
+    staging:
+      +materialized: view
+      globepay:
+        +schema: staging
+
+    intermediate:
+      +materialized: view
+
+    marts:
+      +materialized: table
+      payment_management:
+        +schema: payment_management
+
 seeds:
   +column_types:
     date_time: timestamp

@@ -5,28 +5,8 @@ seeds:
     description: >
       Raw chargeback dat per transaction from Globepay API. Reported data that specifically 
       flags whether a specific transaction has a disputed chargeback or not
-    columns:
-      - name: external_ref
-        description: "Unique externally generated identifier of the transaction record associated with the chargeback case"
-        tests:
-          - unique
-          - not_null
-          - relationships:
-              to: ref('acceptance_report_raw')
-              field: external_ref
 
   - name: acceptance_report_raw
     description: >
       Raw transaction data from Globepay API. Reported data that specifically 
       tracks the outcome of every payment attempt processed through Globepay
-    columns:
-      - name: external_ref
-        description: "Unique externally generated identifier of the transaction record"
-        tests:
-          - unique
-          - not_null
-      - name: ref
-        description: "Unique event identifier associated with the recorded transaction"
-        tests:
-          - unique
-          - not_null
