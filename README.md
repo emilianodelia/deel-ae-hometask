@@ -1,20 +1,17 @@
 # Deel x Globepay: Account Funding Analysis
 
 ## Overview
-This repository contains the Analytics Engineering solution for processing and analyzing credit/debit card funding transactions handled by Globepay
+This repository contains the Analytics Engineering solution for processing and analysing credit/debit card funding transactions handled by Globepay
 
 ## Business Context
 Deel leverages Globepay as a global payment processor to allow clients to fund their accounts. This project focuses on:
-
-Standardizing multi-currency transaction data.
-
-Mapping Globepay API responses to Deel’s internal account funding structures.
-
-Providing visibility into transaction success rates and processing performance across different countries.
+* Standardizing multi-currency transaction data.
+* Mapping Globepay API responses to Deel’s internal account funding structures.
+* Providing visibility into transaction success rates and processing performance across different countries.
 
 # Part 1 - Data Ingestion and Architecture Design
 
-## 1. Preliminary data exploration
+## 1. Preliminary Data Exploration
 
 ### Transaction Acceptance Report
 notebook path: `analyses/acceptance_rate_eda.ipynb`
@@ -65,9 +62,8 @@ chargeback      0
 
 <img src="analyses/eda_graphics/chargeback_distribution_grid.png" width="700">
 
-### Conclusions
-* High reliability thanks to having no null/missing values in any of the columns of any of the two datasets
-* All json fx rates records look good, no weird formatting or broken records detected
+### Key Observations
+* High reliability thanks to no null or missing values were found in any columns across both datasets* All json fx rates records look good, no weird formatting or broken records detected
 * Transactional data only covers 6 months of 2019
 * A consistent universe of 5430 records is maintained across both the acceptance report and the chargeback report
 
@@ -106,26 +102,31 @@ models
 
 ### Description per Layer 
 
+### Layer Descriptions
+
 ### 1. Ingestion Layer
-* **Role**: Ingestion for raw transaction acceptance and chargedbak data
-* **Action**: Static CSV files are loaded into BigQuery as raw tables using dbt seed
-* **Notes**: EDA did not show messy data or broken data type formats. Testing was applied anyways to ensure data quality in this first step of the pipeline
+* **Role**: Ingestion of raw transaction acceptance and chargeback data.
+* **Action**: Static CSV files are loaded into BigQuery as raw tables
+* **Notes**: EDA showed no messy data or broken data formats; however, testing was still applied to ensure data quality at the start of the pipeline.
+
 ### 2. Staging Layer
-* **Role**: Cleaning & Standardizing.
-* **Action**: We create views that rename columns, cast timestamps, and tidy everything up
-* **Why**: This layer ensures that if the source column names change, we only have to fix them in one place
+* **Role**: Cleaning and standardizing.
+* **Action**: Creation of views that rename columns, cast timestamps, and standardize the schema.
+* **Why**: This layer ensures that if source column names change, the fix only needs to be applied in one place.
+
 ### 3. Intermediate Layer
-* **Role**: Business logic integration and relevant transformation
-* **Action**: This is where the heavy lifting happens and we clean up way more with more complex transformations
-* **JSON Processing**
-  * Extracting nested exchange rates from the `rates` column in order to display the USD exchange rate that was used in the conversion
-  * Value: This allows analysts to reverse calculate the original local currency amount paid by the customer, providing insight into local price points and consumer behavior that is otherwise lost in a USD standardized dataset
-* **Joining & Flag Creation**: Performing a join between transactions and chargebacks and creating the `has_chargeback` and `has_charge_back_evidence` boolean field
-* **Why**: We keep this logic out of the final Mart to make the final table thin and easy to query
+* **Role**: Business logic integration and core transformations.
+* **Action**: This is where the "heavy lifting" occurs, using complex transformations to further refine the data.
+* **JSON Processing**:
+  * Extracts nested exchange rates from the `rates` column to identify the specific USD rate used in the conversion.
+  * **Value**: This allows analysts to reverse-calculate the original local currency amount paid by the customer, providing insight into local price points and consumer behavior otherwise lost in a USD-standardized dataset.
+* **Joining & Flag Creation**: Joins transactions with chargebacks and creates the `has_chargeback` and `has_chargeback_evidence` boolean fields.
+* **Why**: Keeps complex logic out of the Marts layer to ensure the final tables remain thin and easy to query.
+
 ### 4. Marts Layer
-* **Role**: Consumption and reporting at enterprise or domain level
-* **Action**: Building the final `fct_transactions` capable of answering the business questions defined in the task when queried 
-* **Why**: This table is optimized for BI tools and end-users. It is tested for uniqueness and nulls to ensure financial reporting accuracy
+* **Role**: Consumption and reporting at the enterprise or domain level.
+* **Action**: Builds the final `fct_transactions` model, capable of answering all defined business questions.
+* **Why**: This table is optimized for BI tools and end-users. It is tested for uniqueness and nulls to ensure financial reporting accuracy.
 
 ### Data Limitations & Assumptions
 * **Assumption on Chargeback Status**: Although the current acceptance and chargeback reports share a perfect 1:1 mapping, I have introduced a boolean validation field to identify any transactions missing a corresponding chargeback record. The field `has_chargeback_evidence` will let the analysts filter any transaction with missing chargeback data and avoid dealing with nulls within the BI tool to be used by the analyst
@@ -139,15 +140,16 @@ The graph below shows the flow from raw seeds to the final fact table.
 ## 4. Tips around macros, data validation, and documentation
 
 ### Data Quality and Validations
-* `uniqueness` and `not_null` testing was applied to `transaction_id` and `external_ref` across staging and marts to ensure no duplicates were generated during joins or other operations. This set of tests are usefull for avoiding duplication or distortion of any critical financial metric
-* `relationship` testing was used to ensure that 100% of the IDs in the `chargeback_report` actually exist in the `acceptance_report`.
-* `accepted_values` testing was used to validate that statuses (like state) fall within the expected set of values that are seen in our source data 
+* **Uniqueness and Not-Null**: Applied to `transaction_id` and `external_ref` across both the Staging and Marts layers. These tests ensure no duplicates are generated during joins, preventing the distortion of critical financial metrics.
+* **Relationships**: Used to guarantee that 100% of the IDs in the `chargeback_report` exist within the `acceptance_report`, ensuring referential integrity.
+* **Accepted Values**: Used to validate that categorical fields (such as `state`) fall within the expected set of values defined in the source data
 
 ### Documentation
-* yml descriptions were included in every model and column and I made sure to transfer that information into the materialized models in BQ
-* CTEs in SQL are key to make the transformation steps easy for anyone to follow. In my day-to-day I also welcome the inclusion of comments within the code. Our entreprise level repository has a ton of collaborators and therefore it is always nice to pick up where someone left off with some context and SQL logic explanations
-* The project is fully compatible with `dbt docs generate` which provides a searchable data catalog for anyone that needs or want to check the lineages or data flows. Not everyone wants to clone a repo and make some research from the inside. This kind of UI is quite helpful
-* Hot Tip! To avoid copy/pasting the column names again and again across every layer a `markdown` file can be created to centralize all common column definitions and assign them when needed. Initially I avoided using this in the repo because I assumed you wanted to the see the definitions in the yml themselves and not in separate doc
+### Documentation
+* YML descriptions were included for every model and column, and I ensured that this information was transferred to the materialized models in BigQuery.
+* CTEs in SQL are key to making the transformation steps easy for anyone to follow. In my day-to-day work, I also welcome the inclusion of comments within the code. Our enterprise-level repository has many collaborators; therefore, it is always helpful to be able to pick up where someone left off with clear context and SQL logic explanations.
+* The project is fully compatible with `dbt docs generate`, which provides a searchable data catalog for anyone who needs or wants to check lineages or data flows. Not everyone wants to clone a repo and research from the inside, so this UI is quite helpful.
+* **Hot Tip!** To avoid copy/pasting column names repeatedly across every layer, a markdown file can be created to centralize all common column definitions and assign them where needed. Initially, I avoided using this in the repo because I assumed you wanted to see the definitions in the YML files themselves rather than in a separate document
 
 Example
 
@@ -164,7 +166,7 @@ Common values include `ACCEPTED`, `DECLINED`, or `ERROR`.
 {% enddocs %}
 ```
 
-yml files would look like this 
+YML files would look like this 
 
 ```yml
 version: 2
