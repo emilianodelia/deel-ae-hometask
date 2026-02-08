@@ -54,22 +54,22 @@ models
 * **Action**: Static CSV files are loaded into BigQuery as raw tables using dbt seed
 * **Notes**: EDA did not show messy data or broken data type formats. Testing was applied anyways to ensure data quality in this first step of the pipeline
 ### 2. Staging Layer
-* **Role**: Cleaning & Standardizing.Action: We create views that rename columns to a consistent snake_case (e.g., external_ref becomes transaction_id), cast timestamps, and clean up string values
+* **Role**: Cleaning & Standardizing.
+* **Action**: We create views that rename columns, cast timestamps, and tidy everything up
 * **Why**: This layer ensures that if the source column names change, we only have to fix them in one place
 ### 3. Intermediate Layer
 * **Role**: Business logic integration and relevant transformation
-* **Action**: This is where the heavy lifting happens
+* **Action**: This is where the heavy lifting happens and we clean up way more with more complex transformations
 * **JSON Processing**: Extracting nested exchange rates from the string-based rates column in order to display the USD exchange rate that was used in the conversion
-* **Joining**: Performing a LEFT JOIN between transactions and chargebacks.
-* **Flagging**: Creating the has_chargeback boolean logic
-* **Why**: We keep this logic out of the final Mart to make the final table "thin" and easy to query
+* **Joining & Flag Creation**: Performing a join between transactions and chargebacks and creating the `has_chargeback` boolean field
+* **Why**: We keep this logic out of the final Mart to make the final table thin and easy to query
 ### 4. Marts Layer
-* **Role**: Consumption & Reporting.
+* **Role**: Consumption and reporting at enterprise or domain level
 * **Action**: Building the final `fct_transactions` capable of answering the business questions defined in the task when queried 
 * **Why**: This table is optimized for BI tools and end-users. It is tested for uniqueness and nulls to ensure financial reporting accuracy
 
 ### Data Limitations & Assumptions
-* **Assumption on Chargeback Status**: I have modeled the `has_chargeback` flag as a Boolean. While a TRUE value indicates a confirmed dispute in the source data, a FALSE value indicates the absence of a record in the provided `chargeback_report`. In a live production environment, I would distinguish between a 'Confirmed Negative' and 'No Data Received,' but for the scope of this task, I have treated unmatched records as non-disputed to facilitate aggregate reporting. (Nulls can be tricky to hanlde in BI tools such as Looker)
+* **Assumption on Chargeback Status**: I have modeled the `has_chargeback` flag as a Boolean. While a TRUE value indicates a confirmed dispute in the source data, a Null value indicates the absence of a record in the provided `chargeback_report`. In a live production environment, I would distinguish between a 'Confirmed Negative' and 'No Data Received,' but for the scope of this task, I have treated unmatched records as non-disputed to facilitate aggregate reporting. (Nulls can be tricky to hanlde in BI tools such as Looker)
 
 ## 3. Lineage graphs
 

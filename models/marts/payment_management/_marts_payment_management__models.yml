@@ -50,3 +50,8 @@ models:
           Value TRUE indicates that the transaction was disputed by the cardholder or 
           issuing bank, resulting in a chargeback record in the source data. FALSE 
           indicates that the transaction was not disputed
+      
+      - name: has_chargeback_evidence
+        description: >
+          Boolean field that indicates whether a certain transaction has a matching 
+          chargeback record in the source data

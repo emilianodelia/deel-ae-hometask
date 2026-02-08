@@ -25,6 +25,11 @@ assign_chargeback_flag as (
                 then false 
         end as is_valid, 
         chargebacks.has_chargeback, 
+       case 
+        when chargebacks.transaction_id is not null 
+            then true
+        else false
+        end as has_chargeback_evidence, 
         txns.event_id
     from transactions as txns
     left join chargebacks
