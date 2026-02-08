@@ -27,10 +27,19 @@ models:
       - name: original_currency
         description: "The three-character ISO currency code used for the transaction"
 
-      - name: settled_usd_amount
+      - name: usd_settled_amount
         description: "The transaction value in USD"
+
+      - name: usd_exchange_rate
+        description: "The USD exchange rate extracted from the source metadata, used to convert the local currency amount to a normalized USD value."
 
       - name: is_valid
         description: >
           Flags whether the transaction is valid or not based on its status. Useful for filtering out
           any records that are not relevant for critical metrics to be calculated in downstream models
+      
+      - name: has_chargeback
+        description: >
+          Boolean flag indicating if a chargeback was reported for this transaction. 
+          Value TRUE indicates that the transaction was disputed by the cardholder or 
+          issuing bank, resulting in a chargeback record in the source data

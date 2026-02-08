@@ -8,14 +8,12 @@
 
 -- funcsign: (relation, list[base_column]) -> string
 {% macro default__create_columns(relation, columns) %}
-  {# DIVERGENCE: FIXME: support expanded_data_type on Column #}
   {% for column in columns %}
     {% call statement() %}
-      alter table {{ relation.render() }} add column {{ adapter.quote(column.name) }} {{ column.data_type }}; {# DIVERGENCE: FIXME: support expanded_data_type on Column #}
+      alter table {{ relation.render() }} add column "{{ column.name }}" {{ column.data_type }};
     {% endcall %}
   {% endfor %}
 {% endmacro %}
-
 
 -- funcsign: (relation) -> string
 {% macro post_snapshot(staging_relation) %}
@@ -119,9 +117,7 @@
         left outer join snapshotted_data
             on {{ unique_key_join_on(strategy.unique_key, "snapshotted_data", "source_data") }}
             where {{ unique_key_is_null(strategy.unique_key, "snapshotted_data") }}
-            or ({{ unique_key_is_not_null(strategy.unique_key, "snapshotted_data") }} and (
-               {{ strategy.row_changed }} {%- if strategy.hard_deletes == 'new_record' -%} or snapshotted_data.{{ columns.dbt_is_deleted }} = 'True' {% endif %}
-            )
+            or ({{ unique_key_is_not_null(strategy.unique_key, "snapshotted_data") }} and ({{ strategy.row_changed }})
 
         )
 
@@ -141,7 +137,7 @@
         join snapshotted_data
             on {{ unique_key_join_on(strategy.unique_key, "snapshotted_data", "source_data") }}
         where (
-            {{ strategy.row_changed }}  {%- if strategy.hard_deletes == 'new_record' -%} or snapshotted_data.{{ columns.dbt_is_deleted }} = 'True' {% endif %}
+            {{ strategy.row_changed }}
         )
     )
 
@@ -163,40 +159,18 @@
         left join deletes_source_data as source_data
             on {{ unique_key_join_on(strategy.unique_key, "snapshotted_data", "source_data") }}
             where {{ unique_key_is_null(strategy.unique_key, "source_data") }}
-
-            {%- if strategy.hard_deletes == 'new_record' %}
-            and not (
-                --avoid updating the record's valid_to if the latest entry is marked as deleted
-                snapshotted_data.{{ columns.dbt_is_deleted }} = 'True'
-                and
-                {% if config.get('dbt_valid_to_current') -%}
-                    snapshotted_data.{{ columns.dbt_valid_to }} = {{ config.get('dbt_valid_to_current') }}
-                {%- else -%}
-                    snapshotted_data.{{ columns.dbt_valid_to }} is null
-                {%- endif %}
-            )
-            {%- endif %}
     )
     {%- endif %}
 
     {%- if strategy.hard_deletes == 'new_record' %}
-        {% set snapshotted_cols = get_list_of_column_names(get_columns_in_relation(target_relation)) %}
         {% set source_sql_cols = get_column_schema_from_query(source_sql) %}
     ,
     deletion_records as (
 
         select
             'insert' as dbt_change_type,
-            {#/*
-                If a column has been added to the source it won't yet exist in the
-                snapshotted table so we insert a null value as a placeholder for the column.
-             */#}
             {%- for col in source_sql_cols -%}
-            {%- if col.name in snapshotted_cols -%}
             snapshotted_data.{{ adapter.quote(col.column) }},
-            {%- else -%}
-            NULL as {{ adapter.quote(col.column) }},
-            {%- endif -%}
             {% endfor -%}
             {%- if strategy.unique_key | is_list -%}
                 {%- for key in strategy.unique_key -%}
@@ -214,16 +188,6 @@
         left join deletes_source_data as source_data
             on {{ unique_key_join_on(strategy.unique_key, "snapshotted_data", "source_data") }}
         where {{ unique_key_is_null(strategy.unique_key, "source_data") }}
-        and not (
-            --avoid inserting a new record if the latest one is marked as deleted
-            snapshotted_data.{{ columns.dbt_is_deleted }} = 'True'
-            and
-            {% if config.get('dbt_valid_to_current') -%}
-                snapshotted_data.{{ columns.dbt_valid_to }} = {{ config.get('dbt_valid_to_current') }}
-            {%- else -%}
-                snapshotted_data.{{ columns.dbt_valid_to }} is null
-            {%- endif %}
-            )
 
     )
     {%- endif %}
@@ -242,7 +206,6 @@
 
 
 {%- endmacro %}
-
 
 -- funcsign: (strategy, string) -> string
 {% macro build_snapshot_table(strategy, sql) -%}
@@ -267,7 +230,6 @@
 
 {% endmacro %}
 
-
 -- funcsign: (strategy, string, relation) -> relation
 {% macro build_snapshot_staging_table(strategy, sql, target_relation) %}
     {% set temp_relation = make_temp_relation(target_relation) %}
@@ -280,7 +242,6 @@
 
     {% do return(temp_relation) %}
 {% endmacro %}
-
 
 -- funcsign: (string) -> string
 {% macro get_updated_at_column_data_type(snapshot_sql) %}
@@ -296,7 +257,6 @@
     {{ return(ns.dbt_updated_at_data_type or none)  }}
 {% endmacro %}
 
-
 -- funcsign: (string) -> string
 {% macro check_time_data_types(sql) %}
   {% set dbt_updated_at_data_type = get_updated_at_column_data_type(sql) %}
@@ -308,14 +268,12 @@
   {% endif %}
 {% endmacro %}
 
-
 -- funcsign: (strategy, list[base_column]) -> string
 {% macro get_dbt_valid_to_current(strategy, columns) %}
   {% set dbt_valid_to_current = config.get('dbt_valid_to_current') or "null" %}
   coalesce(nullif({{ strategy.updated_at }}, {{ strategy.updated_at }}), {{dbt_valid_to_current}})
   as {{ columns.dbt_valid_to }}
 {% endmacro %}
-
 
 -- funcsign: (string|list[string]|none) -> string
 {% macro unique_key_fields(unique_key) %}
@@ -328,7 +286,6 @@
         {{ unique_key }} as dbt_unique_key
     {% endif %}
 {% endmacro %}
-
 
 -- funcsign: (string|list[string]|none, string, string) -> string
 {% macro unique_key_join_on(unique_key, identifier, from_identifier) %}
@@ -344,7 +301,6 @@
     {% endif %}
 {% endmacro %}
 
-
 -- funcsign: (string|list[string]|none, string) -> string
 {% macro unique_key_is_null(unique_key, identifier) %}
     {% if unique_key | is_list %}
@@ -353,7 +309,6 @@
         {{ identifier }}.dbt_unique_key is null
     {% endif %}
 {% endmacro %}
-
 
 -- funcsign: (string|list[string]|none, string) -> string
 {% macro unique_key_is_not_null(unique_key, identifier) %}

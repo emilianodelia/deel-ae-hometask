@@ -43,7 +43,6 @@
     {{ return(backup_relation) }}
 {% endmacro %}
 
-
 -- funcsign: (relation) -> string
 {% macro truncate_relation(relation) -%}
   {{ return(adapter.dispatch('truncate_relation', 'dbt')(relation)) }}
@@ -56,7 +55,6 @@
   {%- endcall %}
 {% endmacro %}
 
-
 -- funcsign: (string, string, string, string) -> tuple[bool, relation]
 {% macro get_or_create_relation(database, schema, identifier, type) -%}
   {{ return(adapter.dispatch('get_or_create_relation', 'dbt')(database, schema, identifier, type)) }}
@@ -67,7 +65,7 @@
   {%- set target_relation = adapter.get_relation(database=database, schema=schema, identifier=identifier) %}
 
   {% if target_relation %}
-    {% do return([true, target_relation]) %}
+    {% do return((true, target_relation)) %}
   {% endif %}
 
   {%- set new_relation = api.Relation.create(
@@ -76,7 +74,7 @@
       identifier=identifier,
       type=type
   ) -%}
-  {% do return([false, new_relation]) %}
+  {% do return((false, new_relation)) %}
 {% endmacro %}
 
 

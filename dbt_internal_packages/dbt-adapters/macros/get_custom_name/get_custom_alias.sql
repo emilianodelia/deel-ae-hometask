@@ -25,14 +25,14 @@
 
         {{ custom_alias_name | trim }}
 
-    {%- elif node.version -%}
+    {%- elif node -%}
 
-        {{ return(node.name ~ "_v" ~ (node.version | replace(".", "_"))) }}
-
-    {%- else -%}
-
-        {{ node.name }}
-
+        {% if node.version -%}
+            {{ node.name ~ "_v" ~ (node.version | replace(".", "_")) }}
+        {%- else -%}
+            {{ node.name }}
+        {%- endif -%}
+    
     {%- endif -%}
 
 {%- endmacro %}

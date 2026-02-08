@@ -18,7 +18,6 @@
     ) -}}
 {% endmacro %}
 
-
 -- funcsign: (relation, string, string, relation, relation, relation) -> string
 {% macro default__get_alter_materialized_view_as_sql(
     relation,

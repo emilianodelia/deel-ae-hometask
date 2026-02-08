@@ -27,7 +27,11 @@ clean-targets:         # directories to be removed by `dbt clean`
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 models:
   deel_globepay:
-    
+    +persist_docs:
+      relation: true
+      columns:
+        true
+
     staging:
       +materialized: view
       globepay:

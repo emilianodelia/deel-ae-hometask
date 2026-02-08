@@ -3,7 +3,6 @@
     Use with care if calling elsewhere.
 #} */
 
-
 -- funcsign: (list[string]) -> string
 {% macro get_quoted_csv(column_names) %}
 
@@ -36,8 +35,6 @@
 
 {% endmacro %}
 
-
-{# DIVERGENCE: FIXME: support expanded_data_type on Column #}
 -- funcsign: (list[base_column], list[base_column]) -> list[dict[string, string]]
 {% macro diff_column_data_types(source_columns, target_columns) %}
 
