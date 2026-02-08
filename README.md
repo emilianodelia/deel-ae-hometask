@@ -1,4 +1,4 @@
-# Deel x Globepay: Account Funding Analysis
+# Deel <> Analytics Engineering Challenge
 
 ## Business Context
 Deel clients can add funds to their Deel account using their credit and debit cards. Deel has partnered with Globepay to process all of these account funding credit and debit card transactions. Globepay is an industry-leading global payment processor and is able to process payments in many currencies from cards domiciled in many countries.
