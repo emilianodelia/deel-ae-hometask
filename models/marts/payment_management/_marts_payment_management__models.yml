@@ -7,7 +7,7 @@ models:
       acceptance and chargeback status
     columns:
       - name: transaction_id
-        description: "External event ID. Unique external reference (external_ref) for the transaction event"
+        description: "The unique primary key for each transaction. Use this to join with other payment dimension tables"
 
       - name: event_id
         description: "Unique event identifier associated with the recorded transaction"
@@ -16,7 +16,7 @@ models:
         description: "UTC timestamp of the transaction, converted from the ISO 8601 Zulu format"
 
       - name: status
-        description: "The final outcome of the transaction (e.g., accepted, declined)"
+        description: "The final outcome of the transaction"
 
       - name: is_cvv_provided
         description: "Boolean flag indicating if the CVV was provided by the user during checkout"
@@ -29,9 +29,6 @@ models:
 
       - name: settled_usd_amount
         description: "The transaction value in USD"
-
-      - name: rates
-        description: "JSON string containing the exchange rates used to settle the funds to USD."
 
       - name: is_valid
         description: >

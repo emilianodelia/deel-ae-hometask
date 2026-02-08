@@ -3,17 +3,18 @@ version: 2
 models:
   - name: stg_globepay__chargebacks
     description: >
-      Raw chargeback dat per transaction from Globepay API. Reported data that specifically 
-      flags whether a specific transaction has a disputed chargeback or not
+      Raw chargeback data per transaction from Globepay API. Records specifically 
+      indicate whether a specific transaction has a disputed chargeback or not
     columns:
       - name: transaction_id
-        description: "Unique externally generated identifier of the transaction record associated with the chargeback case"
+        description: "The raw unique identifier (external_ref) from the Globepay source system"
         tests:
           - unique
           - not_null
           - relationships:
-              to: ref('stg_globepay__transactions')
-              field: transaction_id
+              arguments:
+                to: ref('stg_globepay__transactions')
+                field: transaction_id
 
   - name: stg_globepay__transactions
     description: >

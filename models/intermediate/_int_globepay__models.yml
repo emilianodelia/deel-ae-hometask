@@ -17,7 +17,7 @@ models:
                 severity: error
       
       - name: transaction_id
-        description: "Unique externally generated identifier of the transaction record"
+        description: "Unique transaction ID used as the join key between acceptance and chargeback reports"
         data_tests:
           - unique:
               config:

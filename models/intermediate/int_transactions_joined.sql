@@ -29,6 +29,27 @@ assign_chargeback_flag as (
     from transactions as txns
     left join chargebacks
         on txns.transaction_id=chargebacks.transaction_id
+),
+
+flattened_rates as (
+    select
+        transaction_id,
+        -- Extract the key (such as "USD") and value (1.0) using regex
+        regexp_extract(kv_pair, r'"([A-Z]{3})"') as rate_currency,
+        cast(regexp_extract(kv_pair, r':([\d\.]+)') as numeric) as rate_value
+    from assign_chargeback_flag,
+    -- unnest in order to create a row for every currency found in field
+    unnest(regexp_extract_all(exchange_rates_json, r'"[A-Z]{3}":[\d\.]+')) as kv_pair
+), 
+
+assign_applied_usd_rate as (
+    select
+        main.*,
+        rates.rate_value as usd_exchange_rate
+    from assign_chargeback_flag as main
+    left join flattened_rates as rates
+        on main.transaction_id = rates.transaction_id
+        and main.original_currency = rates.rate_currency
 )
 
-select * from assign_chargeback_flag
+select * from assign_applied_usd_rate
