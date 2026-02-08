@@ -8,7 +8,13 @@ models:
     columns:
       - name: transaction_id
         description: "The unique primary key for each transaction. Use this to join with other payment dimension tables"
-
+        data_tests:
+          - unique:
+              config:
+                severity: error
+          - not_null:
+              config:
+                severity: error
       - name: event_id
         description: "Unique event identifier associated with the recorded transaction"
 
