@@ -120,7 +120,7 @@ models
 * **Action**: This is where the "heavy lifting" occurs, using complex transformations to further refine the data.
 * **JSON Processing**:
   * Extracts nested exchange rates from the `rates` column to identify the specific USD rate used in the conversion.
-  * **Value**: This allows analysts to reverse-calculate the original local currency amount paid by the customer, providing insight into local price points and consumer behavior otherwise lost in a USD-standardized dataset.
+  * **Value**: This allows analysts to reverse-calculate the original local currency amount paid by the customer, providing insight into local price points and consumer behavior otherwise lost in a dataset standardized to USD.
 * **Joining & Flag Creation**: Joins transactions with chargebacks and creates the `has_chargeback` and `has_chargeback_evidence` boolean fields.
 * **Why**: Keeps complex logic out of the Marts layer to ensure the final tables remain thin and easy to query.
 
