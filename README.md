@@ -66,8 +66,8 @@ chargeback      0
 * All JSON FX rate records look good. No weird formatting or broken records were detected.
 * Transactional data only covers 6 months of 2019.
 * A consistent universe of 5430 records is maintained across both the acceptance report and the chargeback report.
-* Column `status` in both reports looks like a message related to the success of the API call, we can ignore it for now 
-* Column `source` (chargebacks) has only one possible value which is GLOBALPAY, useful for differentiating between sources in the case  more payment third parties get integrated in the future but it is not relevant for the task. Ignore for now
+* Column `status` in both reports looks like a message related to the success of the API call, we can ignore it for now.
+* Column `source` (chargebacks) has only one possible value which is GLOBALPAY, useful for differentiating between sources in the case  more payment third parties get integrated in the future but it is not relevant for the task. Ignore for now.
 
 
 ## `2. Summary of your model architecture`
