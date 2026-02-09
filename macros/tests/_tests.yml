@@ -1,0 +1,17 @@
+version: 2
+
+macros:
+  - name: is_fresh
+    description: >
+      A custom generic test to monitor data latency. It ensures that the 
+      most recent record in a table is not older than a defined threshold.
+    arguments:
+      - name: column_name
+        type: string
+        description: The timestamp or date column used to measure freshness.
+      - name: index
+        type: integer
+        description: The quantity of time units (e.g., 24).
+      - name: period
+        type: string
+        description: The unit of time (e.g., hour, day, minute).

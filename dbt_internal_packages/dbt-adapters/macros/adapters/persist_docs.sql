@@ -9,7 +9,6 @@
     'alter_column_comment macro not implemented for adapter '+adapter.type()) }}
 {% endmacro %}
 
-
 -- funcsign: (relation, string) -> string
 {% macro alter_relation_comment(relation, relation_comment) -%}
   {{ return(adapter.dispatch('alter_relation_comment', 'dbt')(relation, relation_comment)) }}
@@ -20,7 +19,6 @@
   {{ exceptions.raise_not_implemented(
     'alter_relation_comment macro not implemented for adapter '+adapter.type()) }}
 {% endmacro %}
-
 
 -- funcsign: (relation, model, optional[bool], optional[bool]) -> string
 {% macro persist_docs(relation, model, for_relation=true, for_columns=true) -%}

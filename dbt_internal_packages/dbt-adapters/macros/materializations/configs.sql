@@ -3,7 +3,6 @@
   {{ config.set('sql_header', caller()) }}
 {%- endmacro %}
 
-
 -- funcsign: () -> bool
 {% macro should_full_refresh() %}
   {% set config_full_refresh = config.get('full_refresh') %}
@@ -12,7 +11,6 @@
   {% endif %}
   {% do return(config_full_refresh) %}
 {% endmacro %}
-
 
 -- ai
 -- funcsign: () -> bool
