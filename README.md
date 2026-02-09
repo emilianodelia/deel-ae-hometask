@@ -186,6 +186,11 @@ models:
         description: "{{ doc('transaction_state') }}"
 ```
 
+## `Future Improvements 
+* Implement a "look-back" window in the incremental logic (e.g., checking the last 3 days) to capture chargebacks that occur days after the initial transaction event
+* Use Data Contracts to enforce schema constraints at the Ingestion layer so that that any breaking changes in the source data are caught before they reach our final models
+* To ensure the pipeline is production ready and scalable the fct_transactions model could be materialized as an incremental model. New data is detected filtering for records where processed_at is greater than the maximum timestamp already present in the destination table and merged into the final table. This way we avoid reprocessing the entire dataset during every execution
+
 # `Part II - Final Model Testing`
 For the second part of the challenge, please develop a production version of the model for the
 Data Analyst to utilize. This model should be able to answer these three questions at a
