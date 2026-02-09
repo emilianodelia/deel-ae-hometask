@@ -144,7 +144,7 @@ The graph below shows the flow from raw seeds to the final fact table.
 * **Uniqueness and Not-Null**: Applied to `transaction_id` and `external_ref` across both the Staging and Marts layers. These tests ensure no duplicates are generated during joins, preventing the distortion of critical financial metrics.
 * **Relationships**: Used to guarantee that 100% of the IDs in the `chargeback_report` exist within the `acceptance_report`, ensuring referential integrity.
 * **Accepted Values**: Used to validate that categorical fields (such as `state`) fall within the expected set of values defined in the source data
-* **Freshness**: Testing for freshness is also crucial for this type of information. We want to be able to detect any delays in our time series data so we can configure some tests to be applied in the `processed_at` column.
+* **Freshness**: Testing for freshness is also crucial for this type of information. We want to be able to detect any delays in our time series data so we can configure some tests to be applied in the `processed_at` column. (Test was created but not applied)
 
 ### Documentation
 * YML descriptions were included for every model and column, and I ensured that this information was transferred to the materialized models in BigQuery.
