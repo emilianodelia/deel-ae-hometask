@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: fct_transactions
+  - name: fct_globepay_transactions
     description: >
       Fact model that stores globepay transactions with their corresponding 
       acceptance and chargeback status

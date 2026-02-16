@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: build_fct_transactions
+  - name: build_fct_globepay_transactions
     description: >
      Intermediate version for the reporting model that stores Globepay transactions along
      with their corresponding accetance rate and chargeback status
