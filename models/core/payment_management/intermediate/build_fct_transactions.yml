@@ -1,13 +1,13 @@
 version: 2
 
 models:
-  - name: int_transactions_joined
+  - name: build_fct_transactions
     description: >
      Intermediate version for the reporting model that stores Globepay transactions along
      with their corresponding accetance rate and chargeback status
     columns:
       - name: event_id
-        description: "Unique event identifier associated with the recorded transaction"
+        description: '{{ doc("event_id") }}'
         data_tests:
           - unique:
               config:
@@ -17,7 +17,7 @@ models:
                 severity: error
       
       - name: transaction_id
-        description: "Unique transaction ID used as the join key between acceptance and chargeback reports"
+        description: '{{ doc("transaction_id") }}'
         data_tests:
           - unique:
               config:
@@ -26,8 +26,8 @@ models:
               config:
                 severity: error
 
-      - name: status
-        description: "The binary state of the transaction, it could be either accepted or declined"
+      - name: transaction_status
+        description: '{{ doc("transaction_status") }}'
         data_tests:
           - accepted_values:
               arguments:
@@ -36,7 +36,7 @@ models:
                 severity: warn
       
       - name: processed_at
-        description:  "UTC timestamp of the transaction, converted from the ISO 8601 Zulu format."
+        description: '{{ doc("processed_at") }}'
         data_tests:
           - not_null:
               config:

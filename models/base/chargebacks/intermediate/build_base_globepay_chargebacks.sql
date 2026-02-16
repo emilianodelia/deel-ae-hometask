@@ -6,3 +6,4 @@ with renaming as (
 )
 
 select * from renaming
+

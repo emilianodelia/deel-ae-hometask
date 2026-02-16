@@ -32,22 +32,19 @@ models:
       columns:
         true
 
-    staging:
+    base:
     # Raw data cleaned, cast, and renamed. Materialized as views
-      +materialized: view 
-      globepay:
-        +schema: staging
+      +materialized: table 
+      chargebacks:
+        +schema: base_globepay
+      transactions:
+        +schema: base_globepay
 
-    intermediate:
+    core:
     # Business logic and heavy/complex transformation layer
-      +materialized: view
-
-    marts:
-    # Home of the fct and dim models materialized as tables
-    # to procide high performance models for end users
+    # and exposure of enterprise-level relevant data
       +materialized: table
-      payment_management:
-        +schema: payment_management
+      +schema: core_globepay
 
 seeds:
   deel_globepay:
