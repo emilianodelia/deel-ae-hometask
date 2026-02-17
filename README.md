@@ -78,24 +78,26 @@ _Note on Implementation:_ All models in this project were fully materialized wit
 
 ```bash
 models
-├── seeds/ # csv files / ingestion layer 
-│   ├── acceptance_report_raw.csv
-│   └── charge_back_report_raw.csv
-│
-└── models/
-    ├── 1_staging/      # Raw data cleaned, cast, and renamed. Materialized as views
-    │   ├── _stg_globepay__models.yml
-    │   ├── stg_globepay__chargebacks.sql
-    │   └── stg_globepay__transactions.sql
-    │
-    ├── 2_intermediate/   # Business logic and heavy/complex transformation layer. Materialized as views       
-    │   ├── _int_globepay__models.yml
-    │   └── int_transactions_joined.sql
-    │
-    └── 3_marts/     # Home of the fct and dim models materialized as tables to procide high performance models for end users            
-        └── payment_management
-            ├── _marts_payment_management__models.yml
-            └── fct_transactions.sql
+├── base
+│   ├── chargebacks
+│   │   ├── base_globepay_chargebacks.sql
+│   │   ├── base_globepay_chargebacks.yml
+│   │   └── intermediate
+│   │       ├── build_base_globepay_chargebacks.sql
+│   │       └── build_base_globepay_chargebacks.yml
+│   └── transaction_flow
+│       ├── base_globepay_transactions.sql
+│       └── intermediate
+│           ├── build_base_globepay_transactions.sql
+│           └── build_base_gloebpay_transactions.yml
+├── core
+│   └── payment_management
+│       ├── fct_globepay_transactions.sql
+│       ├── fct_globepay_transactions.yml
+│       └── intermediate
+│           ├── build_fct_globepay_transactions.sql
+│           └── build_fct_globepay_transactions.yml
+└── globepay_column_descriptions.md
 ```
 
 * Materializing the models in both the staging and intermediate layers as views keeps our production schema clean by not physically storing redundant datasets and simplifies the database catalog. Everybody wins
