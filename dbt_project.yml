@@ -33,18 +33,26 @@ models:
         true
 
     base:
-    # Raw data cleaned, cast, and renamed. Materialized as views
-      +materialized: table 
+    # base layer, where raw data gets cleanup and renamed
+    # according to enterprise standards
+      +materialized: table
+      +schema: base_globepay
+      
       chargebacks:
-        +schema: base_globepay
+        intermediate:
+          +schema: intermediate_base
+          
       transactions:
-        +schema: base_globepay
+        intermediate:
+          +schema: intermediate_base
 
     core:
-    # Business logic and heavy/complex transformation layer
-    # and exposure of enterprise-level relevant data
       +materialized: table
-      +schema: core_globepay
+      +schema: core_transactional
+      # Business logic and heavy/complex transformation layer
+      payment_management:
+        intermediate:
+          +schema: intermediate_core_transactional
 
 seeds:
   deel_globepay:

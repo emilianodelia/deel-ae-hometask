@@ -49,3 +49,7 @@ Boolean field that indicates whether a certain transaction has a matching charge
 {% docs fx_rates_json_globepay_transactions %}
 JSON object containing foreign exchange rates relative to USD (base = 1.0). Each key represents a three-character ISO currency code, and each value represents the exchange rate multiplier to convert from USD to that currency. For example, a value of 1.415 for CAD means 1 USD = 1.415 CAD.
 {% enddocs %}
+
+{% docs exchange_rate_globepay_transactions %}
+Exchange rate used to convert local transaction amount to USD
+{% enddocs %}

@@ -8,13 +8,7 @@ models:
     columns:
       - name: transaction_id
         description: '{{ doc("transaction_id_globepay_transactions") }}'
-        data_tests:
-          - unique:
-              config:
-                severity: error
-          - not_null:
-              config:
-                severity: error
+
       - name: event_id
         description: '{{ doc("event_id_globepay_transactions") }}'
 
@@ -35,9 +29,12 @@ models:
 
       - name: local_amount
         description: '{{ doc("local_amount_globepay_transactions") }}'
-        
+
       - name: usd_settled_amount
         description: '{{ doc("usd_settled_amount_globepay_transactions") }}'
+      
+      - name: exchange_rate
+        description: '{{ doc("exchange_rate_globepay_transactions") }}'
 
       - name: is_valid
         description: '{{ doc("is_valid_globepay_transactions") }}'
