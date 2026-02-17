@@ -7,7 +7,7 @@ with renaming as (
         cast(cvv_provided as boolean) as is_cvv_provided,
         country as country_code,
         currency as local_currency,
-        cast(amount as numeric) as settled_amount_usd,
+        cast(amount as numeric) as settled_amount,
         rates as fx_rates_json
     from {{ ref('acceptance_report_raw') }}
 )

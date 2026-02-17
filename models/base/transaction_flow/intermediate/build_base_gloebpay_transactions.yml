@@ -8,12 +8,12 @@ models:
       attempt processed through Globepay
     columns:
       - name: transaction_id
-        description: '{{ doc("transaction_id") }}'
+        description: '{{ doc("transaction_id_globepay_transactions") }}'
         tests:
           - unique
           - not_null
       - name: event_id
-        description: '{{ doc("event_id") }}'
+        description: '{{ doc("event_id_globepay_transactions") }}'
         tests:
           - unique
-          - not_null
+          - not_nullß

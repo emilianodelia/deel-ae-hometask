@@ -7,6 +7,6 @@ models:
       indicate whether a specific transaction has a disputed chargeback or not
     columns: 
       - name: transaction_id
-        description: '{{ doc("transaction_id") }}'
+        description: '{{ doc("transaction_id_globepay_transactions") }}'
       - name: has_chargeback
-        description: '{{ doc("has_chargeback") }}'
+        description: '{{ doc("has_chargeback_globepay_chargebacks") }}'

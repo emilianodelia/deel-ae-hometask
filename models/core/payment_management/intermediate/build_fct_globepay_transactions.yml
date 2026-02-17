@@ -7,7 +7,7 @@ models:
      with their corresponding accetance rate and chargeback status
     columns:
       - name: event_id
-        description: '{{ doc("event_id") }}'
+        description: '{{ doc("event_id_globepay_transactions") }}'
         data_tests:
           - unique:
               config:
@@ -17,7 +17,7 @@ models:
                 severity: error
       
       - name: transaction_id
-        description: '{{ doc("transaction_id") }}'
+        description: '{{ doc("transaction_id_globepay_transactions") }}'
         data_tests:
           - unique:
               config:
@@ -27,7 +27,7 @@ models:
                 severity: error
 
       - name: transaction_status
-        description: '{{ doc("transaction_status") }}'
+        description: '{{ doc("transaction_status_globepay_transactions") }}'
         data_tests:
           - accepted_values:
               arguments:
@@ -36,7 +36,7 @@ models:
                 severity: warn
       
       - name: processed_at
-        description: '{{ doc("processed_at") }}'
+        description: '{{ doc("processed_at_globepay_transactions") }}'
         data_tests:
           - not_null:
               config:

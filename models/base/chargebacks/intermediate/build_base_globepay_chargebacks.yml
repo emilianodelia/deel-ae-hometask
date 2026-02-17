@@ -5,7 +5,7 @@ models:
       Records specifically indicate whether a specific transaction has a disputed chargeback or not
     columns:
       - name: transaction_id
-        description: '{{ doc("transaction_id") }}'
+        description: '{{ doc("transaction_id_globepay_transactions") }}'
         tests:
           - unique
           - not_null

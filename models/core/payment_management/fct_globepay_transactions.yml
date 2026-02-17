@@ -7,7 +7,7 @@ models:
       acceptance and chargeback status
     columns:
       - name: transaction_id
-        description: '{{ doc("transaction_id") }}'
+        description: '{{ doc("transaction_id_globepay_transactions") }}'
         data_tests:
           - unique:
               config:
@@ -16,34 +16,34 @@ models:
               config:
                 severity: error
       - name: event_id
-        description: '{{ doc("event_id") }}'
+        description: '{{ doc("event_id_globepay_transactions") }}'
 
       - name: processed_at
-        description: '{{ doc("processed_at") }}'
+        description: '{{ doc("processed_at_globepay_transactions") }}'
 
       - name: transaction_status
-        description: '{{ doc("transaction_status") }}'
+        description: '{{ doc("transaction_status_globepay_transactions") }}'
 
       - name: is_cvv_provided
-        description: '{{ doc("is_cvv_provided") }}'
+        description: '{{ doc("is_cvv_provided_globepay_transactions") }}'
 
       - name: country_code
-        description: '{{ doc("country_code") }}'
+        description: '{{ doc("country_code_globepay_transactions") }}'
 
       - name: local_currency
-        description: '{{ doc("local_currency") }}'
+        description: '{{ doc("local_currency_globepay_transactions") }}'
 
       - name: local_amount
-        description: '{{ doc("local_amount") }}'
-      
-      - name: settled_amount_usd
-        description: '{{ doc("settled_amount_usd") }}'
+        description: '{{ doc("local_amount_globepay_transactions") }}'
+        
+      - name: usd_settled_amount
+        description: '{{ doc("usd_settled_amount_globepay_transactions") }}'
 
       - name: is_valid
-        description: '{{ doc("is_valid") }}'
+        description: '{{ doc("is_valid_globepay_transactions") }}'
       
       - name: has_chargeback
-        description: '{{ doc("has_chargeback") }}'
+        description: '{{ doc("has_chargeback_globepay_chargebacks") }}'
       
       - name: has_chargeback_evidence
-        description: '{{ doc("has_chargeback_evidence") }}'
+        description: '{{ doc("has_chargeback_evidence_globepay_transactions") }}'
