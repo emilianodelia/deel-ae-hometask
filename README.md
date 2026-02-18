@@ -199,7 +199,7 @@ order by year, month_num asc
 with declined_transactions_scope as (
   select 
     country_code, 
-    sum(settled_amount_usd) as total_settled_amount_usd_for_declined_txns
+    sum(usd_settled_amount) as total_settled_amount_usd_for_declined_txns
   from deel-task-12345.core_transactional.fct_globepay_transactions 
   where transaction_status='DECLINED'
 group by country_code 
