@@ -16,4 +16,4 @@ models:
         description: '{{ doc("event_id_globepay_transactions") }}'
         tests:
           - unique
-          - not_nullß
+          - not_null
