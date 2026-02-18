@@ -100,36 +100,30 @@ models
 └── globepay_column_descriptions.md
 ```
 
-* Materializing the models in both the staging and intermediate layers as views keeps our production schema clean by not physically storing redundant datasets and simplifies the database catalog. Everybody wins
-
-
 ### Description per Layer 
 
 ### Layer Descriptions
 
 ### `1. Ingestion Layer`
-* **Role**: Ingestion of raw transaction acceptance and chargeback data.
+* **Role**: Ingestion of raw transaction acceptance and chargeback reports.
 * **Action**: Static CSV files are loaded into BigQuery as raw tables
-* **Notes**: EDA showed no messy data or broken data formats; however, testing was still applied to ensure data quality at the start of the pipeline.
+* **Notes**: EDA showed no messy data or broken data formats, however, testing was still applied to ensure data quality at the start of the pipeline.
 
-### `2. Staging Layer`
-* **Role**: Cleaning and standardizing.
-* **Action**: Creation of views that rename columns, cast timestamps, and standardize the schema.
-* **Why**: This layer ensures that if source column names change, the fix only needs to be applied in one place.
+### `2. Base Layer`
+* **Role**: Cleaning and standardizing based on enterprise-level naming conventions.
+* **Action**: Creation of base models where columns are renamed and data types are enforced based on business logic.
+* **Why**
+  * This layer ensures that if source column names change, the fix only needs to be applied in one place
+  * The objective of the base layer is to have a place where data can be transformed and renamed based on the conventions of the data warehouse
+  * Depending on the business requirements, this is the layer where the historical models are kept and where transaction versioning stays intact in case of a future audit. As a rule of thumb, it's always handy to create both the historical base model (which no analyst is supposed to query) and the hourly base models (which are the ones used to build models in our core layers)
 
-### `3. Intermediate Layer`
+### `3. Core Layer`
 * **Role**: Business logic integration and core transformations.
 * **Action**: This is where the "heavy lifting" occurs, using complex transformations to further refine the data.
-* **JSON Processing**:
-  * Extracts nested exchange rates from the `rates` column to identify the specific USD rate used in the conversion.
-  * **Value**: This allows analysts to reverse-calculate the original local currency amount paid by the customer, providing insight into local price points and consumer behavior otherwise lost in a dataset standardized to USD.
+* **JSON Processing**: Extracts nested exchange rates from the `rates` column to identify the FX rate needed for the USD conversion.
 * **Joining & Flag Creation**: Joins transactions with chargebacks and creates the `has_chargeback` and `has_chargeback_evidence` boolean fields.
 * **Why**: Keeps complex logic out of the Marts layer to ensure the final tables remain thin and easy to query.
 
-### `4. Marts Layer`
-* **Role**: Consumption and reporting at the enterprise or domain level.
-* **Action**: Builds the final `fct_transactions` model, capable of answering all defined business questions.
-* **Why**: This table is optimized for BI tools and end-users. It is tested for uniqueness and nulls to ensure financial reporting accuracy.
 
 ### `Data Limitations & Assumptions`
 * **Assumption on Chargeback Status**: Although the current acceptance and chargeback reports share a perfect 1:1 mapping, I have introduced a boolean validation field to identify any transactions missing a corresponding chargeback record. The field `has_chargeback_evidence` will let the analysts filter any transaction with missing chargeback data and avoid dealing with nulls within the BI tool to be used by the analyst
@@ -152,59 +146,22 @@ The graph below shows the flow from raw seeds to the final fact table.
 * YML descriptions were included for every model and column, and I ensured that this information was transferred to the materialized models in BigQuery.
 * CTEs are key to making the transformation steps easy for anyone to follow. In my day-to-day, I welcome the inclusion of comments within the code. Our enterprise-level repository has many collaborators, therefore, it is always helpful to be able to pick up where someone left off with clear context and logic explanations.
 * The project is fully compatible with `dbt docs generate`, which provides a searchable data catalog for anyone who needs or wants to check lineages or data flows. Not everyone wants to clone a repo and research from the inside, so this UI is quite helpful.
-* **Hot Tip!** To avoid copy/pasting column names repeatedly across every layer, a markdown file can be created to centralize all common column definitions and assign them where needed. Initially, I avoided using this in the repo because I assumed you wanted to see the definitions in the YML files themselves rather than in a separate document
-
-Example
-
-md file would look like this 
-```md
-{% docs external_ref %}
-The unique transaction identifier generated by the Globepay API. 
-This is the primary join key across all Globepay reports.
-{% enddocs %}
-
-{% docs transaction_state %}
-The final business outcome of the payment attempt. 
-Common values include `ACCEPTED`, `DECLINED`, or `ERROR`.
-{% enddocs %}
-```
-
-YML files would look like this 
-
-```yml
-version: 2
-
-seeds:
-  - name: chargeback_report_raw
-    columns:
-      - name: external_ref
-        description: "{{ doc('external_ref') }}" # <--- Pulls from the .md file
-
-models:
-  - name: stg_globepay__transactions
-    columns:
-      - name: external_ref
-        description: "{{ doc('external_ref') }}"
-      - name: state
-        description: "{{ doc('transaction_state') }}"
-```
 
 ## `Future Improvements`
-* Implement a "look-back" window in the incremental logic (e.g., checking the last 3 days) to capture chargebacks that occur days after the initial transaction event
+* Implement a "look-back" window in the incremental logic (checking the last 3 days) to capture chargebacks that occur days after the initial transaction event
 * Use Data Contracts to enforce schema constraints at the Ingestion layer so that that any breaking changes in the source data are caught before they reach our final models
-* To ensure the pipeline is production ready and scalable the fct_transactions model could be materialized as an incremental model. New data is detected filtering for records where processed_at is greater than the maximum timestamp already present in the destination table and merged into the final table. This way we avoid reprocessing the entire dataset during every execution
 
 # `Part II - Final Model Testing`
 For the second part of the challenge, please develop a production version of the model for the
 Data Analyst to utilize. This model should be able to answer these three questions at a
 minimum
 
-Final Model -----> `fct_transactions`
+Final Model -----> `fct_globepay_transactions`
 
 dbt build ran as expected, all good 
 
 ```sql
-dbt build -s +fct_transactions
+dbt build -s +fct_globepay_transactions
 ```
 
 <img src="docs/dbt_build_evidence.png" width="700">
@@ -219,10 +176,10 @@ with calculations as (
     extract(year from processed_at) as year,
     extract(month from processed_at) as month_num,
     format_timestamp('%B', processed_at) AS month,
-    sum(case when status='DECLINED' then 1 else 0 end)  as total_declined_transactions, 
-    sum(case when status='ACCEPTED' then 1 else 0 end) as total_accepted_transactions,
+    sum(case when transaction_status='DECLINED' then 1 else 0 end) as total_declined_transactions, 
+    sum(case when transaction_status='ACCEPTED' then 1 else 0 end) as total_accepted_transactions,
     count(transaction_id) as total_transactions
-  from deel-task-12345.payment_management.fct_transactions 
+  from deel-task-12345.core_transactional.fct_globepay_transactions 
   group by all 
 )
 
@@ -243,8 +200,8 @@ with declined_transactions_scope as (
   select 
     country_code, 
     sum(settled_amount_usd) as total_settled_amount_usd_for_declined_txns
-  from deel-task-12345.payment_management.fct_transactions 
-  where status='DECLINED'
+  from deel-task-12345.core_transactional.fct_globepay_transactions 
+  where transaction_status='DECLINED'
 group by country_code 
 )
 
@@ -260,7 +217,7 @@ where total_settled_amount_usd_for_declined_txns>25000000
 
 ```sql
 select count(*) as txns_with_no_chargeback_record
-from deel-task-12345.payment_management.fct_transactions 
+from deel-task-12345.core_transactional.fct_globepay_transactions 
 where has_chargeback_evidence=false
 ```
 
