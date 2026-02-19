@@ -8,7 +8,13 @@ with renaming as (
         country as country_code,
         currency as local_currency,
         cast(amount as numeric) as settled_amount,
-        rates as fx_rates_json
+        safe.parse_json(
+        replace(
+            trim(rates, '"'),
+            '""',
+            '"'
+        )
+) as fx_rates_json
     from {{ ref('acceptance_report_raw') }}
 )
 

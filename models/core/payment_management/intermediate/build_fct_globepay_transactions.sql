@@ -29,7 +29,7 @@ assign_chargeback_flag as (
         txns.country_code, 
         txns.local_currency, 
         txns.usd_settled_amount, 
-        txns.exchange_rate, 
+        txns.exchange_rate,
         case 
             when upper(transaction_status)='ACCEPTED'
                 then true

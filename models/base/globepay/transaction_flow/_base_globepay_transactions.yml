@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: base_globepay_transactions
+    description: >
+      Final base version of the model for storing raw transaction data from 
+      Globepay API. Reported data that specifically tracks the outcome of every payment 
+      attempt processed through Globepay
+    columns:
+      - name: transaction_id
+        description: '{{ doc("transaction_id_globepay_transactions") }}'
+
+      - name: event_id
+        description: '{{ doc("event_id_globepay_transactions") }}'
+
+      - name: processed_at
+        description: '{{ doc("processed_at_globepay_transactions") }}'
+
+      - name: transaction_status
+        description: '{{ doc("transaction_status_globepay_transactions") }}'
+
+      - name: is_cvv_provided
+        description: '{{ doc("is_cvv_provided_globepay_transactions") }}'
+
+      - name: country_code
+        description: '{{ doc("country_code_globepay_transactions") }}'
+
+      - name: local_currency
+        description: '{{ doc("local_currency_globepay_transactions") }}'
+
+      - name: local_amount
+        description: '{{ doc("local_amount_globepay_transactions") }}'

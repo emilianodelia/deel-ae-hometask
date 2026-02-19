@@ -72,31 +72,30 @@ chargeback      0
 
 ## `2. Summary of your model architecture`
 
-The architecture is divided into four standalone layers to ensure scalability, data quality, and clear lineage. 
+The architecture is divided into 2 standalone layers (marts would be developed by the Analysts) to ensure scalability and clear lineage. Within the base layer, models are grouped by source name rather than concept, for example, all Globepay models live under `base/globepay/`, so that onboarding a new payment processor in the future is as simple as adding a new source folder alongside it, with no restructuring required.
 
-_Note on Implementation:_ All models in this project were fully materialized within a prersonal BigQuery project
-
-```bash
+```plaintext
 models
 ├── base
 │   ├── chargebacks
+│   │   ├── _base_globepay_chargebacks.yml
 │   │   ├── base_globepay_chargebacks.sql
-│   │   ├── base_globepay_chargebacks.yml
 │   │   └── intermediate
-│   │       ├── build_base_globepay_chargebacks.sql
-│   │       └── build_base_globepay_chargebacks.yml
+│   │       ├── _build_base_globepay_chargebacks.yml
+│   │       └── build_base_globepay_chargebacks.sql
 │   └── transaction_flow
+│       ├── _base_globepay_transactions.yml
 │       ├── base_globepay_transactions.sql
 │       └── intermediate
-│           ├── build_base_globepay_transactions.sql
-│           └── build_base_gloebpay_transactions.yml
+│           ├── _build_base_globebpay_transactions.yml
+│           └── build_base_globepay_transactions.sql
 ├── core
 │   └── payment_management
+│       ├── _fct_globepay_transactions.yml
 │       ├── fct_globepay_transactions.sql
-│       ├── fct_globepay_transactions.yml
 │       └── intermediate
-│           ├── build_fct_globepay_transactions.sql
-│           └── build_fct_globepay_transactions.yml
+│           ├── _build_fct_globepay_transactions.yml
+│           └── build_fct_globepay_transactions.sql
 └── globepay_column_descriptions.md
 ```
 
@@ -105,24 +104,21 @@ models
 ### Layer Descriptions
 
 ### `1. Ingestion Layer`
-* **Role**: Ingestion of raw transaction acceptance and chargeback reports.
-* **Action**: Static CSV files are loaded into BigQuery as raw tables
-* **Notes**: EDA showed no messy data or broken data formats, however, testing was still applied to ensure data quality at the start of the pipeline.
+* Ingests raw transaction acceptance and chargeback reports by loading static CSV files into BigQuery as raw tables
+* EDA showed no messy or broken data formats, however testing was still applied at this stage to ensure data quality from the start of the pipeline
+* **Worth noting:** as the project grows, documenting the refresh cadence and planning for automated or event-triggered loads will be important — static ingestion is often where pipelines become brittle at scale
 
 ### `2. Base Layer`
-* **Role**: Cleaning and standardizing based on enterprise-level naming conventions.
-* **Action**: Creation of base models where columns are renamed and data types are enforced based on business logic.
-* **Why**
-  * This layer ensures that if source column names change, the fix only needs to be applied in one place
-  * The objective of the base layer is to have a place where data can be transformed and renamed based on the conventions of the data warehouse
-  * Depending on the business requirements, this is the layer where the historical models are kept and where transaction versioning stays intact in case of a future audit. As a rule of thumb, it's always handy to create both the historical base model (which no analyst is supposed to query) and the hourly base models (which are the ones used to build models in our core layers)
+* Cleans and standardizes data based on enterprise-level naming conventions, renaming columns and enforcing data types according to business logic
+* Acts as a schema contract between raw source and everything downstream — if a source column name changes, the fix only needs to be applied in one place, minimising the blast radius of upstream changes
+* Keeps historical models and transaction versioning intact for future audits
+* As a rule of thumb, both a historical base model (not meant for direct analyst queries) and models used to build the core layer are maintained separately
 
 ### `3. Core Layer`
-* **Role**: Business logic integration and core transformations.
-* **Action**: This is where the "heavy lifting" occurs, using complex transformations to further refine the data.
-* **JSON Processing**: Extracts nested exchange rates from the `rates` column to identify the FX rate needed for the USD conversion.
-* **Joining & Flag Creation**: Joins transactions with chargebacks and creates the `has_chargeback` and `has_chargeback_evidence` boolean fields.
-* **Why**: Keeps complex logic out of the Marts layer to ensure the final tables remain thin and easy to query.
+* Handles all heavy lifting: JSON processing extracts nested exchange rates from the rates column to identify the FX rate needed for USD conversion
+* Joins transactions with chargebacks and creates the has_chargeback and has_chargeback_evidence boolean fields
+* Keeps complex logic out of the marts layer, ensuring final tables remain thin and easy to query
+* An intermediate folder pattern is applied across all layers. Eeach model has a preceding `build_` intermediate step that acts as a protective barrier for the final models. All data quality tests are applied exclusively at this stage, ensuring that bad data is caught and never allowed to reach the final models that analysts and downstream consumers depend on.
 
 
 ### `Data Limitations & Assumptions`
@@ -136,16 +132,50 @@ The graph below shows the flow from raw seeds to the final fact table.
 
 ## `4. Tips around macros, data validation, and documentation`
 
-### Data Quality and Validations
-* **Uniqueness and Not-Null**: Applied to `transaction_id` and `external_ref` across both the Staging and Marts layers. These tests ensure no duplicates are generated during joins, preventing the distortion of critical financial metrics.
-* **Relationships**: Used to guarantee that 100% of the IDs in the `chargeback_report` exist within the `acceptance_report`, ensuring referential integrity.
-* **Accepted Values**: Used to validate that categorical fields (such as `state`) fall within the expected set of values defined in the source data
-* **Freshness**: Testing for freshness is also crucial for this type of information. We want to be able to detect any delays in our time series data so we can configure some tests to be applied in the `processed_at` column. (Test was created but not applied)
+### Data Quality & Validations
+
+* **Uniqueness and Not-Null:** Applied to transaction_id and external_ref across both the Base and Core layers. These tests ensure no duplicates are generated during joins, preventing the distortion of critical financial metrics.
+* **Relationships:** Used to guarantee that 100% of the IDs in the chargeback_report exist within the acceptance_report, ensuring referential integrity across the two source datasets.
+* **Accepted Values:** Validates that categorical fields such as state fall within the expected set of values defined in the source data, catching any unexpected classifications early.
+* **Custom Generic Tests:** Where native dbt tests were not sufficient, custom generic tests were written to handle edge cases specific to the business logic of this pipeline.
+* **Freshness:** Freshness testing is particularly critical for time-series financial data. Tests are configured against the processed_at column to detect any delays or gaps in data arrival as early as possible. (Test was created but not yet applied.)
+* **Alerting & Observability:**
+  * Depending on the criticality of the failure, rather than halting the entire pipeline, workflows would be designed to isolate and exclude inconsistent or       unreconciled records from the final models, routing them instead to a dedicated quarantine or exception dashboard. 
+  * This gives stakeholders and data reviewers full visibility over problematic cases without compromising the integrity or availability of the main reporting layer.
 
 ### Documentation
-* YML descriptions were included for every model and column, and I ensured that this information was transferred to the materialized models in BigQuery.
-* CTEs are key to making the transformation steps easy for anyone to follow. In my day-to-day, I welcome the inclusion of comments within the code. Our enterprise-level repository has many collaborators, therefore, it is always helpful to be able to pick up where someone left off with clear context and logic explanations.
-* The project is fully compatible with `dbt docs generate`, which provides a searchable data catalog for anyone who needs or wants to check lineages or data flows. Not everyone wants to clone a repo and research from the inside, so this UI is quite helpful.
+* In my current role, the development lifecycle begins with a formal proposal outlining requirements, expected outputs, and delivery timelines. 
+Modelling only begins once all relevant stakeholders have reviewed and signed off, this ensures alignment before a single line of SQL is written and avoids costly rework down the line. 
+* Once development is complete, all details are fully captured in a design document where any addition or change related to business logic or data ingestion must be specified. 
+* This document will live in the initiatives folder, accessible to anyone in the organisation who needs to understand the reasoning and logic behind a given initiative. 
+
+
+Initiave documentation would look like this 
+
+```plaintext
+initiatives
+└── FY25-26
+    ├── payment_management
+    │   ├── proposal
+    │   │   └── 2025_10_01_payment_integration_proposal.md  # proposal
+    │   └── design_document
+    │       └── 2025_11_03_payment_integration_design.md    # signed off
+    ├── fraud_detection
+    │   ├── proposal
+    │   │   └── 2025_10_18_fraud_detection_proposal.md      # proposal
+    │   └── design_document
+    │       └── 2025_11_20_fraud_detection_design.md        # signed off
+    ├── customer_lifetime_value
+    │   ├── proposal
+    │   │   └── 2026_01_07_clv_modelling_proposal.md        # proposal
+    │   └── design_document
+    │       └── 2026_01_21_clv_modelling_design.md          # signed off
+    └── revenue_reconciliation
+        ├── proposal
+        │   └── 2026_02_03_revenue_reconciliation_proposal.md  # proposal
+        └── design_document
+            └── 2026_02_14_revenue_reconciliation_design.md    # in review
+```
 
 ## `Future Improvements`
 * Implement a "look-back" window in the incremental logic (checking the last 3 days) to capture chargebacks that occur days after the initial transaction event
