@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: base_globepay_transactions
+  - name: base_transactions
     description: >
       Final base version of the model for storing raw transaction data from 
       Globepay API. Reported data that specifically tracks the outcome of every payment 

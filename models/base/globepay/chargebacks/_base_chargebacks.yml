@@ -1,7 +1,7 @@
 version: 2 
 
 models:
-  - name: base_globepay_chargebacks
+  - name: base_chargebacks
     description: >
       Base chargeback data per transaction from Globepay API. Records specifically 
       indicate whether a specific transaction has a disputed chargeback or not

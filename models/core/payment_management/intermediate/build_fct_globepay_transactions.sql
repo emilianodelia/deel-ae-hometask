@@ -9,7 +9,7 @@ with scope as (
         local_currency,
         settled_amount,
         fx_rates_json  
-    from {{ ref('base_globepay_transactions') }}
+    from {{ ref('base_transactions') }}
     where is_quarantined = false
 ), 
 
@@ -47,7 +47,7 @@ assign_chargeback_flag as (
         end as has_chargeback_evidence, 
         txns.event_id
     from normalize_to_usd as txns
-    left join {{ ref('base_globepay_chargebacks') }} as chargebacks
+    left join {{ ref('base_chargebacks') }} as chargebacks
         on txns.transaction_id=chargebacks.transaction_id
 )
 

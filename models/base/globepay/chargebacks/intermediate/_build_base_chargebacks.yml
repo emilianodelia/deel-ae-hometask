@@ -1,5 +1,7 @@
+version: 2
+
 models:
-  - name: build_base_globepay_chargebacks
+  - name: build_base_chargebacks
     description: >
       Build version of the model storing raw chargeback data per transaction from Globepay API.
       Records specifically indicate whether a specific transaction has a disputed chargeback or not
@@ -11,5 +13,5 @@ models:
           - not_null
           - relationships:
               arguments:
-                to: ref('base_globepay_transactions')
+                to: ref('base_transactions')
                 field: transaction_id

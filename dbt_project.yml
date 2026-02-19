@@ -47,7 +47,7 @@ models:
     # base layer, where raw data gets cleanup and renamed
     # according to enterprise standards
         +materialized: table
-        +schema: base_transaction_flow
+        +schema: base_globepay
         
         chargebacks:
           intermediate:
@@ -61,9 +61,9 @@ models:
       +materialized: table
       # Business logic and heavy/complex transformation layer
       core_transactional:
-        +schema: core_transactional
+        +schema: core_payment_management
         intermediate:
-          +schema: intermediate_core_transactional
+          +schema: intermediate_core_payment_management
 
 seeds:
   deel_globepay:

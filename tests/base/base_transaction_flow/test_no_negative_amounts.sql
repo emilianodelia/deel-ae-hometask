@@ -4,5 +4,5 @@
 {{ config(severity='warn') }}
 
 select *
-from {{ ref('build_base_globepay_transactions') }}
+from {{ ref('build_base_transactions') }}
 where settled_amount < 0
