@@ -77,18 +77,19 @@ The architecture is divided into 2 standalone layers (marts would be developed b
 ```plaintext
 models
 ├── base
-│   ├── chargebacks
-│   │   ├── _base_globepay_chargebacks.yml
-│   │   ├── base_globepay_chargebacks.sql
-│   │   └── intermediate
-│   │       ├── _build_base_globepay_chargebacks.yml
-│   │       └── build_base_globepay_chargebacks.sql
-│   └── transaction_flow
-│       ├── _base_globepay_transactions.yml
-│       ├── base_globepay_transactions.sql
-│       └── intermediate
-│           ├── _build_base_globebpay_transactions.yml
-│           └── build_base_globepay_transactions.sql
+│   └── globepay
+│       ├── chargebacks
+│       │   ├── _base_chargebacks.yml
+│       │   ├── base_chargebacks.sql
+│       │   └── intermediate
+│       │       ├── _build_base_chargebacks.yml
+│       │       └── build_base_chargebacks.sql
+│       └── transactions
+│           ├── _base_transactions.yml
+│           ├── base_transactions.sql
+│           └── intermediate
+│               ├── _build_base_transactions.yml
+│               └── build_base_transactions.sql
 ├── core
 │   └── payment_management
 │       ├── _fct_globepay_transactions.yml
@@ -97,6 +98,14 @@ models
 │           ├── _build_fct_globepay_transactions.yml
 │           └── build_fct_globepay_transactions.sql
 └── globepay_column_descriptions.md
+
+//////////////////////////////////////////////////////
+tests
+├── base
+│   └── base_transaction_flow
+│       ├── test_accepted_currencies.sql
+│       └── test_no_negative_amounts.sql
+└── warn_freshness_base_globepay_transactions.sql
 ```
 
 ### Description per Layer 
