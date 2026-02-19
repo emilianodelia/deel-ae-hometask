@@ -66,8 +66,10 @@ chargeback      0
 * Transactional data covers 6 months of 2019
 * A consistent universe of 5430 records is maintained across both reports
 * `status` and `source` columns were deprioritised as they carry no analytical value for this task
-* **Source data anomaly detected in FX Rates:** Although EDA reported no broken JSON records, investigation during development revealed that `safe.parse_json()` fails silently on high precision floats (Ex. `1.4060447923604744`). This was resolved by applying `wide_number_mode => 'round'` during parsing. The issue was isolated to 20 records sharing 4 distinct rate snapshots
-  * Rounding should have no impact on analytical accuracy given the rounding margin is negligible for FX conversion purposes
+* **Source data anomaly detected in FX Rates:** Although EDA in python reported no broken JSON records, some warnings/error were triggered during development which revealed that `safe.parse_json()` fails silently on floats with a lot of decimals (Example: `1.4060447923604744`)
+  * This was resolved by applying `wide_number_mode => 'round'` during parsing 
+  * This is flagged as a known limitation and recommended for further review with the Globepay team to discuss whether a higher precision format can be agreed upon at the source level
+  * As long as all incoming rate jsons stay within the same decimal precision range, the parsing will work, any deviations from an common format will cause the pipeline to break
 
 ## `2. Summary of your model architecture`
 

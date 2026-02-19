@@ -20,4 +20,6 @@ models:
       - name: fx_rates_json
         description: '{{ doc("fx_rates_json_globepay_transactions") }}'
         tests:
-          - not_null
+          - not_null:
+              config:
+                severity: error
