@@ -1,0 +1,19 @@
+version: 2
+
+seeds:
+  - name: accepted_currencies
+    description: >
+      Centralised reference table for all currencies accepted per payment processor.
+      When a new payment processor is onboarded or a new currency is
+      supported, this file should be updated accordingly, no changes to tests or models required.
+    columns:
+      - name: currency_code
+        description: >
+          ISO 4217 currency code representing an accepted currency for a given payment
+          processor (USD, EUR, CAD). Used for validation in data quality tests
+          across the base and core layers.
+      - name: provider
+        description: >
+          Identifier for the payment processor associated with the accepted currency
+          Enables filtering by provider so that currency validation
+          remains scoped to the correct source when multiple processors are active.

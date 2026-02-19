@@ -53,3 +53,7 @@ JSON object containing foreign exchange rates relative to USD (base = 1.0). Each
 {% docs exchange_rate_globepay_transactions %}
 Exchange rate used to convert local transaction amount to USD
 {% enddocs %}
+
+{% docs is_quarantined_globepay_transactions %}
+Boolean flag that identifies records that have failed one or more data quality checks and have been excluded from the final model.  Records where is_quarantined = true are preserved at the build layer for review but never propagateto fct_globepay_transactions.
+{% enddocs %}

@@ -10,6 +10,8 @@ with scope as (
         settled_amount,
         fx_rates_json  
     from {{ ref('base_globepay_transactions') }}
+    where is_quarantined = false
+
 ), 
 
 normalize_to_usd as (
@@ -37,7 +39,7 @@ assign_chargeback_flag as (
                 then false 
         end as is_valid, 
         chargebacks.has_chargeback, 
-       case 
+        case 
             when chargebacks.transaction_id is not null 
                 then true
             else false

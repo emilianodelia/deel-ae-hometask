@@ -26,7 +26,12 @@ tests:
   deel_globepay:
     warn_freshness_base_globepay_transactions:
       config:
-        severity: warn
+        +severity: warn
+
+    base_transaction_flow:
+      # tells dbt to materialise the failing rows into a table 
+      # in my database so you can query them directly and investigate
+      +store_failures: true
 
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models

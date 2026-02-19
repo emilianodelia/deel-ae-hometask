@@ -8,7 +8,12 @@ with renaming as (
         country as country_code,
         currency as local_currency,
         cast(amount as numeric) as settled_amount,
-        safe.parse_json(rates) as fx_rates_json
+        safe.parse_json(rates) as fx_rates_json, 
+        case 
+            when cast(amount as numeric) < 0 
+                then true 
+            else false 
+        end as is_quarantined
     from {{ ref('acceptance_report_raw') }}
 )
 

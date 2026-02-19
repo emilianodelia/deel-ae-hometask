@@ -30,3 +30,6 @@ models:
 
       - name: local_amount
         description: '{{ doc("local_amount_globepay_transactions") }}'
+      
+      - name: is_quarantined
+        description: '{{ doc("is_quarantined_globepay_transactions") }}'
