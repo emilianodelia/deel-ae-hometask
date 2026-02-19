@@ -62,19 +62,21 @@ chargeback      0
 <img src="analyses/eda_graphics/chargeback_distribution_grid.png" width="700">
 
 ### Key Observations
-* High reliability: No null or missing values were found in any columns across both datasets.
-* All JSON FX rate records look good. No weird formatting or broken records were detected.
-* Transactional data only covers 6 months of 2019.
-* A consistent universe of 5430 records is maintained across both the acceptance report and the chargeback report.
-* Column `status` in both reports looks like a message related to the success of the API call, we can ignore it for now.
-* Column `source` (chargebacks) has only one possible value which is GLOBALPAY, useful for differentiating between sources in the case  more payment third parties get integrated in the future but it is not relevant for the task. Ignore for now.
-
+* No null or missing values were found across both datasets
+* Transactional data covers 6 months of 2019
+* A consistent universe of 5430 records is maintained across both reports
+* `status` and `source` columns were deprioritised as they carry no analytical value for this task
+* **Source data anomaly detected in FX Rates:** Although EDA reported no broken JSON records, investigation during development revealed that `safe.parse_json()` fails silently on high precision floats (Ex. `1.4060447923604744`). This was resolved by applying `wide_number_mode => 'round'` during parsing. The issue was isolated to 20 records sharing 4 distinct rate snapshots
+  * Rounding should have no impact on analytical accuracy given the rounding margin is negligible for FX conversion purposes
 
 ## `2. Summary of your model architecture`
 
 The architecture is divided into 2 standalone layers (marts would be developed by the Analysts) to ensure scalability and clear lineage. Within the base layer, models are grouped by source name rather than concept, for example, all Globepay models live under `base/globepay/`, so that onboarding a new payment processor in the future is as simple as adding a new source folder alongside it, with no restructuring required.
 
 ```plaintext
+
+//////////////////////////////////////////////////////
+
 models
 ├── base
 │   └── globepay
@@ -100,64 +102,85 @@ models
 └── globepay_column_descriptions.md
 
 //////////////////////////////////////////////////////
+
 tests
 ├── base
 │   └── base_transaction_flow
 │       ├── test_accepted_currencies.sql
 │       └── test_no_negative_amounts.sql
 └── warn_freshness_base_globepay_transactions.sql
+
+//////////////////////////////////////////////////////
 ```
 
 ### Description per Layer 
 
-### Layer Descriptions
+## `1. Ingestion Layer`
+* Loads static CSV files into BigQuery as raw seeds
+* Testing applied at this stage despite clean EDA results — pipelines should never assume source quality
+* As the project grows, refresh cadence and automated ingestion triggers should be documented — static loads are often where pipelines become brittle at scale
 
-### `1. Ingestion Layer`
-* Ingests raw transaction acceptance and chargeback reports by loading static CSV files into BigQuery as raw tables
-* EDA showed no messy or broken data formats, however testing was still applied at this stage to ensure data quality from the start of the pipeline
-* **Worth noting:** as the project grows, documenting the refresh cadence and planning for automated or event-triggered loads will be important — static ingestion is often where pipelines become brittle at scale
+## `2. Base Layer`
+* Cleans and standardizes data based on enterprise naming conventions, renaming columns and enforcing data types
+* Acts as a schema contract, if a source column changes, the fix is applied in one place only
+* Historical models and transaction versioning are preserved for audit purposes
+* Each model has a preceding `build_` intermediate step that acts as a **protective barrier**. All data quality tests run exclusively at this stage, bad data is caught before it ever reaches the final models that analysts and downstream consumers depend on
 
-### `2. Base Layer`
-* Cleans and standardizes data based on enterprise-level naming conventions, renaming columns and enforcing data types according to business logic
-* Acts as a schema contract between raw source and everything downstream — if a source column name changes, the fix only needs to be applied in one place, minimising the blast radius of upstream changes
-* Keeps historical models and transaction versioning intact for future audits
-* As a rule of thumb, both a historical base model (not meant for direct analyst queries) and models used to build the core layer are maintained separately
-
-### `3. Core Layer`
-* Handles all heavy lifting: JSON processing extracts nested exchange rates from the rates column to identify the FX rate needed for USD conversion
-* Joins transactions with chargebacks and creates the has_chargeback and has_chargeback_evidence boolean fields
-* Keeps complex logic out of the marts layer, ensuring final tables remain thin and easy to query
-* An intermediate folder pattern is applied across all layers. Eeach model has a preceding `build_` intermediate step that acts as a protective barrier for the final models. All data quality tests are applied exclusively at this stage, ensuring that bad data is caught and never allowed to reach the final models that analysts and downstream consumers depend on.
-
+## `3. Core Layer`
+* JSON processing extracts nested FX rates using `wide_number_mode => 'round'` to handle high precision floats that would otherwise cause `safe.parse_json()` to fail silently
+* Joins transactions with chargebacks and creates `has_chargeback` and `has_chargeback_evidence` boolean fields
+* Complex logic is kept here to ensure final tables remain thin and easy to query
+* The `build_` intermediate pattern is applied here as well, same protective barrier approach as the base layer
 
 ### `Data Limitations & Assumptions`
-* **Assumption on Chargeback Status**: Although the current acceptance and chargeback reports share a perfect 1:1 mapping, I have introduced a boolean validation field to identify any transactions missing a corresponding chargeback record. The field `has_chargeback_evidence` will let the analysts filter any transaction with missing chargeback data and avoid dealing with nulls within the BI tool to be used by the analyst
+* **Negative amount:** One record with `-$23.78` was identified within the `ACCEPTED + has_chargeback = true` cohort. Since this integration is exclusively scoped to account funding, negative values have no valid business justification and are flagged via `is_quarantined = true`. The record is preserved at the build layer for review and excluded from `fct_globepay_transactions`.
+* **Chargeback evidence flag:** Although the current datasets share a perfect 1:1 mapping, `has_chargeback_evidence` was introduced to surface any transactions missing a chargeback record, avoiding null handling in the BI layer.
 
-## 3. Lineage graphs
+---
+
+## `3. Lineage Graph`
 
 The graph below shows the flow from raw seeds to the final fact table.
 
 <img src="docs/dbt_architecture_lineage.png" width="700" alt="dbt Lineage Graph">
 
-## `4. Tips around macros, data validation, and documentation`
+---
+
+## `4. Data Quality, Macros & Documentation`
 
 ### Data Quality & Validations
+* **Uniqueness and Not-Null:** Applied to `transaction_id` across both base and core layers to prevent duplicate generation during joins
+* **Relationships:** Guarantees 100% of IDs in `chargeback_report` exist within `acceptance_report`
+* **Accepted Values:** Validates `transaction_status` and `local_currency` against expected value sets
+* **Accepted Currencies Seed:** A reference seed (`seeds/reference/accepted_currencies.csv`) serves as the single source of truth for valid currencies per payment processor. When Deel expands to a new currency or onboards a new processor, only the seed requires updating — no changes to tests or models needed
+* **Freshness:** A warning-severity test monitors `processed_at` to detect delays in time-series data arrival
+* **Alerting & Observability:** Depending on criticality, rather than halting the pipeline, workflows are designed to isolate inconsistent records and route them to a quarantine dashboard — giving stakeholders visibility without compromising the main reporting layer
 
-* **Uniqueness and Not-Null:** Applied to transaction_id and external_ref across both the Base and Core layers. These tests ensure no duplicates are generated during joins, preventing the distortion of critical financial metrics.
-* **Relationships:** Used to guarantee that 100% of the IDs in the chargeback_report exist within the acceptance_report, ensuring referential integrity across the two source datasets.
-* **Accepted Values:** Validates that categorical fields such as state fall within the expected set of values defined in the source data, catching any unexpected classifications early.
-* **Custom Generic Tests:** Where native dbt tests were not sufficient, custom generic tests were written to handle edge cases specific to the business logic of this pipeline.
-* **Freshness:** Freshness testing is particularly critical for time-series financial data. Tests are configured against the processed_at column to detect any delays or gaps in data arrival as early as possible. (Test was created but not yet applied.)
-* **Alerting & Observability:**
-  * Depending on the criticality of the failure, rather than halting the entire pipeline, workflows would be designed to isolate and exclude inconsistent or       unreconciled records from the final models, routing them instead to a dedicated quarantine or exception dashboard. 
-  * This gives stakeholders and data reviewers full visibility over problematic cases without compromising the integrity or availability of the main reporting layer.
-* During data exploration, one negative amount `(-$23.78)` was identified within the `ACCEPTED + has_chargeback = true` cohort. Given that this integration is exclusively scoped to account funding operations, negative values were flagged via `is_quarantined = true`. The correlation with a chargeback event may suggest a reversal or dispute scenario that falls outside the expected data contract with Globepay, and is preserved at the build layer for further investigation.
+### Macros
+* **`is_valid_json`:** Custom generic test that validates JSON columns using `safe.parse_json()`. Applies `wide_number_mode => 'round'` to handle high precision floats that BigQuery cannot parse in standard mode
 
 ### Documentation
-* In my current role, the development lifecycle begins with a formal proposal outlining requirements, expected outputs, and delivery timelines. 
-Modelling only begins once all relevant stakeholders have reviewed and signed off, this ensures alignment before a single line of SQL is written and avoids costly rework down the line. 
-* Once development is complete, all details are fully captured in a design document where any addition or change related to business logic or data ingestion must be specified. 
-* This document will live in the initiatives folder, accessible to anyone in the organisation who needs to understand the reasoning and logic behind a given initiative. 
+* Development begins with a formal proposal signed off by all relevant stakeholders before a single line of SQL is written. Once complete, all logic is captured in a design document stored in the initiatives folder — accessible to anyone in the organisation.
+```plaintext
+initiatives
+└── FY25-26
+    ├── payment_management
+    │   ├── proposal/2025_10_01_payment_integration_proposal.md        # signed off
+    │   └── design_document/2025_11_03_payment_integration_design.md  # signed off
+    ├── fraud_detection
+    │   ├── proposal/2025_10_18_fraud_detection_proposal.md            # signed off
+    │   └── design_document/2025_11_20_fraud_detection_design.md      # signed off
+    └── revenue_reconciliation
+        ├── proposal/2026_02_03_revenue_reconciliation_proposal.md     # signed off
+        └── design_document/2026_02_14_revenue_reconciliation_design.md  # in review
+```
+
+## `Future Improvements`
+* **Look-back window:** Implement a 3-day look-back in incremental logic to capture chargebacks raised after the initial transaction event
+* **Data Contracts:** Enforce schema constraints at the ingestion layer so breaking source changes are caught before reaching final models
+* **Alerting:** Introduce automated test failure notifications so teams are alerted immediately when a `build_` intermediate step catches bad data
+* **Marts Layer:** As consumer count grows, a dedicated marts layer would provide cleaner access control and pre-aggregated views tailored to specific use cases
+
 
 
 Initiave documentation would look like this 
@@ -219,7 +242,7 @@ with calculations as (
     sum(case when transaction_status='DECLINED' then 1 else 0 end) as total_declined_transactions, 
     sum(case when transaction_status='ACCEPTED' then 1 else 0 end) as total_accepted_transactions,
     count(transaction_id) as total_transactions
-  from deel-task-12345.core_transactional.fct_globepay_transactions 
+  from deel-task-12345.core_payment_management.fct_globepay_transactions 
   group by all 
 )
 
@@ -240,7 +263,7 @@ with declined_transactions_scope as (
   select 
     country_code, 
     sum(usd_settled_amount) as total_settled_amount_usd_for_declined_txns
-  from deel-task-12345.core_transactional.fct_globepay_transactions 
+  from deel-task-12345.core_payment_management.fct_globepay_transactions 
   where transaction_status='DECLINED'
 group by country_code 
 )
@@ -257,7 +280,7 @@ where total_settled_amount_usd_for_declined_txns>25000000
 
 ```sql
 select count(*) as txns_with_no_chargeback_record
-from deel-task-12345.core_transactional.fct_globepay_transactions 
+from deel-task-12345.core_payment_management.fct_globepay_transactions 
 where has_chargeback_evidence=false
 ```
 

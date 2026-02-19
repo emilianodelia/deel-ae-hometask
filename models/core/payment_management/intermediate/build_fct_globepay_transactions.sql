@@ -15,7 +15,7 @@ with scope as (
 
 normalize_to_usd as (
     select
-        *, --except(fx_rates_json), -- Exclude column in json format
+        * except(fx_rates_json), -- exclude column in json format
         lax_float64(fx_rates_json[local_currency]) AS exchange_rate,
         round(settled_amount / nullif(lax_float64(fx_rates_json[local_currency]), 0), 2) as usd_settled_amount
     from scope
@@ -30,8 +30,7 @@ assign_chargeback_flag as (
         txns.country_code, 
         txns.local_currency, 
         txns.settled_amount,
-        txns.fx_rates_json, 
-        txns.usd_settled_amount, 
+        txns.usd_settled_amount,
         txns.exchange_rate,
         case 
             when upper(transaction_status)='ACCEPTED'
