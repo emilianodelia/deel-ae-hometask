@@ -32,6 +32,9 @@ models:
 
       - name: usd_settled_amount
         description: '{{ doc("usd_settled_amount_globepay_transactions") }}'
+
+      - name: settled_amount
+        description: '{{ doc("settled_amount_globepay_transactions") }}'
       
       - name: exchange_rate
         description: '{{ doc("exchange_rate_globepay_transactions") }}'

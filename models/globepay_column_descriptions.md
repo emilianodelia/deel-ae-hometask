@@ -34,6 +34,10 @@ The original transaction amount in the customer's currency, calculated by multip
 The transaction value in USD.
 {% enddocs %}
 
+{% docs settled_amount_globepay_transactions %}
+The transaction value in local amount.
+{% enddocs %}
+
 {% docs is_valid_globepay_transactions %}
 Flags whether the transaction is valid or not based on its status. Useful for filtering out any records that are not relevant for critical metrics to be calculated in downstream models.
 {% enddocs %}

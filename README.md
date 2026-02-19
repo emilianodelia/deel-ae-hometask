@@ -142,6 +142,7 @@ The graph below shows the flow from raw seeds to the final fact table.
 * **Alerting & Observability:**
   * Depending on the criticality of the failure, rather than halting the entire pipeline, workflows would be designed to isolate and exclude inconsistent or       unreconciled records from the final models, routing them instead to a dedicated quarantine or exception dashboard. 
   * This gives stakeholders and data reviewers full visibility over problematic cases without compromising the integrity or availability of the main reporting layer.
+* During data exploration, one negative amount `(-$23.78)` was identified within the `ACCEPTED + has_chargeback = true` cohort. Given that this integration is exclusively scoped to account funding operations, negative values were flagged via `is_quarantined = true`. The correlation with a chargeback event may suggest a reversal or dispute scenario that falls outside the expected data contract with Globepay, and is preserved at the build layer for further investigation.
 
 ### Documentation
 * In my current role, the development lifecycle begins with a formal proposal outlining requirements, expected outputs, and delivery timelines. 

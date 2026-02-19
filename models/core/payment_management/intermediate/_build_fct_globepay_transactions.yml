@@ -3,8 +3,8 @@ version: 2
 models:
   - name: build_fct_globepay_transactions
     description: >
-     Intermediate version for the reporting model that stores Globepay transactions along
-     with their corresponding accetance rate and chargeback status
+      Intermediate version for the reporting model that stores Globepay transactions along
+      with their corresponding accetance rate and chargeback status
     columns:
       - name: event_id
         description: '{{ doc("event_id_globepay_transactions") }}'
@@ -37,6 +37,13 @@ models:
       
       - name: processed_at
         description: '{{ doc("processed_at_globepay_transactions") }}'
+        data_tests:
+          - not_null:
+              config:
+                severity: warn
+      
+      - name: usd_settled_amount
+        description: '{{ doc("usd_settled_amount_globepay_transactions") }}'
         data_tests:
           - not_null:
               config:
