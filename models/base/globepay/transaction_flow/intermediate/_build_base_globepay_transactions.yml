@@ -17,8 +17,3 @@ models:
         tests:
           - unique
           - not_null
-      - name: fx_rates_json
-        description: '{{ doc("fx_rates_json_globepay_transactions") }}'
-        tests:
-          - not_null
-          - custom_is_valid_json

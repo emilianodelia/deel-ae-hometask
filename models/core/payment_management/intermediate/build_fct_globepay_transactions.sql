@@ -8,7 +8,7 @@ with scope as (
         country_code,
         local_currency,
         settled_amount,
-        safe.parse_json(fx_rates_json) as fx_rates_json  
+        fx_rates_json  
     from {{ ref('base_globepay_transactions') }}
 ), 
 

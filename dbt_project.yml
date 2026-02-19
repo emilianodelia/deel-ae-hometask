@@ -37,7 +37,7 @@ models:
     # base layer, where raw data gets cleanup and renamed
     # according to enterprise standards
         +materialized: table
-        +schema: base_globepay
+        +schema: base_transaction_flow
         
         chargebacks:
           intermediate:
