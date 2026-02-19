@@ -60,7 +60,7 @@ models:
     core:
       +materialized: table
       # Business logic and heavy/complex transformation layer
-      core_transactional:
+      payment_management:
         +schema: core_payment_management
         intermediate:
           +schema: intermediate_core_payment_management
