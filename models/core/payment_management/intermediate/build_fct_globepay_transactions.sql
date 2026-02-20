@@ -35,8 +35,7 @@ assign_chargeback_flag as (
         case 
             when upper(transaction_status)='ACCEPTED'
                 then true
-            when upper(transaction_status)='DECLINED'
-                then false 
+            else false
         end as is_valid, 
         chargebacks.has_chargeback, 
         case 
