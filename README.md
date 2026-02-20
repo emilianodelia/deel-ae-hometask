@@ -41,6 +41,8 @@ rates           0
 
 <img src="analyses/eda_graphics/amount_field_distributions.png" width="700">
 
+<img src="analyses/eda_graphics/amount_field_distributions_by_currency.png" width="700">
+
 
 ### Chargeback Report
 
