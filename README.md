@@ -144,8 +144,8 @@ tests
 * The `build_` intermediate pattern is applied here as well, same protective barrier approach as the base layer
 
 ### `Data Limitations & Assumptions`
-* **Negative amount:** One record with `-$23.78` was identified within the `ACCEPTED + has_chargeback = true` group
-  * At first, this seemed strange given that this integration is scoped to account funding, negative values do not seem to belong here, and therefore, were flagged via `is_quarantined = true`
+* **Negative amount:** One record with `-$23.78` was identified within the `transaction_status='ACCEPTED' and has_chargeback = true` group
+  * At first, this seemed strange given that this integration is scoped to account funding, negative values do not seem to belong here, and therefore, it was flagged via `is_quarantined = true`
   * The record is preserved at the build layer for review and excluded from `fct_globepay_transactions` to avoid introducing noise into the final reports.
 * **Chargeback evidence flag:** Although the current datasets share a perfect 1:1 mapping, `has_chargeback_evidence` was introduced to surface any transactions missing a chargeback record, avoiding null handling in the BI layer.
 ---
@@ -163,37 +163,22 @@ The graph below shows the flow from raw seeds to the final fact table.
 ### Data Quality & Validations
 * **Uniqueness and Not-Null:** Applied to `transaction_id` across both base and core layers to prevent duplicate generation during joins
 * **Relationships:** Guarantees 100% of IDs in `chargeback_report` exist within `acceptance_report`
-* **Accepted Values:** Validates `transaction_status` and `local_currency` against expected value sets
-* **Accepted Currencies Seed:** A reference seed (`seeds/reference/accepted_currencies.csv`) serves as the single source of truth for valid currencies per payment processor. 
+* **Accepted Values:** Validates `transaction_status` against expected value sets
+* **Accepted Currencies Seed:** A reference seed (`seeds/reference/accepted_currencies.csv`) serves as the single source of truth for valid `local_currencies` per payment processor. 
   * When Deel expands to a new currency or onboards a new processor, only the seed requires updating. 
 * **Freshness:** A test monitors `processed_at` (transactions) in order to detect any delays in time series data arrival.
 * **Alerting & Observability:** Depending on criticality, rather than halting the pipeline, workflows were designed to flag inconsistent records so that they can be excluded 
   * This gives stakeholders visibility without compromising the main reporting layer
 
-### Documentation
-* Development begins with a formal proposal signed off by all relevant stakeholders before a single line of SQL is written. Once complete, all logic is captured in a design document stored in the initiatives folder — accessible to anyone in the organisation.
-```plaintext
-initiatives
-└── FY25-26
-    ├── payment_management
-    │   ├── proposal/2025_10_01_payment_integration_proposal.md        # signed off
-    │   └── design_document/2025_11_03_payment_integration_design.md  # signed off
-    ├── fraud_detection
-    │   ├── proposal/2025_10_18_fraud_detection_proposal.md            # signed off
-    │   └── design_document/2025_11_20_fraud_detection_design.md      # signed off
-    └── revenue_reconciliation
-        ├── proposal/2026_02_03_revenue_reconciliation_proposal.md     # signed off
-        └── design_document/2026_02_14_revenue_reconciliation_design.md  # in review
-```
+## Model Level Documentation
+* A centralised `globepay_column_descriptions.md` file was created in order to serve as a single source of truth for column descriptions across the entire repository
 
 ## `Future Improvements`
 * **Data Contracts:** Enforce schema constraints at the ingestion layer so breaking source changes are caught before reaching final models
 * **Alerting:** Introduce automated test failure notifications so teams are alerted immediately when a `build_` intermediate step catches bad data
   * Bad data can be routed to either a Control Dashboard or a separate quarantine model that cab be queried in BQ
-* **Marts Layer:** As consumer count grows, a dedicated marts layer would provide cleaner access control and pre-aggregated views tailored to specific use cases
-
-## Model Level Documentation
-* A centralised `globepay_column_descriptions.md` file was created in order to serve as a single source of truth for column descriptions across the entire repository
+  * Daily email alerts for data inconsistencies can also be setup with via the integrations between BQ, Google Sheets and Google Scripts
+  * Every alert must be routed to the correct stakeholder and actionables must be agreed upon before hand
 
 ## Initiative/Development Level Documentation
 In my current role, the development lifecycle begins with a formal proposal outlining requirements, expected outputs, and delivery timelines. 
@@ -237,14 +222,6 @@ Data Analyst to utilize. This model should be able to answer these three questio
 minimum
 
 Final Model -----> `fct_globepay_transactions`
-
-dbt build ran as expected, all good 
-
-```sql
-dbt build -s +fct_globepay_transactions
-```
-
-<img src="docs/dbt_build_evidence.png" width="700">
 
 ----------------------------------------
 
