@@ -65,13 +65,19 @@ chargeback      0
 
 ### Key Observations
 * No null or missing values were found across both datasets
+
 * Transactional data covers 6 months of 2019
+
 * A consistent universe of 5430 records is maintained across both reports
+
 * `status` and `source` columns were deprioritised as they carry no analytical value for this task
-* **Source data anomaly detected in FX Rates:** Although EDA in python reported no broken JSON records, some warnings/error were triggered during development which revealed that `safe.parse_json()` fails silently on floats with a lot of decimals (Example: `1.4060447923604744`)
-  * This was resolved by applying `wide_number_mode => 'round'` during parsing 
-  * This is flagged as a known limitation and recommended for further review with the Globepay team to discuss whether a higher precision format can be agreed upon at the source level
-  * As long as all incoming rate jsons stay within the same decimal precision range, the parsing will work, any deviations from an common format will cause the pipeline to break
+
+#### BigQuery JSON Precision Anomaly
+  > While Python EDA reported no broken records, I identified a "silent failure" during the development phase.
+
+  > Standard `safe.parse_json()` logic fails on high precision floats (Example 1.4060447923604744)
+
+  > **Resolution**: I implemented `wide_number_mode => 'round'` during the parsing step to ensure 100% ingestion of these records (Only 20 were being affected)
 
 ## `2. Summary of your model architecture`
 
@@ -146,15 +152,36 @@ tests
 * The `build_` intermediate pattern is applied here as well, same protective barrier approach as the base layer
 
 ### `Data Limitations & Assumptions`
-* **Negative amount:** One record with `-$23.78` was identified within the `transaction_status='ACCEPTED' and has_chargeback = true` group
-  * At first, this seemed strange given that this integration is scoped to account funding, negative values do not seem to belong here, and therefore, it was flagged via `is_quarantined = true`
-  * The record is preserved at the build layer for review and excluded from `fct_globepay_transactions` to avoid introducing noise into the final reports.
-* **Chargeback evidence flag:** Although the current datasets share a perfect 1:1 mapping, `has_chargeback_evidence` was introduced to surface any transactions missing a chargeback record, avoiding null handling in the BI layer.
+
+#### JSON Handling
+> I have also replaced the previous regex-heavy string parsing with a direct, scalable JSON extraction
+
+#### FX Rate Contractual Dependency
+
+> **FX Precision Thresholds:** The pipeline currently relies on `wide_number_mode => 'round'` in the json parsing step to avoid breaking.
+
+> While this preserves the pipeline's stability, any significant change on the decimal formatting beyond current ranges remains a technical risk that should be monitored. 
+
+>I have flagged this as a candidate for a Data Contract. Deel should align with Globepay on a standardized decimal format to prevent ingestion issues as transaction volumes scale
+
+#### Local Currency vs. USD
+> My initial assumption that all amount values were in USD was incorrect. The current architecture treats the amount field as the local currency of the transaction
+
+#### Anomalies in an Account Funding Context
+> **Negative amount:** One record with `-$23.78` was identified within the `transaction_status='ACCEPTED' and has_chargeback = true` group
+
+> At first, this seemed strange given that this integration is scoped to account funding, negative values do not seem to belong here, and therefore, it was flagged via `is_quarantined = true`
+
+>The record is preserved at the build layer for review and excluded from `fct_globepay_transactions` to avoid introducing noise into the final reports.
+
+#### Chargeback Reporting
+> **Chargeback evidence flag:** Although the current datasets share a perfect 1:1 mapping, `has_chargeback_evidence` was introduced to surface any transactions missing a chargeback record, avoiding null handling in the BI layer.
+
 ---
 
 ## `3. Lineage Graph`
 
-The graph below shows the flow from raw seeds to the final fact table.
+Data flow from raw seeds to the final fact table
 
 <img src="docs/dbt_architecture_lineage.png" width="700" alt="dbt Lineage Graph">
 
