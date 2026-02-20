@@ -73,7 +73,16 @@ chargeback      0
 
 ## `2. Summary of your model architecture`
 
-The architecture is divided into 2 standalone layers (marts would be developed by the Analysts) to ensure scalability and clear lineage. Within the base layer, models are grouped by source name rather than concept, for example, all Globepay models live under `base/globepay/`, so that onboarding a new payment processor in the future is as simple as adding a new source folder alongside it, with no restructuring required.
+The architecture is divided into 2 standalone layers. A marts layer should be developed by the analysts consuming this data. Within the base layer, models are grouped by source name rather than concept. All Globepay models live under `base/globepay/` so that onboarding a new payment processor is as simple as adding a new source folder with no restructuring required.
+
+The core layer is where business logic gets integrated, resulting in lean and easy to query tables containing critical financial metrics and dimensional attributes related to each transaction. By the time data reaches this layer it has already passed all quality checks at the intermediate/build step. 
+
+Each layer follows the same structural pattern
+* A `build_` intermediate model that acts as a protective barrier where all data quality tests are applied before data is allowed to reach the final model
+  * `build_base_chargebacks` and `build_base_transactions` are tested before feeding data to `base_chargebacks` and `base_transactions`
+  * `build_fct_globepay_transactions` is tested before feeding data to `fct_globepay_transactions`
+
+The idea is to avoid having bad/untested data enter the final models that analysts or downstream consumers depend on.
 
 ```plaintext
 
@@ -119,14 +128,14 @@ tests
 
 ## `1. Ingestion Layer`
 * Loads static CSV files into BigQuery as raw seeds
-* Testing applied at this stage despite clean EDA results — pipelines should never assume source quality
-* As the project grows, refresh cadence and automated ingestion triggers should be documented — static loads are often where pipelines become brittle at scale
+* Testing applied at this stage despite clean EDA results. Assuming source quality is always risky
+* Details about the sources are documented in this step for future reference
 
 ## `2. Base Layer`
 * Cleans and standardizes data based on enterprise naming conventions, renaming columns and enforcing data types
 * Acts as a schema contract, if a source column changes, the fix is applied in one place only
-* Historical models and transaction versioning are preserved for audit purposes
-* Each model has a preceding `build_` intermediate step that acts as a **protective barrier**. All data quality tests run exclusively at this stage, bad data is caught before it ever reaches the final models that analysts and downstream consumers depend on
+* If we were ever to receive the records for each lifecycle event of every transaction, historical models and transaction versioning are preserved in this layer for audit purposes. Not necessary to create historical models now since it seems that we receive the final state of every transaction
+* Testing in intermediate layer is applied as usual
 
 ## `3. Core Layer`
 * JSON processing extracts nested FX rates using `wide_number_mode => 'round'` to handle high precision floats that would otherwise cause `safe.parse_json()` to fail silently
@@ -135,9 +144,10 @@ tests
 * The `build_` intermediate pattern is applied here as well, same protective barrier approach as the base layer
 
 ### `Data Limitations & Assumptions`
-* **Negative amount:** One record with `-$23.78` was identified within the `ACCEPTED + has_chargeback = true` cohort. Since this integration is exclusively scoped to account funding, negative values have no valid business justification and are flagged via `is_quarantined = true`. The record is preserved at the build layer for review and excluded from `fct_globepay_transactions`.
+* **Negative amount:** One record with `-$23.78` was identified within the `ACCEPTED + has_chargeback = true` group
+  * At first, this seemed strange given that this integration is scoped to account funding, negative values do not seem to belong here, and therefore, were flagged via `is_quarantined = true`
+  * The record is preserved at the build layer for review and excluded from `fct_globepay_transactions` to avoid introducing noise into the final reports.
 * **Chargeback evidence flag:** Although the current datasets share a perfect 1:1 mapping, `has_chargeback_evidence` was introduced to surface any transactions missing a chargeback record, avoiding null handling in the BI layer.
-
 ---
 
 ## `3. Lineage Graph`
@@ -154,12 +164,11 @@ The graph below shows the flow from raw seeds to the final fact table.
 * **Uniqueness and Not-Null:** Applied to `transaction_id` across both base and core layers to prevent duplicate generation during joins
 * **Relationships:** Guarantees 100% of IDs in `chargeback_report` exist within `acceptance_report`
 * **Accepted Values:** Validates `transaction_status` and `local_currency` against expected value sets
-* **Accepted Currencies Seed:** A reference seed (`seeds/reference/accepted_currencies.csv`) serves as the single source of truth for valid currencies per payment processor. When Deel expands to a new currency or onboards a new processor, only the seed requires updating — no changes to tests or models needed
-* **Freshness:** A warning-severity test monitors `processed_at` to detect delays in time-series data arrival
-* **Alerting & Observability:** Depending on criticality, rather than halting the pipeline, workflows are designed to isolate inconsistent records and route them to a quarantine dashboard — giving stakeholders visibility without compromising the main reporting layer
-
-### Macros
-* **`is_valid_json`:** Custom generic test that validates JSON columns using `safe.parse_json()`. Applies `wide_number_mode => 'round'` to handle high precision floats that BigQuery cannot parse in standard mode
+* **Accepted Currencies Seed:** A reference seed (`seeds/reference/accepted_currencies.csv`) serves as the single source of truth for valid currencies per payment processor. 
+  * When Deel expands to a new currency or onboards a new processor, only the seed requires updating. 
+* **Freshness:** A test monitors `processed_at` (transactions) in order to detect any delays in time series data arrival.
+* **Alerting & Observability:** Depending on criticality, rather than halting the pipeline, workflows were designed to flag inconsistent records so that they can be excluded 
+  * This gives stakeholders visibility without compromising the main reporting layer
 
 ### Documentation
 * Development begins with a formal proposal signed off by all relevant stakeholders before a single line of SQL is written. Once complete, all logic is captured in a design document stored in the initiatives folder — accessible to anyone in the organisation.
@@ -178,12 +187,22 @@ initiatives
 ```
 
 ## `Future Improvements`
-* **Look-back window:** Implement a 3-day look-back in incremental logic to capture chargebacks raised after the initial transaction event
 * **Data Contracts:** Enforce schema constraints at the ingestion layer so breaking source changes are caught before reaching final models
 * **Alerting:** Introduce automated test failure notifications so teams are alerted immediately when a `build_` intermediate step catches bad data
+  * Bad data can be routed to either a Control Dashboard or a separate quarantine model that cab be queried in BQ
 * **Marts Layer:** As consumer count grows, a dedicated marts layer would provide cleaner access control and pre-aggregated views tailored to specific use cases
 
+## Model Level Documentation
+* A centralised `globepay_column_descriptions.md` file was created in order to serve as a single source of truth for column descriptions across the entire repository
 
+## Initiative/Development Level Documentation
+In my current role, the development lifecycle begins with a formal proposal outlining requirements, expected outputs, and delivery timelines. 
+
+Modelling begins once all relevant stakeholders have reviewed and signed off, this ensures alignment before a single line of SQL is written and avoids U-turns down the line.
+
+Once development is complete, all details are fully captured in a design document where any addition or change related to business logic or data ingestion must be specified.
+
+This document lives in the initiatives folder, accessible to anyone in the organisation who needs to understand the reasoning and logic behind any given initiative or development.
 
 Initiave documentation would look like this 
 
@@ -211,10 +230,6 @@ initiatives
         └── design_document
             └── 2026_02_14_revenue_reconciliation_design.md    # in review
 ```
-
-## `Future Improvements`
-* Implement a "look-back" window in the incremental logic (checking the last 3 days) to capture chargebacks that occur days after the initial transaction event
-* Use Data Contracts to enforce schema constraints at the Ingestion layer so that that any breaking changes in the source data are caught before they reach our final models
 
 # `Part II - Final Model Testing`
 For the second part of the challenge, please develop a production version of the model for the
